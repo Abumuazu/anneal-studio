@@ -1,0 +1,115 @@
+{/* Wisp. Copy: docs/copy-deck-v3.md, the gov.* keys. Layout: design/v6/CaseWispV6.dc.html. */}
+
+import {
+  Brief,
+  CaseHero,
+  Feature,
+  Features,
+  FlowStep,
+  IslandStates,
+  Next,
+  Principle,
+  Question,
+  Questions,
+  WispFlow,
+  WispStage,
+} from '@/components/case';
+
+<CaseHero
+  slug="wisp"
+  msg="Meetings in, minutes out."
+  lines={['Press record.', 'Lock the phone.', 'Approve the minutes.']}
+  meta={{
+    client: 'Confidential',
+    sector: 'Meeting records',
+    platform: 'iOS, built in React Native',
+    did: 'Design and the full mobile build, end to end',
+    year: '2026',
+  }}
+/>
+
+<WispStage />
+
+<Brief msg="Three questions came first." width="wide">
+  Boards, committees and leadership teams make decisions that have to be recorded correctly. They
+  needed to capture meetings on a phone, in the room or on a Teams or Zoom call, without losing
+  minutes to a locked screen or a bad connection. Every meeting also carries a classification, and a
+  draft only becomes the official record once a secretary approves it. We designed and built the
+  whole app.
+</Brief>
+
+<Questions
+  msg="Three questions came first."
+  heading="Three questions we answered before drawing a screen."
+>
+  <Question title="What happens when the phone locks mid-meeting?">
+    Recording keeps going. A Live Activity on the lock screen and in the Dynamic Island shows the
+    timer and level meter, and a long press opens pause and stop.
+  </Question>
+  <Question title="How do classification and consent get captured before recording?">
+    Every meeting carries a classification: Public, Internal, Confidential or Restricted. The person
+    recording confirms that everyone present has been told the session is recorded.
+  </Question>
+  <Question title="How does a transcript become an official record?">
+    Only after review. The recording is uploaded to the organization's own servers and transcribed
+    with speaker labels. Draft minutes then go to a secretary, who can suggest edits and approve
+    them.
+  </Question>
+</Questions>
+
+<WispFlow msg="Lock the phone, keep recording." heading="Follow one meeting from start to minutes.">
+  <FlowStep title="Start a capture">
+    Set the classification, confirm that everyone present has been told, and start recording.
+  </FlowStep>
+  <FlowStep title="Lock the phone">
+    Recording continues when the screen locks or you switch apps. A Live Activity keeps the timer on
+    the lock screen.
+  </FlowStep>
+  <FlowStep title="Dynamic Island">
+    The compact view shows a level meter and timer. When another app shares the island, it shrinks
+    to a minimal view.
+  </FlowStep>
+  <FlowStep title="Long press for controls">
+    Press and hold to open the full controls: pause, resume and stop. The lock screen uses the same
+    layout, so it reads as one object.
+  </FlowStep>
+  <FlowStep title="Stop, saved, minutes">
+    The recording is saved and uploaded to the organization's own servers. A transcript with speaker
+    labels follows in about 4 minutes, then draft minutes for a secretary to review.
+  </FlowStep>
+</WispFlow>
+
+<Principle msg="Follow one meeting through.">
+  If recording stops when the phone locks, nobody trusts the minutes.
+</Principle>
+
+<Features
+  msg="Six things we built."
+  heading="What we built."
+  stack="React Native · iOS Live Activities · Dynamic Island · Offline sync"
+>
+  <Feature title="Capture anywhere">
+    Record in-person meetings on the phone, or send a bot into Teams and Zoom.
+  </Feature>
+  <Feature title="Works offline">
+    Recordings stay safe on the phone and sync once it is back online.
+  </Feature>
+  <Feature title="Classification and consent">
+    Four classification levels and a consent confirmation before every recording.
+  </Feature>
+  <Feature title="Live Activity">
+    Lock screen and Dynamic Island controls while a meeting is recording.
+  </Feature>
+  <Feature title="One view per meeting">
+    Overview, transcript, actions and minutes in one place. Ask about this meeting, and push actions
+    with owners to your project tool.
+  </Feature>
+  <Feature title="Review before record">
+    Draft minutes a secretary reviews, edits and approves. Alerts tell people when a transcript is
+    ready or an action lands.
+  </Feature>
+</Features>
+
+<IslandStates />
+
+<Next slug="naira-crypto-exchange" msg="Next project is up." flush />

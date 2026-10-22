@@ -1,0 +1,95 @@
+{/* Naira to crypto exchange. Copy: docs/copy-deck-appendix.md. Layout: design/v6/CaseExchangeV6.dc.html. */}
+
+import {
+  Brief,
+  BuiltWith,
+  CaseHero,
+  ExchangeStage,
+  Feature,
+  Features,
+  Next,
+  Principle,
+  Question,
+  Questions,
+} from '@/components/case';
+
+<CaseHero
+  slug="naira-crypto-exchange"
+  msg="This one moves naira and crypto."
+  lines={['A crypto exchange', 'built around who', 'holds the licence.']}
+  meta={{
+    client: 'Confidential fintech, Nigeria',
+    sector: 'Digital assets, payments',
+    platform: 'iOS and Android',
+    did: 'Product strategy, design and the full mobile build',
+    year: '2026',
+  }}
+/>
+
+<ExchangeStage />
+
+<Brief msg="Two sets of requirements before any design.">
+  The founders wanted people in Nigeria to buy and sell crypto against naira on their phone.
+  Nigeria's Investments and Securities Act 2025 brings digital assets under securities regulation,
+  so this is regulated activity. Apple adds its own requirements for exchange apps: licensing, a
+  legal entity and supporting documents, which depend on how the business is set up and where the
+  app is distributed. Miss either one and the app doesn't launch, however good it looks. This is how
+  we approached the project, not legal advice, and each client confirms the requirements with its
+  own advisers.
+</Brief>
+
+<Questions
+  msg="Who holds the licence decides a lot."
+  heading="Three questions we answered before drawing a screen."
+>
+  <Question title="Who holds the licence?">
+    We mapped which parts of the flow sit with the licensed partner and which sit with the client,
+    so the client could see where its own responsibilities start.
+  </Question>
+  <Question title="Which entity goes on the App Store listing?">
+    Apple reviews exchange apps against the licences and legal entity behind the listing. We planned
+    the publishing set-up around that from the start and flagged it for the client to confirm with
+    its advisers.
+  </Question>
+  <Question title="What does the partner's API cover?">
+    Plugging into a licensed provider's API doesn't automatically hand you their licence. We drew a
+    clear line between what the API handles and what the business still has to own.
+  </Question>
+</Questions>
+
+<Principle
+  msg="Worth saying twice."
+  lines={[
+    "A partner's API gives",
+    'you their rails. It',
+    "doesn't always come",
+    'with their licence.',
+  ]}
+  dim={[2, 3]}
+/>
+
+<Features
+  msg="The flow, one step at a time."
+  heading="Sign-up to first trade in a few short steps."
+>
+  <Feature title="Verification first">
+    BVN and ID checks happen before the first trade, with clear progress at each step.
+  </Feature>
+  <Feature title="Live price and rate lock">
+    The rate holds for a short window, so the price on screen is the price you get.
+  </Feature>
+  <Feature title="Naira payouts">Sales are paid straight to a verified bank account.</Feature>
+  <Feature title="Receipts and history">
+    Every trade has a receipt and sits in a history you can search.
+  </Feature>
+  <Feature title="Licensed routing">Every trade runs through the licensed partner.</Feature>
+  <Feature title="Publishing set-up">
+    Planned around the licensed entity's own developer account, subject to Apple's review.
+  </Feature>
+</Features>
+
+<BuiltWith msg="Built with." heading="Built with">
+  React Native · TypeScript · Node.js · Licensed partner API
+</BuiltWith>
+
+<Next slug="jewellery-marketplace" msg="One more case to go." />

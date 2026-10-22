@@ -1,0 +1,271 @@
+/* Work page and case pages (WorkV6, CaseWispV6, CaseJewelleryV6). */
+:root {
+  /* The dimmed headline line on case heroes (board #6E6E6E). */
+  --case-dim: var(--color-grey-550);
+}
+
+@layer components {
+  /* Covers: a colour frame holding a fixed-size artwork canvas, scaled to fit small screens. */
+  .cover {
+    display: block;
+  }
+  .cover-frame {
+    --fit: var(--cover-fit-sm, 0.5);
+    position: relative;
+    height: calc(var(--cover-h, 720px) * var(--fit));
+    overflow: hidden;
+    border-radius: 28px;
+  }
+  .cover-fit {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--cover-w, 666px);
+    height: var(--cover-h, 720px);
+    transform: translateX(-50%) scale(var(--fit));
+    transform-origin: 50% 0;
+  }
+  .cover-art {
+    position: absolute;
+    inset: 0;
+  }
+  @media (min-width: 640px) {
+    .cover-frame {
+      --fit: var(--cover-fit-md, 1);
+    }
+  }
+  @media (min-width: 901px) {
+    .cover-frame {
+      height: var(--cover-h, 720px);
+    }
+    .cover-fit {
+      left: 0;
+      width: 100%;
+      transform: none;
+    }
+  }
+  .cover-arrow {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--color-ink);
+    color: var(--color-panel);
+    font-size: 20px;
+    transition: transform 600ms var(--ease-reveal);
+  }
+  .cover:hover .cover-arrow {
+    transform: rotate(45deg);
+  }
+
+  /* Index rows */
+  .irow {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 46px;
+    align-items: center;
+    gap: 20px;
+    padding: 22px 18px;
+    border-radius: 22px;
+    transition: background-color 500ms var(--ease-reveal);
+  }
+  .irow:hover {
+    background: var(--color-panel);
+  }
+  .irow-hm {
+    display: none;
+  }
+  @media (min-width: 901px) {
+    .irow {
+      grid-template-columns: 70px minmax(0, 4fr) minmax(0, 2fr) minmax(0, 2fr) 120px 56px;
+      padding: 26px 28px;
+    }
+    .irow-hm {
+      display: block;
+    }
+  }
+  .irow-t {
+    transition: transform 700ms var(--ease-reveal);
+  }
+  [data-motion='full'] .irow:hover .irow-t {
+    transform: translateX(16px);
+  }
+  .irow-a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--color-ink);
+    color: var(--color-panel);
+    transition: transform 600ms var(--ease-reveal);
+  }
+  .irow:hover .irow-a {
+    transform: rotate(45deg);
+  }
+  .work-preview {
+    width: 340px;
+    height: 240px;
+    border-radius: 22px;
+    box-shadow: 0 30px 70px rgb(11 11 12 / 0.25);
+  }
+
+  /* Wisp: the capture flow steps beside the phone */
+  .wflow-step {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+    width: 100%;
+    padding: 22px 26px;
+    border: 0;
+    border-radius: 24px;
+    overflow: hidden;
+    text-align: left;
+    cursor: pointer;
+    background: var(--color-grey-50);
+    color: var(--color-ink);
+    --astep-fill: #00ff5a;
+    transition:
+      background-color 500ms var(--ease-reveal),
+      color 500ms var(--ease-reveal);
+  }
+  .wflow-step[data-active='true'] {
+    background: var(--color-ink);
+    color: var(--color-panel);
+  }
+  /* Board #BDBDBD fails 3:1 on the step background; this is the closest grey that passes. */
+  .wflow-n {
+    color: var(--color-grey-400);
+  }
+  .wflow-step[data-active='true'] .wflow-n {
+    color: #00ff5a;
+  }
+  .wflow-x {
+    display: none;
+    color: var(--color-grey-300);
+  }
+  .wflow-step[data-active='true'] .wflow-x {
+    display: block;
+  }
+  .wflow-pad {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 620px;
+    height: 700px;
+    border-radius: 40px;
+    background: radial-gradient(90% 70% at 50% 40%, #d2f8de 0%, #eef1ef 70%);
+  }
+  .wflow-pad > * {
+    transform: scale(0.8);
+  }
+  @media (min-width: 901px) {
+    .wflow-pad {
+      height: 820px;
+    }
+    .wflow-pad > * {
+      transform: none;
+    }
+  }
+
+  /* Jewellery: the pinned money flow */
+  .mflow-step {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 18px;
+    padding: 22px 24px;
+    border-radius: 22px;
+    color: var(--color-ink);
+    transition:
+      background-color 600ms var(--ease-reveal),
+      color 600ms var(--ease-reveal);
+  }
+  .mflow-x {
+    color: var(--color-grey-700);
+  }
+  .mflow-step[data-scrubbing='true'] {
+    color: var(--color-text-dim);
+  }
+  /* Board #D0D0D0 fails 3:1 on white; this is the closest grey that passes. */
+  .mflow-step[data-scrubbing='true'] .mflow-n {
+    color: var(--color-grey-400);
+  }
+  .mflow-step[data-scrubbing='true'] .mflow-x {
+    color: var(--color-text-dim);
+  }
+  .mflow-step[data-scrubbing='true'][data-past='true'],
+  .mflow-step[data-scrubbing='true'][data-past='true'] .mflow-n {
+    color: var(--color-ink);
+  }
+  .mflow-step[data-scrubbing='true'][data-active='true'] {
+    background: var(--color-ink);
+    color: var(--color-panel);
+  }
+  .mflow-step[data-scrubbing='true'][data-active='true'] .mflow-n {
+    color: var(--color-accent);
+  }
+  .mflow-step[data-scrubbing='true'][data-active='true'] .mflow-x {
+    color: var(--color-grey-300);
+  }
+  .mflow-phone {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    width: 250px;
+    height: 524px;
+    margin-left: -125px;
+    padding: 9px;
+    box-sizing: border-box;
+    border-radius: 44px;
+    background: #050505;
+    box-shadow:
+      0 40px 80px rgb(0 0 0 / 0.3),
+      inset 0 0 0 1.5px #2a2a2a;
+  }
+  .mflow-screen {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 44px 18px 18px;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 36px;
+    background: #f4f4f4;
+    color: var(--color-ink);
+  }
+  .mflow-notch {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    width: 80px;
+    height: 23px;
+    margin-left: -40px;
+    border-radius: 999px;
+    background: #050505;
+  }
+  .mflow-state {
+    margin-top: 16px;
+    padding: 14px;
+    border-radius: 16px;
+    transition:
+      background-color 600ms var(--ease-reveal),
+      color 600ms var(--ease-reveal);
+  }
+  .mflow-hold {
+    position: absolute;
+    bottom: 90px;
+    left: -70px;
+    width: 250px;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    transition: transform 800ms var(--ease-reveal);
+  }
+}

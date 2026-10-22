@@ -1,0 +1,50 @@
+/* Inner pages (Services, Products, Studio, Privacy). */
+@layer components {
+  .jump {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 42px;
+    padding: 0 18px;
+    border-radius: 999px;
+    background: var(--color-panel);
+    font-family: var(--font-text);
+    font-size: 14px;
+    font-weight: 600;
+    transition:
+      background-color 400ms var(--ease-reveal),
+      color 400ms var(--ease-reveal);
+  }
+  .jump:hover {
+    background: var(--color-ink);
+    color: var(--color-panel);
+  }
+
+  [data-motion='full'] .row-nudge {
+    transition: transform 700ms var(--ease-reveal);
+  }
+  [data-motion='full'] .row-nudge:hover {
+    transform: translateX(10px);
+  }
+
+  .faq-x {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-ink);
+    color: var(--color-panel);
+    font-size: 20px;
+    transition:
+      transform 600ms var(--ease-reveal),
+      background-color 500ms;
+  }
+  .faq-item[data-open='true'] .faq-x {
+    transform: rotate(45deg);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+}

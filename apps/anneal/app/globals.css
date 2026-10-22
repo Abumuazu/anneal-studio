@@ -1,0 +1,155 @@
+@import 'tailwindcss';
+@import '@studio/kit/theme/index.css';
+@import './mockups.css';
+@import './home.css';
+@import './pages.css';
+@import './work.css';
+@import './start.css';
+
+@source '../components';
+@source '../app';
+
+/* Size-adjusted fallbacks for the Special Gothic faces (see app/fonts.ts). */
+@font-face {
+  font-family: 'Special Gothic Fallback';
+  src: local('Arial');
+  ascent-override: 105.94%;
+  descent-override: 31.1%;
+  line-gap-override: 0%;
+  size-adjust: 94.86%;
+}
+@font-face {
+  font-family: 'Special Gothic Condensed Fallback';
+  src: local('Arial');
+  ascent-override: 134.94%;
+  descent-override: 39.61%;
+  line-gap-override: 0%;
+  size-adjust: 74.48%;
+}
+@font-face {
+  font-family: 'Special Gothic Expanded Fallback';
+  src: local('Arial');
+  ascent-override: 75.21%;
+  descent-override: 22.08%;
+  line-gap-override: 0%;
+  size-adjust: 133.63%;
+}
+
+/* Geist Mono and Courier New share a 0.6em advance; only vertical metrics differ. */
+@font-face {
+  font-family: 'Geist Mono Fallback';
+  src: local('Courier New'), local('CourierNewPSMT');
+  ascent-override: 100.52%;
+  descent-override: 29.5%;
+  line-gap-override: 0%;
+  size-adjust: 100%;
+}
+
+/* Anneal-only tokens on top of the kit's set. */
+@theme {
+  --color-grey-550: #6e6e6e;
+}
+
+/*
+ * Anneal theme. Values from design/README.md (brand tokens) and the Iteration 6
+ * boards. Unlayered, so they override the kit's neutral defaults.
+ */
+:root {
+  --color-ground: #d9d9d9;
+  --color-ink: #0b0b0c;
+  --color-panel: #ffffff;
+  --color-accent: #7a5cff;
+  /*
+   * The board picks ink (#0B0B0C) on the accent, which measures 4.497:1, just
+   * under WCAG AA for small text. Pure black reaches 4.80:1 and looks the same.
+   * Spec question in the M1 PR.
+   */
+  --color-on-accent: #000000;
+
+  --color-grey-50: #f2f2f2;
+  --color-grey-100: #ededed;
+  --color-grey-150: #e6e6e6;
+  --color-grey-200: #cfcfcf;
+  --color-grey-300: #bdbdbd;
+  --color-grey-400: #8a8a8a;
+  --color-grey-500: #7a7a7a;
+  --color-grey-600: #5c5c5c;
+  --color-grey-700: #3d3d3d;
+  --color-grey-800: #262626;
+  --color-grey-850: #1c1c1c;
+  --color-grey-900: #161616;
+
+  /*
+   * Unlit words and inactive steps. The boards use #CFCFCF and #A6A6A6, which
+   * fail WCAG AA on white (1.5:1 and 2.4:1). #767676 is the lightest grey that
+   * passes on white (4.54:1). Spec question in the M1 PR.
+   */
+  --color-text-dim: #767676;
+
+  --font-text: var(--ff-text), system-ui, sans-serif;
+  --font-display: var(--ff-display), var(--ff-text), sans-serif;
+  --font-display-wide: var(--ff-display-wide), var(--ff-text), sans-serif;
+  --font-mono: var(--ff-mono), ui-monospace, monospace;
+}
+
+/* Anneal's four-cell mark: square, circle, rounded, leaf. */
+@layer components {
+  .mark {
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12%;
+    width: 1em;
+    height: 1em;
+    flex: none;
+  }
+  .mark i {
+    display: block;
+    background: currentColor;
+  }
+  .mark i:nth-child(1) {
+    border-radius: 0;
+  }
+  .mark i:nth-child(2) {
+    border-radius: 50%;
+  }
+  .mark i:nth-child(3) {
+    border-radius: 26%;
+  }
+  .mark i:nth-child(4) {
+    border-radius: 50% 0 50% 0;
+  }
+  [data-motion='full'] .mark[data-live] i {
+    animation: anneal-mark var(--mark-cycle, 6.4s) var(--ease-morph) infinite;
+  }
+  [data-motion='full'] .mark[data-live] i:nth-child(2) {
+    animation-delay: calc(var(--mark-cycle, 6.4s) * -0.25);
+  }
+  [data-motion='full'] .mark[data-live] i:nth-child(3) {
+    animation-delay: calc(var(--mark-cycle, 6.4s) * -0.5);
+  }
+  [data-motion='full'] .mark[data-live] i:nth-child(4) {
+    animation-delay: calc(var(--mark-cycle, 6.4s) * -0.75);
+  }
+}
+
+@keyframes anneal-mark {
+  0%,
+  20% {
+    border-radius: 0;
+  }
+  25%,
+  45% {
+    border-radius: 50%;
+  }
+  50%,
+  70% {
+    border-radius: 26%;
+  }
+  75%,
+  95% {
+    border-radius: 50% 0 50% 0;
+  }
+  100% {
+    border-radius: 0;
+  }
+}

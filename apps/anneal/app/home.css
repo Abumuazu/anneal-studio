@@ -1,0 +1,245 @@
+/*
+ * Home (design/v6/HomeV6.dc.html). The preloader stages live on
+ * <html data-preload>: count, split, fly, landed. With no attribute (return
+ * visits, reduced motion, no JS) every element renders in its final state.
+ */
+@layer components {
+  /* Hero */
+  .hero {
+    height: clamp(640px, 100svh, 1000px);
+  }
+  @media (min-height: 1300px) {
+    .hero {
+      height: 920px;
+    }
+  }
+  .hero-row {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    font-size: clamp(48px, min(11.4vw, 15.6vh), 176px);
+    will-change: transform;
+  }
+  .hw {
+    display: inline-block;
+    overflow: hidden;
+    margin: -0.08em 0 -0.04em;
+    padding: 0.08em 0.02em 0.04em;
+  }
+  .hw > span {
+    display: inline-block;
+  }
+  [data-motion='full'] .hw > span {
+    transition: transform 1150ms var(--ease-reveal) var(--hw-delay, 0s);
+  }
+  :root[data-preload='split'] .hw > span,
+  :root[data-preload='fly'] .hw > span {
+    transform: translateY(112%);
+    transition: none;
+  }
+  [data-motion='full'] .hfade {
+    transition:
+      opacity 900ms var(--ease-reveal) var(--hf-delay, 0s),
+      transform 1000ms var(--ease-reveal) var(--hf-delay, 0s);
+  }
+  :root[data-preload='split'] .hfade,
+  :root[data-preload='fly'] .hfade {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: none;
+  }
+  :root[data-preload='split'] [data-hero-tile],
+  :root[data-preload='fly'] [data-hero-tile] {
+    opacity: 0;
+  }
+  .bob {
+    display: inline-block;
+  }
+  [data-motion='full'] .bob {
+    animation: anneal-bob 1.8s var(--ease-reveal) infinite;
+  }
+
+  /* Preloader */
+  .pre {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: none;
+    background: var(--color-ground);
+    color: var(--color-ink);
+    transition: background-color 600ms var(--ease-reveal);
+  }
+  :root[data-preload] .pre {
+    display: block;
+    /* Failsafe: if the script never runs, uncover the page anyway. */
+    animation: anneal-pre-out 0s 6s forwards;
+  }
+  :root[data-preload='fly'] .pre,
+  :root[data-preload='landed'] .pre {
+    background: rgb(217 217 217 / 0);
+  }
+  .pre-ui {
+    position: absolute;
+    transition: opacity 450ms var(--ease-reveal);
+  }
+  :root[data-preload='split'] .pre-ui,
+  :root[data-preload='fly'] .pre-ui,
+  :root[data-preload='landed'] .pre-ui {
+    opacity: 0;
+  }
+  .pre-cell {
+    position: absolute;
+    left: calc(50% - 33px);
+    top: calc(50% - 33px);
+    width: 66px;
+    height: 66px;
+    background: var(--color-ink);
+    will-change: transform;
+  }
+  .pre-cell[data-cell='1'] {
+    border-radius: 50%;
+  }
+  .pre-cell[data-cell='2'] {
+    border-radius: 26%;
+  }
+  .pre-cell[data-cell='3'] {
+    border-radius: 50% 0 50% 0;
+    background: var(--color-accent);
+  }
+  :root[data-preload='count'] .pre-cell {
+    animation: anneal-mark 3.2s var(--ease-morph) infinite;
+    animation-delay: var(--cell-delay, 0s);
+  }
+
+  /* Four things we build */
+  .build-tile {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: var(--tile-bg);
+    color: var(--tile-fg);
+    transition:
+      transform 700ms var(--ease-reveal),
+      border-radius 700ms var(--ease-reveal),
+      background-color 500ms;
+  }
+  [data-open='true'] > h3 .build-tile {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+  [data-motion='full'] .build-trigger:hover .build-tile {
+    transform: rotate(90deg);
+    border-radius: 50%;
+  }
+  .build-go {
+    display: inline-block;
+    font-size: 24px;
+    transition: transform 500ms var(--ease-reveal);
+  }
+  [data-motion='full'] .build-trigger:hover .build-go {
+    transform: translate(4px, -4px);
+  }
+
+  /* Case cards */
+  @media (min-width: 901px) {
+    .case-card {
+      height: clamp(700px, calc(100vh - 48px), 900px);
+    }
+  }
+  .case-link {
+    display: block;
+    height: 100%;
+  }
+  .vlink {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    height: 52px;
+    padding: 0 24px;
+    border-radius: 999px;
+    font-family: var(--font-text);
+    font-size: 15px;
+    font-weight: 600;
+    transition: transform 500ms var(--ease-reveal);
+  }
+  [data-motion='full'] .case-link:hover .vlink {
+    transform: translateX(6px);
+  }
+  [data-motion='full'] .case-link:hover .vlink .arrow {
+    transform: translate(4px, -4px);
+  }
+
+  /* Ventures */
+  .ven-shot {
+    position: absolute;
+    width: 190px;
+    overflow: hidden;
+    border-radius: 26px;
+    box-shadow: 0 30px 60px rgb(0 0 0 / 0.3);
+    opacity: 0;
+    transition: opacity 800ms var(--ease-reveal);
+  }
+  [data-active='true'] .ven-shot {
+    opacity: 1;
+  }
+  /* FlexTiles sit inside Parallax wrappers here, so widen the wrapper. */
+  .flex-tile:has(> [data-active='true']) {
+    flex-grow: 2.3;
+  }
+  @media (max-width: 900px) {
+    .ven-shot {
+      opacity: 1;
+    }
+  }
+
+  /* Pricing cards */
+  .way {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border-radius: 24px;
+    padding: 34px;
+    transition: box-shadow 700ms var(--ease-reveal);
+  }
+  .way:hover {
+    box-shadow: 0 30px 60px rgb(11 11 12 / 0.14);
+  }
+  .way-tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    transition:
+      transform 700ms var(--ease-reveal),
+      border-radius 700ms var(--ease-reveal);
+  }
+  [data-motion='full'] .way:hover .way-tile {
+    transform: rotate(-90deg);
+    border-radius: 50%;
+  }
+  @media (min-width: 901px) {
+    .way {
+      height: var(--way-h);
+    }
+  }
+}
+
+@keyframes anneal-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+@keyframes anneal-pre-out {
+  to {
+    visibility: hidden;
+  }
+}

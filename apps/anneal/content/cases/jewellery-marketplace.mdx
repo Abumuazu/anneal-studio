@@ -1,0 +1,131 @@
+{/* Jewellery marketplace. Copy: docs/copy-deck-appendix.md. Layout: design/v6/CaseJewelleryV6.dc.html. */}
+
+import {
+  Brief,
+  BuiltWith,
+  CaseHero,
+  Feature,
+  Features,
+  FlowStep,
+  JewelleryStage,
+  MoneyFlow,
+  Next,
+  Principle,
+  Question,
+  Questions,
+} from '@/components/case';
+
+<CaseHero
+  slug="jewellery-marketplace"
+  msg="Offers on mobile and web."
+  lines={['Make an offer.', 'Pay only if the', 'seller says yes.']}
+  meta={{
+    client: 'Confidential jewellery marketplace',
+    sector: 'Marketplace, payments',
+    platform: 'iOS, Android and web',
+    did: 'Payments design, product design and the full build',
+    year: 'Not listed',
+  }}
+/>
+
+<JewelleryStage />
+
+<Brief msg="The usual answer meant holding other people's money.">
+  Buyers wanted to offer a price instead of paying the sticker one. Sellers wanted to accept,
+  decline or counter, and know an accepted offer would actually pay. The usual answer is a custom
+  escrow that holds the buyer's money until the deal closes. Here, building one would have meant
+  taking on the compliance that comes with holding other people's money.
+</Brief>
+
+<Questions
+  msg="Who holds the money? The bank does."
+  heading="Three questions we answered before drawing a screen."
+>
+  <Question title="Who holds the money while the seller decides?">
+    The buyer's own bank, same as any card payment. The card is authorised when the offer is made,
+    and the funds stay there until the seller accepts.
+  </Question>
+  <Question title="Do we need to hold anyone's money at all?">
+    A custom escrow would have put the client in the business of holding funds. We recommended a
+    card hold through Stripe Checkout instead, so the money stays on the buyer's card until the
+    seller accepts and we never hold it. How a marketplace is regulated depends on where it
+    operates, so the client's advisers confirm that side.
+  </Question>
+  <Question title="What happens if the seller says nothing?">
+    Every offer has an expiry. Card holds usually last about seven days, so offers run out inside
+    that window. When one does, the hold is released and the buyer is free to try again.
+  </Question>
+</Questions>
+
+<MoneyFlow
+  msg="Scroll to watch the money move."
+  heading="Hold on offer. Charge on yes."
+  states={[
+    { title: 'Offer ready to send', line: 'Expires 24 hours after sending', button: 'Send offer' },
+    {
+      title: 'Card authorised, not charged',
+      line: 'The seller has 23 hours to answer',
+      button: 'Offer sent',
+    },
+    {
+      title: 'With the seller now',
+      line: 'They can accept, decline or counter',
+      button: 'Withdraw offer',
+    },
+    {
+      title: 'Accepted. Charged ₦420,000',
+      line: 'The seller is preparing your ring',
+      button: 'Track order',
+    },
+  ]}
+  holds={[
+    { amount: '₦0 held', status: 'Nothing happens until you send' },
+    { amount: '₦420,000 held', status: "Authorised. Still in the buyer's bank" },
+    { amount: '₦420,000 held', status: 'Waiting on the seller' },
+    { amount: '₦420,000 charged', status: 'Captured when the seller said yes' },
+  ]}
+>
+  <FlowStep title="Buyer makes an offer">They pick a price and confirm their card.</FlowStep>
+  <FlowStep title="Card is authorised">
+    The amount is held on the card and nothing is charged yet.
+  </FlowStep>
+  <FlowStep title="Seller decides">Accept, decline or counter, before the offer expires.</FlowStep>
+  <FlowStep title="Charge or release">
+    Accept captures the payment. A decline or an expired offer releases the hold.
+  </FlowStep>
+</MoneyFlow>
+
+<Principle
+  msg="Worth saying twice."
+  lines={[
+    'Before you build a',
+    'payments feature,',
+    'check whether the card',
+    'network already does it.',
+  ]}
+  dim={[2, 3]}
+/>
+
+<Features
+  msg="Looked after the money, then the UI."
+  heading="An offer flow that looks after the money."
+>
+  <Feature title="Offers">Buyers name their price on any listing.</Feature>
+  <Feature title="Counters">
+    Sellers accept, decline or come back with a number of their own.
+  </Feature>
+  <Feature title="Card holds">
+    Authorise and capture through Stripe Checkout, with no escrow for the client to build or run.
+  </Feature>
+  <Feature title="Expiry">
+    Every offer shows when it runs out, and the hold drops when it does.
+  </Feature>
+  <Feature title="Seller view">Incoming offers in one place, ready to answer.</Feature>
+  <Feature title="Mobile and web">The same marketplace on iOS, Android and the web.</Feature>
+</Features>
+
+<BuiltWith msg="Built with." heading="Built with">
+  React Native · Next.js · Stripe Checkout
+</BuiltWith>
+
+<Next slug="wisp" msg="Back to the first one?" />
