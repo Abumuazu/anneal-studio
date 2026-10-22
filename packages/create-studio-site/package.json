@@ -1,0 +1,19 @@
+{
+  "name": "create-studio-site",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Generates a new studio site in apps/<name> from the kit's template.",
+  "bin": {
+    "create-studio-site": "./bin/create-studio-site.mjs"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@studio/config": "workspace:*",
+    "eslint": "9.39.5",
+    "vitest": "3.2.7"
+  }
+}

@@ -1,0 +1,56 @@
+{/* Template placeholder case. Copy goes in the file; the kit sections lay it out. */}
+
+import {
+  CaseBrief,
+  CaseFeatures,
+  CaseHeader,
+  CasePrinciple,
+  CaseQuestions,
+  CaseStage,
+} from '@studio/kit/sections';
+
+<CaseHeader
+  msg="One case, start to finish."
+  crumb={{ href: '/#work', label: 'Work', rest: '01 · Product' }}
+  lines={['A product', 'that does', 'one thing well.']}
+  meta={[
+    { label: 'Client', value: 'Confidential' },
+    { label: 'Sector', value: 'Your sector' },
+    { label: 'Platform', value: 'Web' },
+    { label: 'What we did', value: 'Design and build' },
+    { label: 'Year', value: '2026' },
+  ]}
+/>
+
+<CaseStage background="var(--color-accent)" height={720}>
+  <div className="flex h-full items-center justify-center">
+    <div className="h-[420px] w-[680px] rounded-[28px] bg-panel shadow-2xl" />
+  </div>
+</CaseStage>
+
+<CaseBrief
+  msg="The brief."
+  text="Template placeholder. Write the brief here: who the client is, what they needed and what stood in the way. Each word lights up as the reader scrolls."
+/>
+
+<CaseQuestions
+  msg="Three questions first."
+  heading="Three questions we answered before drawing a screen."
+  items={[
+    { title: 'First question?', body: 'The answer, in two short sentences.' },
+    { title: 'Second question?', body: 'The answer, in two short sentences.' },
+    { title: 'Third question?', body: 'The answer, in two short sentences.' },
+  ]}
+/>
+
+<CasePrinciple msg="Worth saying twice." text="One sentence the reader should remember." />
+
+<CaseFeatures
+  msg="What we built."
+  heading="What we built."
+  items={[
+    { title: 'Feature one', body: 'What it does for the people who use it.' },
+    { title: 'Feature two', body: 'What it does for the people who use it.' },
+    { title: 'Feature three', body: 'What it does for the people who use it.' },
+  ]}
+/>
