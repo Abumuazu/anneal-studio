@@ -106,12 +106,15 @@ function Rows({ items, row, num }: { items: string[]; row: string; num: string }
       {items.map((t, i) => (
         <li
           key={t}
-          className={`row-nudge flex items-center gap-5 rounded-[20px] px-6 py-[22px] ${i % 2 === 0 ? row : ''}`}
+          className={`row-nudge flex items-center gap-4 rounded-2xl px-4 py-4 desk:gap-5 desk:rounded-[20px] desk:px-6 desk:py-[22px] ${i % 2 === 0 ? row : ''}`}
         >
-          <span className={`type-label w-[30px] flex-none text-[11px] ${num}`} aria-hidden="true">
+          <span
+            className={`type-label w-6 flex-none text-[11px] desk:w-[30px] ${num}`}
+            aria-hidden="true"
+          >
             {String(i + 1).padStart(2, '0')}
           </span>
-          <span className="text-[20px] font-medium">{t}</span>
+          <span className="text-[17px] font-medium desk:text-[20px]">{t}</span>
         </li>
       ))}
     </ol>
@@ -135,6 +138,7 @@ function Big({
       phase={phase}
       background={background}
       color={color}
+      className="max-desk:!text-[72px]"
       style={{ fontSize: 154, margin: 0 }}
     />
   );
@@ -148,11 +152,11 @@ function ServiceSection({ def }: { def: (typeof SERVICES)[number] }) {
     <ClipIn
       id={def.id}
       data-msg={s(`${def.key}.name`)}
-      className={`relative py-[150px] ${t.surface}`}
+      className={`relative py-24 desk:py-[150px] ${t.surface}`}
     >
       <InView className="wrap grid items-start gap-6 desk:grid-cols-12">
         <div className="desk:sticky desk:top-[120px] desk:col-span-5">
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-3.5 desk:gap-5">
             <Big
               glyph={def.glyph}
               phase={def.phase}
@@ -160,17 +164,20 @@ function ServiceSection({ def }: { def: (typeof SERVICES)[number] }) {
               color={dark ? 'var(--color-on-accent)' : 'var(--color-panel)'}
             />
             <span
-              className="type-display text-[120px]"
+              className="type-display text-[72px] desk:text-[120px]"
               style={{ color: t.index }}
               aria-hidden="true"
             >
               0{n}
             </span>
           </div>
-          <h2 className="type-display mt-9 mb-0 text-[clamp(56px,6.4vw,96px)]">
+          <h2 className="type-display mt-6 mb-0 text-[clamp(56px,6.4vw,96px)] desk:mt-9">
             <LineMask>{s(`${def.key}.name`)}</LineMask>
           </h2>
-          <Reveal as="p" className="type-h3 mt-[22px] mb-0 max-w-[460px] text-[28px]">
+          <Reveal
+            as="p"
+            className="type-h3 mt-4 mb-0 max-w-[460px] text-[24px] desk:mt-[22px] desk:text-[28px]"
+          >
             {s(`${def.key}.promise`)}
           </Reveal>
           <Reveal step={1} className="mt-8">
@@ -211,7 +218,7 @@ function ServiceSection({ def }: { def: (typeof SERVICES)[number] }) {
           <Label className={t.label}>{sc.labels.notIncluded}</Label>
           <ul className="m-0 list-none p-0">
             {[1, 2, 3].map((i) => (
-              <li key={i} className={`px-6 py-1.5 text-[17px] ${t.not}`}>
+              <li key={i} className={`px-4 py-1.5 text-[16px] desk:px-6 desk:text-[17px] ${t.not}`}>
                 <span aria-hidden="true">× </span>
                 {s(`${def.key}.not.${i}`)}
               </li>
@@ -230,28 +237,35 @@ function GrowthSection() {
   const [l1, l2] = lines(name, [2]);
   const row = 'bg-[rgb(255_255_255/0.14)]';
   return (
-    <ClipIn id="s5" data-msg={name} className="relative bg-accent py-[150px] text-on-accent">
+    <ClipIn
+      id="s5"
+      data-msg={name}
+      className="relative bg-accent py-24 desk:py-[150px] text-on-accent"
+    >
       <InView className="wrap grid items-start gap-6 desk:grid-cols-12">
         <div className="desk:sticky desk:top-[120px] desk:col-span-5">
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-3.5 desk:gap-5">
             <Big
               glyph="g-stack"
               phase={1.5}
               background="var(--color-ink)"
               color="var(--color-panel)"
             />
-            <span className="type-display text-[120px]" aria-hidden="true">
+            <span className="type-display text-[72px] desk:text-[120px]" aria-hidden="true">
               05
             </span>
           </div>
-          <h2 className="type-display mt-9 mb-0 text-[clamp(52px,5.6vw,84px)] leading-[0.9]">
+          <h2 className="type-display mt-6 mb-0 text-[clamp(52px,5.6vw,84px)] leading-[0.9] desk:mt-9">
             <span aria-hidden="true">
               <LineMask line={0}>{l1}</LineMask>
               <LineMask line={1}>{l2}</LineMask>
             </span>
             <span className="sr-only">{name}</span>
           </h2>
-          <Reveal as="p" className="type-h3 mt-[22px] mb-0 max-w-[460px] text-[28px]">
+          <Reveal
+            as="p"
+            className="type-h3 mt-4 mb-0 max-w-[460px] text-[24px] desk:mt-[22px] desk:text-[28px]"
+          >
             {s('growth.promise')}
           </Reveal>
           <Reveal step={1} className="mt-8 flex flex-wrap gap-7">
@@ -367,7 +381,7 @@ export default function ServicesPage() {
       ))}
       <GrowthSection />
 
-      <InView as="section" data-msg={sc.msg.addons} className="relative pt-40 pb-20">
+      <InView as="section" data-msg={sc.msg.addons} className="relative pt-24 desk:pt-40 pb-20">
         <div className="wrap">
           <Reveal as="h2" className="type-h2 m-0 text-[clamp(44px,5.4vw,80px)]">
             {s('addons.h2')}
@@ -390,7 +404,7 @@ export default function ServicesPage() {
         </div>
       </InView>
 
-      <InView as="section" data-msg={sc.msg.custom} className="relative pt-20 pb-40">
+      <InView as="section" data-msg={sc.msg.custom} className="relative pt-20 pb-24 desk:pb-40">
         <div className="wrap">
           <Reveal as="h2" className="type-h2 m-0 text-[clamp(44px,5.4vw,80px)]">
             {s('custom.h2')}
@@ -429,7 +443,7 @@ export default function ServicesPage() {
         </div>
       </InView>
 
-      <InView as="section" data-msg={sc.msg.money} className="relative bg-panel py-40">
+      <InView as="section" data-msg={sc.msg.money} className="relative bg-panel py-24 desk:py-40">
         <div className="wrap grid items-start gap-6 desk:grid-cols-12">
           <div className="desk:sticky desk:top-[120px] desk:col-span-4">
             <Reveal as="h2" className="type-h2 m-0 text-[clamp(44px,5vw,72px)]">
@@ -455,7 +469,7 @@ export default function ServicesPage() {
         </div>
       </InView>
 
-      <ClipIn data-msg={sc.msg.every} className="relative bg-ink py-40 text-panel">
+      <ClipIn data-msg={sc.msg.every} className="relative bg-ink py-24 desk:py-40 text-panel">
         <InView className="wrap">
           <Reveal as="h2" className="type-h2 m-0 max-w-[900px] text-[clamp(44px,5.4vw,80px)]">
             {s('every.h2')}
@@ -486,7 +500,7 @@ export default function ServicesPage() {
         </InView>
       </ClipIn>
 
-      <InView as="section" data-msg={sc.msg.process} className="relative bg-panel py-40">
+      <InView as="section" data-msg={sc.msg.process} className="relative bg-panel py-24 desk:py-40">
         <div className="wrap">
           <Reveal as="h2" className="type-h2 mt-0 mb-14 text-[clamp(44px,5.4vw,80px)]">
             {s('proc.h2')}
@@ -517,7 +531,7 @@ export default function ServicesPage() {
         </div>
       </InView>
 
-      <InView as="section" id="faq" data-msg={sc.msg.faq} className="relative py-40">
+      <InView as="section" id="faq" data-msg={sc.msg.faq} className="relative py-24 desk:py-40">
         <div className="wrap grid items-start gap-6 desk:grid-cols-12">
           <div className="desk:sticky desk:top-[120px] desk:col-span-4">
             <Reveal as="h2" className="type-h2 m-0 text-[clamp(44px,5vw,72px)]">
@@ -553,7 +567,10 @@ export default function ServicesPage() {
         </div>
       </InView>
 
-      <ClipIn data-msg={sc.msg.close} className="relative bg-ink pt-[170px] pb-[150px] text-panel">
+      <ClipIn
+        data-msg={sc.msg.close}
+        className="relative bg-ink pt-24 desk:pt-[170px] pb-24 desk:pb-[150px] text-panel"
+      >
         <InView className="wrap">
           <h2 className="type-display-wide m-0 text-[clamp(48px,6.6vw,104px)]">
             <span aria-hidden="true">

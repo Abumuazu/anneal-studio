@@ -19,7 +19,7 @@ export default function NotFound() {
       closingMsg={chromeCopy.closingMsgBuild}
       footerMsg={chromeCopy.footerMsg}
     >
-      <section className="reveal-on-load relative pt-[200px] pb-[140px]">
+      <section className="reveal-on-load relative pt-[136px] desk:pt-[200px] pb-24 desk:pb-[140px]">
         <div className="wrap grid items-end gap-10 desk:grid-cols-12">
           <h1 className="type-display m-0 text-[clamp(120px,24vw,360px)] desk:col-span-7">404</h1>
           <nav aria-label={boardCopy.primaryNav} className="desk:col-span-4 desk:col-start-9">

@@ -16,7 +16,7 @@ import { CURRENCY_COOKIE, currencyOptions } from '@/content/currency';
 import { primaryNav, site } from '@/content/site.config';
 
 import { Mark } from './Mark';
-import { footerTiles } from './tiles';
+import { footerRestTiles, footerTiles } from './tiles';
 
 const [lagos, barcelona] = site.cities;
 
@@ -35,12 +35,30 @@ function Header() {
       brand={
         <>
           <Mark size={24} />
-          <span className="type-display-wide text-[19px]">{boardCopy.brand}</span>
+          <span className="type-display-wide text-[17px] desk:text-[19px]">{boardCopy.brand}</span>
         </>
       }
       links={primaryNav}
       navLabel={boardCopy.primaryNav}
       meta={<Clocks />}
+      menu={{
+        ...boardCopy.menu,
+        openLabel: boardCopy.menu.open,
+        closeLabel: boardCopy.menu.close,
+        cta: (
+          <ButtonLink
+            href={site.startHref}
+            handoff
+            className="w-full justify-center"
+            bg="var(--color-accent)"
+            fg="var(--color-on-accent)"
+            fill="var(--color-panel)"
+            fillFg="var(--color-ink)"
+          >
+            {boardCopy.workWithUs}
+          </ButtonLink>
+        ),
+      }}
       cta={
         <PillLink href={site.startHref} handoff>
           {boardCopy.workWithUs}
@@ -64,10 +82,28 @@ function HomeClosing({ msg }: { msg: string }) {
       rows={closingRows}
       msg={msg}
       follower={
+        // Touch screens have no pointer to follow; they get the button below instead.
+        <span className="max-desk:hidden">
+          <ButtonLink
+            href={site.startHref}
+            handoff
+            size="xxl"
+            bg="var(--color-accent)"
+            fg="var(--color-on-accent)"
+            fill="var(--color-panel)"
+            fillFg="var(--color-ink)"
+          >
+            {boardCopy.workWithUs}
+          </ButtonLink>
+        </span>
+      }
+    >
+      <div className="wrap type-label mt-12 flex flex-col gap-2.5 text-grey-400 desk:mt-[90px] desk:flex-row desk:flex-wrap desk:justify-between desk:gap-6">
         <ButtonLink
           href={site.startHref}
           handoff
-          size="xxl"
+          size="xl"
+          className="w-full justify-center tracking-normal normal-case max-desk:order-1 desk:hidden"
           bg="var(--color-accent)"
           fg="var(--color-on-accent)"
           fill="var(--color-panel)"
@@ -75,13 +111,14 @@ function HomeClosing({ msg }: { msg: string }) {
         >
           {boardCopy.workWithUs}
         </ButtonLink>
-      }
-    >
-      <div className="wrap type-label mt-[90px] flex flex-wrap justify-between gap-6 text-grey-400">
-        <span>
+        <span className="max-desk:order-3 max-desk:mt-2.5 max-desk:text-center desk:order-1">
           <Clocks />
         </span>
-        <ArrowLink href={site.startHref} handoff className="type-label text-panel">
+        <ArrowLink
+          href={site.startHref}
+          handoff
+          className="type-label text-panel max-desk:order-2 max-desk:justify-center desk:order-2"
+        >
           {copy['closing.cta2']}
         </ArrowLink>
       </div>
@@ -93,11 +130,12 @@ function HomeClosing({ msg }: { msg: string }) {
 function PageClosing({ msg }: { msg: string }) {
   return (
     <Closing id="contact" rows={closingRows} msg={msg} size="compact">
-      <div className="wrap mt-14 flex flex-wrap items-center gap-7">
+      <div className="wrap mt-12 flex flex-col items-stretch gap-2.5 desk:mt-14 desk:flex-row desk:flex-wrap desk:items-center desk:gap-7">
         <ButtonLink
           href={site.startHref}
           handoff
           size="xl"
+          className="max-desk:w-full max-desk:justify-center"
           bg="var(--color-accent)"
           fg="var(--color-on-accent)"
           fill="var(--color-panel)"
@@ -105,7 +143,7 @@ function PageClosing({ msg }: { msg: string }) {
         >
           {boardCopy.workWithUs}
         </ButtonLink>
-        <ArrowLink href={site.startHref} handoff className="text-grey-300">
+        <ArrowLink href={site.startHref} handoff className="text-grey-300 max-desk:justify-center">
           {copy['closing.cta2']}
         </ArrowLink>
       </div>
@@ -120,16 +158,16 @@ function Footer({ msg }: { msg: string }) {
       navLabel={boardCopy.footerNav}
       links={primaryNav}
       middle={
-        <div className="grid grid-cols-2 gap-3.5">
+        <div className="grid grid-cols-2 gap-2.5 desk:gap-3.5">
           {site.cities.map((city) => (
             <div
               key={city.name}
-              className="glass rounded-[22px] p-[22px] [--glass-bg:rgb(255_255_255/0.06)]"
+              className="glass rounded-[20px] p-[18px] [--glass-bg:rgb(255_255_255/0.06)] desk:rounded-[22px] desk:p-[22px]"
             >
-              <div className="type-display text-[76px]">
+              <div className="type-display text-[56px] desk:text-[76px]">
                 <LiveClock timeZone={city.timeZone} />
               </div>
-              <div className="type-label mt-3.5 text-grey-400">
+              <div className="type-label mt-2.5 text-grey-400 desk:mt-3.5">
                 {city.name} ·{' '}
                 {city.zone === 'WAT' ? (
                   city.zone
@@ -160,7 +198,7 @@ function Footer({ msg }: { msg: string }) {
             href={site.startHref}
             handoff
             size="md"
-            className="mt-3.5"
+            className="mt-3.5 max-desk:h-14 max-desk:w-full max-desk:justify-center"
             bg="var(--color-panel)"
             fg="var(--color-ink)"
           >
@@ -168,7 +206,7 @@ function Footer({ msg }: { msg: string }) {
           </ButtonLink>
         </div>
       }
-      playground={{ tiles: footerTiles, hint: copy['footer.hint'] }}
+      playground={{ tiles: footerTiles, hint: copy['footer.hint'], restTiles: footerRestTiles }}
       wordmark={{ text: 'ANNEAL', label: boardCopy.brand, widthRatio: 5.2 }}
       legal={
         <>

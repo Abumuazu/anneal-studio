@@ -17,7 +17,7 @@ interface WaitlistSectionProps {
 /** Dark waitlist section (Products, Studio). The form only confirms once the address is stored. */
 export function WaitlistSection({ source, msg, lines, lead, note }: WaitlistSectionProps) {
   return (
-    <ClipIn data-msg={msg} className="relative bg-ink py-40 text-panel">
+    <ClipIn data-msg={msg} className="relative bg-ink py-24 desk:py-40 text-panel">
       <InView className="wrap grid items-end gap-10 desk:grid-cols-12 desk:gap-6">
         <div className="desk:col-span-7">
           <h2 className="type-display-wide m-0 text-[clamp(44px,5.6vw,88px)]">

@@ -13,7 +13,12 @@ test.describe('smoke', () => {
       page.getByRole('banner').getByRole('link', { name: 'Anneal', exact: true }),
     ).toBeVisible();
     await expect(page.getByRole('contentinfo')).toBeAttached();
-    await expect(page.getByRole('button', { name: 'Go on, throw these around.' })).toBeAttached();
+    // Wide screens have the throwable playground; phones have still tiles instead.
+    const wide = (page.viewportSize()?.width ?? 0) > 900;
+    await expect(page.getByRole('button', { name: 'Go on, throw these around.' })).toHaveCount(
+      wide ? 1 : 0,
+    );
+    await expect(page.locator(wide ? '.phys' : '[data-rest-tiles]')).toBeAttached();
     await expect(page.getByRole('img', { name: 'Anneal' })).toBeAttached();
     await fontsReady(page);
     expect(errors).toEqual([]);
@@ -193,9 +198,14 @@ test.describe('work with us', () => {
         ) {
           w.__coveredFrames = (w.__coveredFrames ?? 0) + 1;
         }
-        requestAnimationFrame(sample);
       };
-      requestAnimationFrame(sample);
+      // Animation frames, and a timer too: a busy runner can starve either one.
+      const frame = () => {
+        sample();
+        requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
+      setInterval(sample, 16);
     });
     await page.evaluate(() => sessionStorage.setItem('anneal-wwu', String(Date.now())));
     await page.reload();

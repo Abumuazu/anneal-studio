@@ -218,7 +218,28 @@
   .htrack-row {
     display: flex;
     width: max-content;
+    padding: 4px 20px 8px;
     will-change: transform;
+  }
+  /* Phones: the row is a native scroller that snaps to each card (HomeMobileV6). */
+  @media (max-width: 900px) {
+    .htrack-vp {
+      margin-top: 32px;
+      scroll-snap-type: x mandatory;
+      scroll-padding-left: 20px;
+      scrollbar-width: none;
+    }
+    .htrack-vp::-webkit-scrollbar {
+      display: none;
+    }
+    .htrack-row > * {
+      scroll-snap-align: start;
+    }
+  }
+  @media (min-width: 901px) {
+    .htrack-row {
+      padding: 10px var(--htrack-px, 40px);
+    }
   }
 
   /* Cursor-following element inside a region */

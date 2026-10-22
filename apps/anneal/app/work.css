@@ -165,6 +165,16 @@
   .wflow-pad > * {
     transform: scale(0.8);
   }
+  /* Very narrow phones: a smaller phone in a shorter pad. */
+  @media (max-width: 360px) {
+    .wflow-pad {
+      height: 560px;
+      overflow: hidden;
+    }
+    .wflow-pad > * {
+      transform: scale(0.66);
+    }
+  }
   @media (min-width: 901px) {
     .wflow-pad {
       height: 820px;

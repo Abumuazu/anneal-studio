@@ -22,7 +22,7 @@ export default function WorkPage() {
     <SiteChrome variant="page" closingMsg={workCopy.msg.close} footerMsg={chromeCopy.footerMsg}>
       <section
         data-msg={workCopy.msg.hero}
-        className="reveal-on-load relative pt-[200px] pb-[120px]"
+        className="reveal-on-load relative pt-[136px] desk:pt-[200px] pb-16 desk:pb-[120px]"
       >
         <div className="wrap grid items-end gap-6 desk:grid-cols-12">
           <h1 className="type-display m-0 text-[clamp(80px,15vw,230px)] desk:col-span-8">
@@ -53,7 +53,7 @@ export default function WorkPage() {
 
       <WorkIndex />
 
-      <InView as="section" data-msg={workCopy.msg.end} className="relative py-[140px]">
+      <InView as="section" data-msg={workCopy.msg.end} className="relative py-24 desk:py-[140px]">
         <div className="wrap">
           <Reveal className="relative overflow-hidden rounded-[32px] bg-panel px-6 py-12 desk:px-16 desk:py-[72px]">
             <div className="type-label text-grey-600">06 · {boardCopy.workWithUs}</div>

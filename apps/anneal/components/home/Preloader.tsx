@@ -9,10 +9,11 @@ const SEEN_KEY = 'anneal-pre';
 
 /**
  * Runs before first paint on a hard load of Home: shows the preloader once
- * per session, with full motion, and never over a "Work with us" arrival.
+ * per session, with full motion on wide screens (phones have none, as on
+ * HomeMobileV6), and never over a "Work with us" arrival.
  * Client-side navigation never runs it (React does not execute this script).
  */
-const START = `(function(){try{var d=document.documentElement;if(d.getAttribute('data-motion')!=='full'||d.hasAttribute('data-handoff')||sessionStorage.getItem('${SEEN_KEY}'))return;d.setAttribute('data-preload','count')}catch(e){}})();`;
+const START = `(function(){try{var d=document.documentElement;if(d.getAttribute('data-motion')!=='full'||matchMedia('(max-width:900px)').matches||d.hasAttribute('data-handoff')||sessionStorage.getItem('${SEEN_KEY}'))return;d.setAttribute('data-preload','count')}catch(e){}})();`;
 
 /**
  * The four-cell logo counts to 100, splits, then each cell flies into a hero

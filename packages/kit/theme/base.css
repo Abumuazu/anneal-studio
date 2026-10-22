@@ -19,6 +19,16 @@
     text-decoration: none;
   }
 
+  /*
+   * A grid with no columns of its own is one column. As an auto track it grows
+   * to its widest unbreakable content (a long word, a phone mockup) and pushes
+   * the page wider than a small screen; minmax(0, 1fr) lets it shrink instead.
+   * Any grid-cols utility still wins.
+   */
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   :where(a, button, [role='button'], [tabindex]):focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 3px;

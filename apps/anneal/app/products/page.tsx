@@ -38,7 +38,7 @@ export default function ProductsPage() {
         </Reveal>
       </PageHero>
 
-      <InView as="section" data-msg={pc.msg.built} className="relative bg-panel py-40">
+      <InView as="section" data-msg={pc.msg.built} className="relative bg-panel py-24 desk:py-40">
         <div className="wrap">
           <Reveal as="h2" step={1} className="type-h2 mt-0 mb-14 text-[clamp(44px,5.4vw,80px)]">
             {copy['products.ven.h2']}
@@ -58,7 +58,7 @@ export default function ProductsPage() {
         </div>
       </InView>
 
-      <InView as="section" data-msg={pc.msg.fit} className="relative py-40">
+      <InView as="section" data-msg={pc.msg.fit} className="relative py-24 desk:py-40">
         <div className="wrap">
           <Reveal as="h2" step={1} className="type-h2 mt-0 mb-16 text-[clamp(44px,5.4vw,80px)]">
             {copy['products.fit.h2']}
@@ -82,7 +82,7 @@ export default function ProductsPage() {
         </div>
       </InView>
 
-      <InView as="section" data-msg={pc.msg.next} className="relative bg-panel py-40">
+      <InView as="section" data-msg={pc.msg.next} className="relative bg-panel py-24 desk:py-40">
         <div className="wrap grid items-start gap-6 desk:grid-cols-12">
           <h2 className="type-h2 m-0 text-[clamp(44px,5.4vw,80px)] desk:col-span-5">
             <span aria-hidden="true">
@@ -131,7 +131,7 @@ export default function ProductsPage() {
         }
       />
 
-      <InView as="section" data-msg={pc.msg.close} className="relative py-40">
+      <InView as="section" data-msg={pc.msg.close} className="relative py-24 desk:py-40">
         <div className="wrap grid items-end gap-6 desk:grid-cols-12">
           <Reveal
             as="h2"

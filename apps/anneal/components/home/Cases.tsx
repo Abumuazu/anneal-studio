@@ -18,6 +18,8 @@ import { JewelleryProduct } from '@/components/mockups/JewelleryProduct';
 import { JewellerySprite } from '@/components/mockups/JewellerySprite';
 import { WispLockScreen } from '@/components/mockups/WispLockScreen';
 import { WispOnboarding } from '@/components/mockups/WispOnboarding';
+
+import { ExchangeMini, JewelleryMini, WispMini } from './CaseMinis';
 import { boardCopy, copy } from '@/content/copy';
 
 interface CaseDef {
@@ -37,35 +39,14 @@ interface CaseDef {
   linkFg: string;
   /** Visual column span on desktop. */
   visual: string;
+  /** Phones: the compact widget inside the card, and the headline size. */
+  mini: ReactNode;
+  titleSize: string;
   phones: ReactNode;
 }
 
+/** Card order on Home: the exchange leads, then Wisp, then the marketplace. */
 const CASES: CaseDef[] = [
-  {
-    n: 1,
-    href: '/work/wisp',
-    bg: '#00ff5a',
-    fg: '#0c1a12',
-    kicker: 'rgb(12 26 18 / 0.62)',
-    index: 'rgb(12 26 18 / 0.5)',
-    lead: 'rgb(12 26 18 / 0.78)',
-    tagBg: 'rgb(12 26 18 / 0.1)',
-    factBg: 'rgb(12 26 18 / 0.12)',
-    factFg: '#0c1a12',
-    linkBg: '#0c1a12',
-    linkFg: '#00ff5a',
-    visual: 'desk:col-start-7 desk:col-span-6',
-    phones: (
-      <>
-        <Parallax mode="enter" distance={120} rotate={-4} className="absolute top-5 left-[4%]">
-          <WispOnboarding />
-        </Parallax>
-        <Parallax mode="enter" distance={260} rotate={5} className="absolute top-[130px] left-1/2">
-          <WispLockScreen />
-        </Parallax>
-      </>
-    ),
-  },
   {
     n: 2,
     href: '/work/naira-crypto-exchange',
@@ -81,6 +62,8 @@ const CASES: CaseDef[] = [
     linkBg: 'var(--color-panel)',
     linkFg: 'var(--color-ink)',
     visual: 'desk:col-start-7 desk:col-span-6',
+    mini: <ExchangeMini />,
+    titleSize: 'max-desk:text-[56px]',
     phones: (
       <>
         <Parallax mode="enter" distance={120} rotate={-4} className="absolute top-2.5 left-[2%]">
@@ -88,6 +71,33 @@ const CASES: CaseDef[] = [
         </Parallax>
         <Parallax mode="enter" distance={260} rotate={5} className="absolute top-[120px] left-1/2">
           <ExchangeSwap />
+        </Parallax>
+      </>
+    ),
+  },
+  {
+    n: 1,
+    href: '/work/wisp',
+    bg: '#00ff5a',
+    fg: '#0c1a12',
+    kicker: 'rgb(12 26 18 / 0.62)',
+    index: 'rgb(12 26 18 / 0.5)',
+    lead: 'rgb(12 26 18 / 0.78)',
+    tagBg: 'rgb(12 26 18 / 0.1)',
+    factBg: 'rgb(12 26 18 / 0.12)',
+    factFg: '#0c1a12',
+    linkBg: '#0c1a12',
+    linkFg: '#00ff5a',
+    visual: 'desk:col-start-7 desk:col-span-6',
+    mini: <WispMini />,
+    titleSize: 'max-desk:text-[72px]',
+    phones: (
+      <>
+        <Parallax mode="enter" distance={120} rotate={-4} className="absolute top-5 left-[4%]">
+          <WispOnboarding />
+        </Parallax>
+        <Parallax mode="enter" distance={260} rotate={5} className="absolute top-[130px] left-1/2">
+          <WispLockScreen />
         </Parallax>
       </>
     ),
@@ -106,6 +116,8 @@ const CASES: CaseDef[] = [
     linkBg: 'var(--color-ink)',
     linkFg: 'var(--color-panel)',
     visual: 'desk:col-start-6 desk:col-span-7',
+    mini: <JewelleryMini />,
+    titleSize: 'max-desk:text-[56px]',
     phones: (
       <>
         <Parallax mode="enter" distance={90} rotate={-4} className="absolute top-10 left-0">
@@ -125,11 +137,11 @@ export function Cases() {
     <section
       id="work"
       data-msg={copy['home.msg.3']}
-      className="relative z-[3] bg-ground pt-40 pb-10"
+      className="relative z-[3] bg-ground pt-24 pb-10 desk:pt-40"
     >
       <JewellerySprite />
       <InView at={0.82} className="wrap grid items-end gap-6 desk:grid-cols-12">
-        <h2 className="type-display m-0 text-[clamp(56px,9.4vw,144px)] desk:col-span-9">
+        <h2 className="type-display m-0 text-[68px] desk:col-span-9 desk:text-[clamp(56px,9.4vw,144px)]">
           {/* The deck line, split across three masked lines. Read once, from the sr-only copy. */}
           <span aria-hidden="true">
             <LineMask line={0}>Products where</LineMask>
@@ -146,9 +158,9 @@ export function Cases() {
           </span>
           <span className="sr-only">{copy['home.work.h2']}</span>
         </h2>
-        <Reveal step={2} className="pb-3.5 desk:col-span-3">
+        <Reveal step={2} className="desk:col-span-3 desk:pb-3.5">
           <p className="type-body m-0 text-grey-700">{copy['home.work.intro']}</p>
-          <ArrowLink href="/work" className="mt-5">
+          <ArrowLink href="/work" className="mt-1 desk:mt-5">
             {boardCopy.allWork}
           </ArrowLink>
         </Reveal>
@@ -158,15 +170,15 @@ export function Cases() {
         top={24}
         scaleTo={0.93}
         shadeTo={0.55}
-        className="mx-auto mt-24 max-w-[1520px] gap-6 px-6"
+        className="mx-auto mt-7 max-w-[1520px] gap-2.5 px-2 desk:mt-24 desk:gap-6 desk:px-6"
       >
-        {CASES.map((c) => {
+        {CASES.map((c, position) => {
           const facts = boardCopy.cases[c.n - 1];
           return (
             <StackCard
               key={c.n}
               className="case-card"
-              innerClassName="overflow-hidden rounded-[32px]"
+              innerClassName="overflow-hidden rounded-3xl desk:rounded-[32px]"
             >
               <Link
                 href={c.href}
@@ -174,36 +186,42 @@ export function Cases() {
                 className="case-link"
                 style={{ background: c.bg, color: c.fg }}
               >
-                <div className="grid h-full grid-cols-1 gap-y-6 px-[22px] py-7 desk:grid-cols-12 desk:gap-x-6 desk:px-12 desk:py-11">
+                <div className="grid h-full grid-cols-1 gap-y-6 p-6 desk:grid-cols-12 desk:gap-x-6 desk:px-12 desk:py-11">
                   <div className="flex min-h-0 flex-col desk:col-span-5">
                     <div className="flex items-baseline justify-between">
                       <span className="type-label" style={{ color: c.kicker }}>
-                        0{c.n} · {copy[`home.work.case${c.n}.kicker`]}
+                        0{position + 1} · {copy[`home.work.case${c.n}.kicker`]}
                       </span>
                       <span
-                        className="type-display text-[44px]"
+                        className="type-display text-[30px] desk:text-[44px]"
                         style={{ color: c.index }}
                         aria-hidden="true"
                       >
-                        0{c.n}/03
+                        0{position + 1}/03
                       </span>
                     </div>
-                    <h3 className="type-display mt-7 mb-0 text-[clamp(64px,6.6vw,104px)]">
+                    <h3
+                      className={`type-display mt-[22px] mb-0 text-[clamp(64px,6.6vw,104px)] desk:mt-7 ${c.titleSize}`}
+                    >
                       {copy[`home.work.case${c.n}.title`]}
                     </h3>
-                    <p className="type-lead mt-[22px] mb-0 max-w-[460px]" style={{ color: c.lead }}>
+                    <p
+                      className="type-lead mt-3 mb-0 max-w-[460px] max-desk:text-base desk:mt-[22px]"
+                      style={{ color: c.lead }}
+                    >
                       {copy[`home.work.case${c.n}.line`]}
                     </p>
-                    <div className="mt-[22px] flex flex-wrap gap-2">
+                    {c.mini}
+                    <div className="mt-[18px] flex flex-wrap gap-2 desk:mt-[22px]">
                       {facts?.tags.map((t) => (
                         <Tag key={t} bg={c.tagBg} color={c.tagFg}>
                           {t}
                         </Tag>
                       ))}
                     </div>
-                    <div className="mt-8 desk:mt-auto">
+                    <div className="mt-[22px] desk:mt-auto">
                       {facts?.facts.map((f, i) => (
-                        <div key={f} className="flex items-center gap-3.5 py-3.5">
+                        <div key={f} className="flex items-center gap-3.5 py-3.5 max-desk:hidden">
                           <span
                             className="inline-flex h-[34px] w-[34px] flex-none items-center justify-center rounded-[10px] font-mono text-[11px]"
                             style={{ background: c.factBg, color: c.factFg }}
@@ -215,7 +233,7 @@ export function Cases() {
                         </div>
                       ))}
                       <span
-                        className="vlink mt-[18px]"
+                        className="vlink desk:mt-[18px]"
                         style={{ background: c.linkBg, color: c.linkFg }}
                       >
                         {boardCopy.viewCase}{' '}
@@ -227,7 +245,7 @@ export function Cases() {
                   </div>
                   <div
                     aria-hidden="true"
-                    className={`relative h-[520px] overflow-hidden desk:h-auto desk:overflow-visible ${c.visual}`}
+                    className={`relative hidden desk:block desk:h-auto desk:overflow-visible ${c.visual}`}
                   >
                     {c.phones}
                   </div>

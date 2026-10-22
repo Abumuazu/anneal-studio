@@ -1,8 +1,9 @@
 export { SiteHeader } from './SiteHeader';
+export { MobileMenu, type MobileMenuProps } from './MobileMenu';
 export { NavLinks, type NavItem } from './NavLinks';
 export { FloatingNav } from './FloatingNav';
 export { Closing, type ClosingRow } from './Closing';
-export { GlassFooter } from './GlassFooter';
+export { GlassFooter, type RestTile } from './GlassFooter';
 export { ScrollSpyNav, type SpyItem } from './ScrollSpyNav';
 export {
   CaseBrief,

@@ -19,7 +19,10 @@ export default function StartPage() {
   const [first, second] = lines(copy['start.h1'], [3]);
   return (
     <SiteChrome variant="page" closingMsg={st.msg.close} footerMsg={chromeCopy.footerMsg}>
-      <section data-msg={st.msg.hero} className="reveal-on-load relative pt-[200px] pb-20">
+      <section
+        data-msg={st.msg.hero}
+        className="reveal-on-load relative pt-[136px] desk:pt-[200px] pb-20"
+      >
         <div className="wrap grid items-end gap-6 desk:grid-cols-12">
           <h1 className="type-display m-0 text-[clamp(64px,10vw,156px)] desk:col-span-8">
             <span aria-hidden="true">
@@ -40,7 +43,7 @@ export default function StartPage() {
         </div>
       </section>
 
-      <InView as="section" className="relative pb-[120px]">
+      <InView as="section" className="relative pb-16 desk:pb-[120px]">
         <div className="wrap grid items-stretch gap-5 desk:grid-cols-[5fr_7fr]">
           <Reveal
             data-msg={st.msg.booking}

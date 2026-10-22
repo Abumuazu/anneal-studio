@@ -28,7 +28,7 @@ export function WispFlow({
       <AutoSteps
         durations={DURATIONS}
         stepOf={STEP_OF}
-        className="wrap grid items-center gap-16 desk:grid-cols-12 desk:gap-6"
+        className="wrap grid grid-cols-[minmax(0,1fr)] items-center gap-16 desk:grid-cols-12 desk:gap-6"
       >
         <div className="desk:col-span-5">
           <Reveal as="h2" className="type-h2 mt-0 mb-10 text-[clamp(40px,4.6vw,70px)]">

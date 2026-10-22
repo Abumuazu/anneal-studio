@@ -30,7 +30,10 @@ export default function PrivacyPage() {
   const toc = pc.sections.map((s, i) => ({ id: `p${i + 1}`, label: s.title }));
   return (
     <SiteChrome variant="page" closingMsg={pc.msg.closing} footerMsg={chromeCopy.footerMsg}>
-      <section data-msg={pc.msg.hero} className="reveal-on-load relative pt-[200px] pb-20">
+      <section
+        data-msg={pc.msg.hero}
+        className="reveal-on-load relative pt-[136px] desk:pt-[200px] pb-20"
+      >
         <div className="wrap">
           <Reveal className="inline-flex h-[38px] items-center gap-2.5 rounded-full bg-ink px-4 text-panel">
             <span className="type-label">{pc.banner}</span>
@@ -53,7 +56,7 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      <section className="relative bg-panel pt-[100px] pb-[140px]">
+      <section className="relative bg-panel pt-[100px] pb-24 desk:pb-[140px]">
         <div className="wrap grid items-start gap-6 desk:grid-cols-12">
           <ScrollSpyNav
             items={toc}

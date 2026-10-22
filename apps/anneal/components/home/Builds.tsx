@@ -78,7 +78,7 @@ export function Builds() {
       at={0.82}
       className="relative z-[3] bg-ground"
     >
-      <div className="wrap pt-[120px] pb-16">
+      <div className="wrap pt-[88px] pb-8 desk:pt-[120px] desk:pb-16">
         <h2 className="type-h2 m-0 text-[clamp(44px,5.4vw,80px)]">{copy['home.build.h2']}</h2>
       </div>
       <ExpandGroup hoverOpens defaultOpen={0} className="grid desk:grid-cols-2">
@@ -89,7 +89,7 @@ export function Builds() {
             className={`${b.surface} ${b.wide ? 'desk:col-span-2' : ''}`}
           >
             <h3 className="m-0">
-              <ExpandTrigger className="build-trigger box-border flex min-h-[124px] w-full cursor-pointer items-center gap-3.5 border-0 bg-transparent px-6 py-5 text-left text-inherit desk:gap-6 desk:px-10 desk:py-7">
+              <ExpandTrigger className="build-trigger box-border flex min-h-[92px] w-full cursor-pointer items-center gap-3.5 border-0 bg-transparent px-5 py-[18px] text-left text-inherit desk:min-h-[124px] desk:gap-6 desk:px-10 desk:py-7">
                 <span
                   className="build-tile"
                   style={
@@ -101,8 +101,10 @@ export function Builds() {
                 >
                   <Glyph name={b.glyph} className="h-[56%] w-[56%]" />
                 </span>
-                <span className={`type-label min-w-[54px] ${b.numClass}`}>0{i + 1}</span>
-                <span className="type-display text-[clamp(36px,4.4vw,64px)]">
+                <span className={`type-label min-w-[22px] desk:min-w-[54px] ${b.numClass}`}>
+                  0{i + 1}
+                </span>
+                <span className="type-display text-[42px] desk:text-[clamp(36px,4.4vw,64px)]">
                   <LineMask>{copy[k(b.key, 'name')]}</LineMask>
                 </span>
                 <span className="build-go ml-auto" aria-hidden="true">
@@ -111,10 +113,10 @@ export function Builds() {
               </ExpandTrigger>
             </h3>
             <ExpandPanel
-              className={`grid grid-cols-1 gap-y-[18px] px-6 pb-9 desk:grid-cols-12 desk:gap-x-6 desk:pr-10 desk:pb-[52px] ${b.wide ? 'desk:pl-[124px]' : 'desk:pl-10'}`}
+              className={`grid grid-cols-1 gap-y-3.5 px-5 pb-8 desk:grid-cols-12 desk:gap-x-6 desk:gap-y-[18px] desk:px-0 desk:pr-10 desk:pb-[52px] ${b.wide ? 'desk:pl-[124px]' : 'desk:pl-10'}`}
             >
               <p
-                className={`type-h3 m-0 ${b.wide ? 'text-[34px] desk:col-span-5' : 'text-[30px] desk:col-span-12'}`}
+                className={`type-h3 m-0 ${b.wide ? 'text-[24px] desk:text-[34px] desk:col-span-5' : 'text-[24px] desk:text-[30px] desk:col-span-12'}`}
               >
                 {copy[k(b.key, 'promise')]}
               </p>
@@ -131,7 +133,9 @@ export function Builds() {
                     {t}
                   </Tag>
                 ))}
-                <span className={`type-label opacity-80 ${b.wide ? 'mt-2.5 w-full' : 'ml-2.5'}`}>
+                <span
+                  className={`type-label opacity-80 max-desk:mt-1 max-desk:w-full ${b.wide ? 'mt-2.5 w-full' : 'ml-2.5'}`}
+                >
                   {copy[k(b.key, 'time')]}
                 </span>
               </div>

@@ -33,15 +33,20 @@ interface ChoicesProps {
   value: string;
   onPick: (value: string) => void;
   small?: boolean;
+  /** On phones, one pill per row with the extra text at the right. */
+  stack?: boolean;
   extra?: (index: number) => ReactNode;
 }
 
 /** A single-choice group drawn as pills, on native radios. */
-function Choices({ name, options, value, onPick, small, extra }: ChoicesProps) {
+function Choices({ name, options, value, onPick, small, stack, extra }: ChoicesProps) {
   return (
-    <div className="flex flex-wrap gap-2.5">
+    <div className={`flex flex-wrap gap-2.5 ${stack ? 'max-desk:flex-col max-desk:gap-2' : ''}`}>
       {options.map((o, i) => (
-        <label key={o} className={small ? 'opt opt-sm' : 'opt'}>
+        <label
+          key={o}
+          className={`${small ? 'opt opt-sm' : 'opt'} ${stack ? 'max-desk:w-full max-desk:justify-between' : ''}`}
+        >
           <input
             type="radio"
             name={name}
@@ -193,6 +198,7 @@ export function BriefForm() {
             <span className="type-label text-grey-600">{copy['start.step1.help']}</span>
             <Choices
               name="offer"
+              stack
               options={OFFERS}
               value={offer}
               onPick={(o) => {

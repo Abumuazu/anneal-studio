@@ -73,6 +73,22 @@ export function toss(bodies: Body[], random: Random = Math.random): void {
   }
 }
 
+/** Closing speed below which two touching tiles count as resting on each other, in px per step. */
+const RESTING_SPEED = 1.2;
+
+/** Downward pull added to every tile each step, in px per step. */
+const GRAVITY = 0.55;
+/**
+ * Below this speed (and under the pull of one step of gravity, so a tile that
+ * has only just started to fall is never caught) a tile counts as settled and
+ * stops: without it, tiles resting on a floor or a pile shiver sideways for
+ * ever and slowly rotate.
+ */
+const SETTLED_SPEED = GRAVITY * 0.8;
+
+/** Collision passes per step. A pile of tiles in a narrow box needs more than two to stop pushing through itself. */
+const SOLVER_PASSES = 5;
+
 /** Advances the simulation by one 60Hz step. */
 export function step(bodies: Body[], { width: W, height: H, gravity, drag }: StepOptions): void {
   const dragged = drag?.index ?? -1;
@@ -86,12 +102,13 @@ export function step(bodies: Body[], { width: W, height: H, gravity, drag }: Ste
       b.y += b.vy;
       b.va = b.vx * 0.6;
     } else if (gravity) {
-      b.vy += 0.55;
+      b.vy += GRAVITY;
       b.x += b.vx;
       b.y += b.vy;
       b.vx *= 0.995;
-      b.va *= 0.97;
     }
+    // Spin always fades, in the air, on the floor and in a pile.
+    if (i !== dragged) b.va *= 0.97;
     b.a += b.va;
     if (b.y + b.r > H) {
       b.y = H - b.r;
@@ -109,7 +126,7 @@ export function step(bodies: Body[], { width: W, height: H, gravity, drag }: Ste
       b.vx *= -0.5;
     }
   }
-  for (let it = 0; it < 2; it++) {
+  for (let it = 0; it < SOLVER_PASSES; it++) {
     for (let i = 0; i < bodies.length; i++) {
       for (let j = i + 1; j < bodies.length; j++) {
         const p = bodies[i];
@@ -131,17 +148,47 @@ export function step(bodies: Body[], { width: W, height: H, gravity, drag }: Ste
         q.y += ny * o * wq;
         const rv = (q.vx - p.vx) * nx + (q.vy - p.vy) * ny;
         if (rv < 0) {
-          const jv = (-1.3 * rv) / 2;
+          // Resting contact (a tile leaning on another under gravity): cancel the
+          // approach without bounce or spin, so a pile settles instead of jittering.
+          // A real impact keeps the board's bounce and spin.
+          const resting = rv > -RESTING_SPEED;
+          const jv = (-(resting ? 1 : 1.3) * rv) / 2;
           p.vx -= jv * nx;
           p.vy -= jv * ny;
           q.vx += jv * nx;
           q.vy += jv * ny;
-          p.va -= jv * 0.8;
-          q.va += jv * 0.8;
+          if (!resting) {
+            p.va -= jv * 0.8;
+            q.va += jv * 0.8;
+          }
         }
       }
     }
+    // A push from a neighbour must not drive a tile through the floor or a wall.
+    for (const b of bodies) {
+      if (b.y + b.r > H) {
+        b.y = H - b.r;
+        if (b.vy > 0) b.vy = 0;
+      }
+      b.x = Math.min(Math.max(b.r, b.x), W - b.r);
+    }
   }
+  for (let i = 0; i < bodies.length; i++) {
+    const b = bodies[i];
+    if (!b || i === dragged) continue;
+    if (Math.abs(b.vx) < SETTLED_SPEED && Math.abs(b.vy) < SETTLED_SPEED) {
+      b.vx = 0;
+      b.vy = 0;
+      b.va = 0;
+    }
+  }
+}
+
+/** True when every tile is slow and not spinning, wherever it sits (on the floor or on a pile). */
+export function isQuiet(bodies: readonly Body[], limit = 0.2): boolean {
+  return bodies.every(
+    (b) => Math.abs(b.vx) < limit && Math.abs(b.vy) < limit && Math.abs(b.va) < limit,
+  );
 }
 
 /** True once nothing is moving enough to be worth another frame. */

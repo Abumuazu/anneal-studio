@@ -20,6 +20,26 @@
     font-size: clamp(48px, min(11.4vw, 15.6vh), 176px);
     will-change: transform;
   }
+  /* Phones (HomeMobileV6): a flow layout, and a 92px headline at 390px wide. */
+  @media (max-width: 900px) {
+    .hero {
+      height: auto;
+      min-height: 100svh;
+    }
+    .hero-row {
+      font-size: clamp(72px, 23.6vw, 120px);
+    }
+    .hero-ask {
+      padding: 16px 18px 14px;
+      border-radius: 20px;
+      background: var(--color-glass-light);
+      -webkit-backdrop-filter: blur(18px) saturate(1.6);
+      backdrop-filter: blur(18px) saturate(1.6);
+      box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.7),
+        0 10px 30px rgb(11 11 12 / 0.08);
+    }
+  }
   .hw {
     display: inline-block;
     overflow: hidden;
@@ -130,6 +150,22 @@
     background: var(--color-accent);
     color: var(--color-on-accent);
   }
+  /* Phones (HomeMobileV6): a 48px tile that turns round and violet when open, and an arrow that turns with it. */
+  @media (max-width: 900px) {
+    .build-tile {
+      width: 48px;
+      height: 48px;
+    }
+    [data-open='true'] > h3 .build-tile {
+      border-radius: 50%;
+    }
+    [data-open='true'] > h3 .build-go {
+      transform: rotate(90deg);
+    }
+    .build-go {
+      font-size: 22px;
+    }
+  }
   [data-motion='full'] .build-trigger:hover .build-tile {
     transform: rotate(90deg);
     border-radius: 50%;
@@ -164,6 +200,13 @@
     font-size: 15px;
     font-weight: 600;
     transition: transform 500ms var(--ease-reveal);
+  }
+  @media (max-width: 900px) {
+    .vlink {
+      gap: 10px;
+      height: 48px;
+      padding: 0 20px;
+    }
   }
   [data-motion='full'] .case-link:hover .vlink {
     transform: translateX(6px);
@@ -224,6 +267,17 @@
   @media (min-width: 901px) {
     .way {
       height: var(--way-h);
+    }
+  }
+  /* Phones (HomeMobileV6): 24px padding, and a round 48px tile. */
+  @media (max-width: 900px) {
+    .way {
+      padding: 24px;
+    }
+    .way-tile {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
     }
   }
 }

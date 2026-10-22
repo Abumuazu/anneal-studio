@@ -50,6 +50,11 @@ export const boardCopy = {
     'Anneal is a product studio for founders and teams. We design, build and launch websites, mobile apps and AI-powered products, with clear pricing, defined scope and timelines agreed upfront.',
   heroLabels: ['Websites', 'Mobile apps', 'AI-powered products', 'Design and launch'],
   heroFoot: 'Anneal Studio · Product studio',
+  /** Phones: the label row above the headline, and the label on the typing card (HomeMobileV6). */
+  heroTop: 'Product studio',
+  askLabel: 'Tell us in a line',
+  /** Under the process cards on phones. */
+  swipe: 'Swipe for the next stage',
   scroll: 'Scroll',
   seePrices: 'See the prices',
   preloaderLine: 'Websites, apps and AI products for founders',
@@ -70,6 +75,7 @@ export const boardCopy = {
   aboutTheStudio: 'About the studio',
   seeProducts: 'See Products',
   primaryNav: 'Primary',
+  menu: { label: 'Menu', open: 'Open menu', close: 'Close menu' },
   footerNav: 'Footer',
   quickNav: 'Quick',
   cases: [
@@ -101,8 +107,18 @@ export const boardCopy = {
   ventures: {
     intro: 'Raum, Centiiv and Clekey came first. Our own tools are next.',
     raum: { name: 'Raum', tag: 'Co-founded', logoAlt: 'Raum', screenAlt: 'Raum app screen' },
-    centiiv: { name: 'Centiiv', kicker: 'Venture · 02', tag: 'Co-founded · Exited' },
-    clekey: { name: 'Clekey', kicker: 'Venture · 03', tag: '2026 · In stealth' },
+    centiiv: {
+      name: 'Centiiv',
+      kicker: 'Venture · 02',
+      tag: 'Co-founded · Exited',
+      shortTag: 'Exited',
+    },
+    clekey: {
+      name: 'Clekey',
+      kicker: 'Venture · 03',
+      tag: '2026 · In stealth',
+      shortTag: 'In stealth',
+    },
     tools: { name: ['Anneal', 'tools'], kicker: 'Next · Our own', tag: 'Coming soon' },
   },
 } as const;

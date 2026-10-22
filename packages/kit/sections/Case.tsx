@@ -54,7 +54,7 @@ interface CaseHeaderProps {
 /** Case hero: breadcrumb, masked headline and the facts row. Reveals on load. */
 export function CaseHeader({ crumb, lines, dim = [1], meta, msg }: CaseHeaderProps) {
   return (
-    <section data-msg={msg} className="reveal-on-load relative pt-[190px] pb-20">
+    <section data-msg={msg} className="reveal-on-load relative pt-[136px] desk:pt-[190px] pb-20">
       <div className="wrap">
         <Reveal className="type-label text-grey-600">
           <Link href={crumb.href} className="case-crumb">
@@ -134,7 +134,7 @@ interface CaseBriefProps {
 /** The brief, lit word by word as it scrolls through. */
 export function CaseBrief({ text, msg, width = 'narrow' }: CaseBriefProps) {
   return (
-    <section data-msg={msg} className="relative py-[140px]">
+    <section data-msg={msg} className="relative py-24 desk:py-[140px]">
       <div className="wrap grid desk:grid-cols-12">
         <WordLight
           text={text}
@@ -166,7 +166,7 @@ interface CaseQuestionsProps {
 /** Numbered question cards that stack as they pin at staggered heights. */
 export function CaseQuestions({ heading, items, msg }: CaseQuestionsProps) {
   return (
-    <InView as="section" data-msg={msg} className="relative pt-10 pb-40">
+    <InView as="section" data-msg={msg} className="relative pt-10 pb-24 desk:pb-40">
       <div className="wrap">
         <Reveal
           as="h2"
@@ -182,10 +182,12 @@ export function CaseQuestions({ heading, items, msg }: CaseQuestionsProps) {
               offset={110 + 30 * i}
               innerClassName={cx('case-q', QUESTION_TONES[i % QUESTION_TONES.length])}
             >
-              <span className="type-display text-[150px]" aria-hidden="true">
+              <span className="type-display text-[72px] desk:text-[150px]" aria-hidden="true">
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <h3 className="type-h3 m-0 text-[clamp(30px,2.8vw,40px)]">{q.title}</h3>
+              <h3 className="type-h3 m-0 text-[26px] desk:text-[clamp(30px,2.8vw,40px)]">
+                {q.title}
+              </h3>
               <p className="case-q-body type-body m-0">{q.body}</p>
             </StackCard>
           ))}
@@ -205,9 +207,10 @@ interface CasePrincipleProps {
 
 /** The one-sentence principle, large, on ink. */
 export function CasePrinciple({ msg, lines, dim = [], text }: CasePrincipleProps) {
-  const classes = 'type-display-wide m-0 text-[clamp(40px,5.2vw,84px)] leading-[1.02]';
+  const classes =
+    'type-display-wide m-0 text-[30px] leading-[1.05] desk:text-[clamp(40px,5.2vw,84px)] desk:leading-[1.02]';
   return (
-    <ClipIn data-msg={msg} className="relative bg-ink py-40 text-panel">
+    <ClipIn data-msg={msg} className="relative bg-ink py-24 desk:py-40 text-panel">
       <InView className="wrap">
         {lines ? (
           <p className={cx(classes, '[--case-dim:var(--color-grey-500)]')}>
@@ -239,7 +242,7 @@ interface CaseFeaturesProps {
 /** "What we built": lettered feature cards. */
 export function CaseFeatures({ heading, items, msg, after }: CaseFeaturesProps) {
   return (
-    <InView as="section" data-msg={msg} className="relative pt-40 pb-[120px]">
+    <InView as="section" data-msg={msg} className="relative pt-24 desk:pt-40 pb-16 desk:pb-[120px]">
       <div className="wrap">
         <Reveal as="h2" step={1} className="type-h2 m-0 max-w-[920px] text-[clamp(40px,5vw,76px)]">
           {heading}
@@ -251,7 +254,9 @@ export function CaseFeatures({ heading, items, msg, after }: CaseFeaturesProps) 
                 <span className="case-feat-tile" aria-hidden="true">
                   {String.fromCharCode(65 + i)}
                 </span>
-                <h3 className="type-h3 mt-auto mb-0 pt-10 text-[28px]">{f.title}</h3>
+                <h3 className="type-h3 mt-auto mb-0 pt-6 text-[24px] desk:pt-10 desk:text-[28px]">
+                  {f.title}
+                </h3>
                 <p className="type-body mt-2.5 mb-0 text-[17px] text-grey-700">{f.body}</p>
               </div>
             </Reveal>
@@ -296,7 +301,7 @@ interface CaseBuiltWithProps {
 /** "Built with", on a white band. */
 export function CaseBuiltWith({ heading, items, msg }: CaseBuiltWithProps) {
   return (
-    <InView as="section" data-msg={msg} className="relative bg-panel py-[110px]">
+    <InView as="section" data-msg={msg} className="relative bg-panel py-24 desk:py-[110px]">
       <div className="wrap">
         <Reveal as="h2" className="type-h3 m-0 text-[32px]">
           {heading}
@@ -325,7 +330,7 @@ export function NextCase({ href, label, title, msg, cursor, flush }: NextCasePro
     <InView
       as="section"
       data-msg={msg}
-      className={cx('relative pb-[140px]', !flush && 'pt-[140px]')}
+      className={cx('relative pb-24 desk:pb-[140px]', !flush && 'pt-[140px]')}
     >
       <div className="wrap">
         <Reveal>

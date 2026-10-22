@@ -48,7 +48,7 @@ export default function StudioPage() {
         </Reveal>
       </PageHero>
 
-      <section data-msg={st.msg.short} className="relative bg-panel py-[170px]">
+      <section data-msg={st.msg.short} className="relative bg-panel py-24 desk:py-[170px]">
         <div className="wrap grid desk:grid-cols-12">
           <WordLight
             text={copy['studio.who']}
@@ -57,7 +57,7 @@ export default function StudioPage() {
         </div>
       </section>
 
-      <InView as="section" data-msg={st.msg.what} className="relative py-40">
+      <InView as="section" data-msg={st.msg.what} className="relative py-24 desk:py-40">
         <div className="wrap">
           <Reveal as="h2" step={1} className="type-h2 mt-0 mb-16 text-[clamp(44px,5.4vw,80px)]">
             {copy['studio.engines.h2']}
@@ -108,7 +108,7 @@ export default function StudioPage() {
         </div>
       </InView>
 
-      <InView as="section" data-msg={st.msg.how} className="relative bg-panel py-40">
+      <InView as="section" data-msg={st.msg.how} className="relative bg-panel py-24 desk:py-40">
         <div className="wrap grid items-start gap-6 desk:grid-cols-12">
           <div className="desk:sticky desk:top-[120px] desk:col-span-5">
             <h2 className="type-h2 m-0 text-[clamp(44px,5.4vw,80px)]">
@@ -137,7 +137,7 @@ export default function StudioPage() {
         </div>
       </InView>
 
-      <InView as="section" data-msg={st.msg.team} className="relative py-40">
+      <InView as="section" data-msg={st.msg.team} className="relative py-24 desk:py-40">
         <div className="wrap">
           <div className="grid items-end gap-6 desk:grid-cols-12">
             <Reveal
@@ -155,9 +155,9 @@ export default function StudioPage() {
               {copy['studio.team.x']}
             </Reveal>
           </div>
-          <ul className="mt-16 grid list-none gap-5 p-0 sm:grid-cols-2 desk:grid-cols-4">
+          <ul className="mt-9 grid list-none grid-cols-2 gap-2.5 p-0 desk:mt-16 desk:grid-cols-4 desk:gap-5">
             <Reveal as="li" className="overflow-hidden rounded-3xl bg-panel">
-              <div className="relative h-[340px] bg-grey-150">
+              <div className="relative h-[190px] bg-grey-150 desk:h-[340px]">
                 <Image
                   src="/images/team-muazu-abu.jpg"
                   alt={st.founder.name}
@@ -166,8 +166,8 @@ export default function StudioPage() {
                   className="object-cover object-[50%_22%]"
                 />
               </div>
-              <div className="p-[22px]">
-                <h3 className="type-h3 m-0 text-[22px]">{st.founder.name}</h3>
+              <div className="p-3.5 desk:p-[22px]">
+                <h3 className="type-h3 m-0 text-[16px] desk:text-[22px]">{st.founder.name}</h3>
                 <p className="type-label mt-2 mb-0 text-grey-600">{st.founder.role}</p>
               </div>
             </Reveal>
@@ -180,15 +180,17 @@ export default function StudioPage() {
               >
                 <div
                   aria-hidden="true"
-                  className="flex h-[340px] items-end p-[22px]"
+                  className="flex h-[190px] items-end p-3.5 desk:h-[340px] desk:p-[22px]"
                   style={{ background: p.gradient }}
                 >
-                  <span className="type-display text-[120px] leading-[0.8] text-panel/75">
+                  <span className="type-display text-[72px] leading-[0.8] text-panel/75 desk:text-[120px]">
                     {p.initials}
                   </span>
                 </div>
-                <div className="p-[22px]">
-                  <h3 className="type-h3 m-0 text-[22px]">{copy[`studio.team.${p.n}.name`]}</h3>
+                <div className="p-3.5 desk:p-[22px]">
+                  <h3 className="type-h3 m-0 text-[16px] desk:text-[22px]">
+                    {copy[`studio.team.${p.n}.name`]}
+                  </h3>
                   <p className="type-label mt-2 mb-0 text-grey-600">
                     {copy[`studio.team.${p.n}.role`]}
                   </p>
@@ -199,7 +201,7 @@ export default function StudioPage() {
         </div>
       </InView>
 
-      <InView as="section" data-msg={st.msg.ventures} className="relative pt-10 pb-40">
+      <InView as="section" data-msg={st.msg.ventures} className="relative pt-10 pb-24 desk:pb-40">
         <div className="wrap">
           <Reveal as="h2" step={1} className="type-h2 mt-0 mb-14 text-[clamp(44px,5.4vw,80px)]">
             {copy['studio.ven.h2']}
@@ -225,7 +227,7 @@ export default function StudioPage() {
         lead={copy['studio.wait.x']}
       />
 
-      <InView as="section" data-msg={st.msg.where} className="relative py-40">
+      <InView as="section" data-msg={st.msg.where} className="relative py-24 desk:py-40">
         <div className="wrap">
           <Reveal as="h2" step={1} className="type-h2 mt-0 mb-14 text-[clamp(44px,5.4vw,80px)]">
             {copy['studio.loc.h2']}

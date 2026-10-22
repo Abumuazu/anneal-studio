@@ -121,6 +121,7 @@
   .tag {
     display: inline-flex;
     align-items: center;
+    white-space: nowrap;
     height: 30px;
     padding: 0 12px;
     border-radius: 999px;
@@ -183,7 +184,7 @@
     align-items: baseline;
     gap: 14px;
     font-family: var(--font-text);
-    font-size: clamp(36px, 4.4vw, 64px);
+    font-size: clamp(38px, 4.4vw, 64px);
     font-weight: 500;
     letter-spacing: -0.035em;
     line-height: 1.08;
@@ -204,8 +205,23 @@
     opacity: 1;
     transform: none;
   }
-  [data-motion='full'] .flink:hover {
-    transform: translateX(14px);
+  /* Phones have no hover: the arrow is always there, at the right edge (HomeMobileV6). */
+  @media (max-width: 900px) {
+    .flink {
+      justify-content: space-between;
+      min-height: 48px;
+      line-height: 1.14;
+    }
+    .flink .arrow {
+      font-size: 22px;
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media (hover: hover) {
+    [data-motion='full'] .flink:hover {
+      transform: translateX(14px);
+    }
   }
 
   /* Header text link */
@@ -318,6 +334,75 @@
     white-space: nowrap;
   }
 
+  /* Round icon button (phone menu) */
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: var(--color-ink);
+    cursor: pointer;
+  }
+
+  /* Phone menu: a full-screen sheet over the page */
+  .mmenu {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: flex;
+    flex-direction: column;
+    padding: 0 var(--spacing-gutter-sm) 28px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background: var(--color-ink);
+    color: var(--color-panel);
+  }
+  .mmenu-top {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .mmenu-close {
+    background: var(--color-grey-850);
+    color: var(--color-panel);
+  }
+  .mmenu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 48px;
+  }
+  .mmenu-link {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    min-height: 48px;
+    font-family: var(--font-text);
+    font-size: 38px;
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 1.14;
+  }
+  .mmenu-link > span {
+    font-size: 24px;
+  }
+  .mmenu-foot {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: auto;
+    padding-top: 40px;
+  }
+  [data-motion='full'] .mmenu {
+    animation: kit-menu-in 450ms var(--ease-reveal);
+  }
+
   /* Floating quick nav */
   .fnav {
     position: fixed;
@@ -367,10 +452,48 @@
   [data-motion='full'] .fnav-msg {
     animation: kit-msg-in 600ms var(--ease-reveal);
   }
+  /* Phones: a wide pill near the bottom edge, with the message and a light button (HomeMobileV6). */
   @media (max-width: 900px) {
-    .fnav-msg {
+    .fnav {
+      left: 12px;
+      right: 12px;
+      bottom: 16px;
+      justify-content: space-between;
+      height: 60px;
+      padding: 0 6px 0 20px;
+      transform: translateY(160%);
+    }
+    .fnav[data-visible],
+    :root:not([data-motion='full']) .fnav {
+      transform: none;
+    }
+    .fnav > :first-child:not(.fnav-msg):not(.fnav-cta) {
       display: none;
     }
+    .fnav-msg {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .fnav-cta {
+      flex: none;
+      height: 48px;
+      padding: 0 18px;
+      background: var(--color-panel);
+      color: var(--color-ink);
+    }
+  }
+}
+
+@keyframes kit-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 

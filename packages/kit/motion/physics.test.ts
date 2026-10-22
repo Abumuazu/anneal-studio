@@ -1,4 +1,4 @@
-import { createBodies, isAtRest, layoutRest, step, toss } from './physics';
+import { createBodies, isAtRest, isQuiet, layoutRest, step, toss } from './physics';
 
 const seeded = () => {
   let s = 42;
@@ -68,5 +68,39 @@ describe('physics', () => {
     const y = bodies[0]?.y;
     for (let i = 0; i < 60; i++) step(bodies, { width: W, height: H, gravity: false, drag: null });
     expect(bodies[0]?.y).toBe(y);
+  });
+
+  // The footer's ten tiles in a phone-wide box used to pile up and spin for ever.
+  it.each([350, 700])('settles and stops spinning in a %ipx box', (width) => {
+    const sizes = [92, 74, 100, 66, 84, 72, 96, 62, 80, 88];
+    const bodies = createBodies(sizes, width, seeded());
+    let quietFrames = 0;
+    for (let i = 0; i < 60 * 30; i++) {
+      step(bodies, { width, height: H, gravity: true, drag: null });
+      quietFrames = isQuiet(bodies) ? quietFrames + 1 : 0;
+    }
+    expect(quietFrames).toBeGreaterThan(60 * 5);
+    for (const b of bodies) expect(Math.abs(b.va)).toBeLessThan(0.2);
+  });
+
+  it('is not quiet at the top of a throw, only after it settles', () => {
+    const bodies = createBodies([80, 80], 800, seeded());
+    layoutRest(bodies, 800, H);
+    toss(bodies, seeded());
+    expect(isQuiet(bodies)).toBe(false);
+  });
+
+  it('a throw rises, then every tile falls back to rest', () => {
+    const bodies = createBodies([92, 74, 100, 66], 900, seeded());
+    layoutRest(bodies, 900, H);
+    toss(bodies, seeded());
+    let highest = H;
+    for (let i = 0; i < 60 * 15; i++) {
+      step(bodies, { width: 900, height: H, gravity: true, drag: null });
+      for (const b of bodies) highest = Math.min(highest, b.y);
+    }
+    expect(highest).toBeLessThan(H - 150);
+    expect(isQuiet(bodies)).toBe(true);
+    for (const b of bodies) expect(b.y + b.r).toBeGreaterThan(H - 2);
   });
 });

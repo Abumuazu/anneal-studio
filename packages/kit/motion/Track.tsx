@@ -6,6 +6,7 @@ import {
   type ReactNode,
   createContext,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -101,6 +102,31 @@ export function HorizontalTrack({
     { media: PIN_QUERY },
   );
 
+  // Scrolling natively (phones, reduced motion): the card nearest the left edge is current.
+  useEffect(() => {
+    if (scrubbing) return;
+    const vp = viewport.current;
+    const track = row.current;
+    if (!vp || !track) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const first = track.firstElementChild;
+      if (!(first instanceof HTMLElement)) return;
+      const next = Math.round(vp.scrollLeft / (first.offsetWidth + gap));
+      setActive(Math.min(count - 1, Math.max(0, next)));
+    };
+    const onScroll = () => {
+      frame ||= requestAnimationFrame(update);
+    };
+    vp.addEventListener('scroll', onScroll, { passive: true });
+    update();
+    return () => {
+      vp.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, [scrubbing, count, gap]);
+
   // Reserve the pinned height in CSS so the page does not grow when JS runs.
   const reserved = `max(0px, ${count * itemWidth + (count - 1) * gap + padding * 2}px - 100vw)`;
 
@@ -122,7 +148,11 @@ export function HorizontalTrack({
             aria-label={label}
             tabIndex={scrubbing ? -1 : 0}
           >
-            <div ref={row} className="htrack-row" style={{ gap, padding: `10px ${padding}px` }}>
+            <div
+              ref={row}
+              className="htrack-row"
+              style={{ gap, '--htrack-px': `${padding}px` } as CSSProperties}
+            >
               {children}
             </div>
           </div>
@@ -142,8 +172,8 @@ interface ItemProps extends HTMLAttributes<HTMLDivElement> {
  * current step, so styles can switch with `data-[active=true]:`.
  */
 export function TrackItem({ index, children, ...rest }: ItemProps) {
-  const { active, scrubbing } = useContext(TrackContext);
-  const on = scrubbing ? index === active : index === 0;
+  const { active } = useContext(TrackContext);
+  const on = index === active;
   return (
     <div data-active={on ? 'true' : 'false'} {...rest}>
       {children}

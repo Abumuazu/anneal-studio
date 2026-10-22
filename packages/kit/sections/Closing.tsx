@@ -44,8 +44,8 @@ export function Closing({
         className={cx(
           'type-display-wide flex flex-col',
           size === 'large'
-            ? 'gap-2.5 text-[clamp(56px,8.4vw,124px)]'
-            : 'gap-2 text-[clamp(48px,6.8vw,104px)]',
+            ? 'gap-2 text-[40px] desk:gap-2.5 desk:text-[clamp(56px,8.4vw,124px)]'
+            : 'gap-2 text-[40px] desk:text-[clamp(48px,6.8vw,104px)]',
         )}
       >
         {rows.map((row, i) => (
@@ -62,8 +62,8 @@ export function Closing({
     </>
   );
   const classes = cx(
-    'sticky top-0 z-[1] overflow-hidden bg-ink pt-[130px] text-panel',
-    size === 'large' ? 'pb-[220px]' : 'pb-[230px]',
+    'sticky top-0 z-[1] overflow-hidden bg-ink pt-24 pb-[120px] text-panel desk:pt-[130px]',
+    size === 'large' ? 'desk:pb-[220px]' : 'desk:pb-[230px]',
     className,
   );
   if (follower) {

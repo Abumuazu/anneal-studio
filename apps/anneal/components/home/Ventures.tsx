@@ -11,10 +11,10 @@ export function Ventures() {
       id="ventures"
       data-msg={copy['home.msg.4']}
       at={0.82}
-      className="relative z-[3] bg-ground pt-[140px] pb-[170px]"
+      className="relative z-[3] bg-ground pt-28 pb-28 desk:pt-[140px] desk:pb-[170px]"
     >
       <div className="wrap">
-        <div className="grid items-end gap-6 desk:grid-cols-12">
+        <div className="grid items-end gap-4 desk:grid-cols-12 desk:gap-6">
           <Reveal
             as="h2"
             step={1}
@@ -39,7 +39,7 @@ export function Ventures() {
             clekey: copy['home.ven.clekey.line'],
             tools: copy['home.ven.tools.line'],
           }}
-          className="mt-16"
+          className="mt-7 desk:mt-16"
         />
       </div>
     </InView>

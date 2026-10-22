@@ -16,7 +16,10 @@ interface PageHeroProps {
 export function PageHero({ lines, glyphs, tile, msg, size, children }: PageHeroProps) {
   const [a, b, c] = lines;
   return (
-    <section data-msg={msg} className="reveal-on-load relative pt-[200px] pb-[120px]">
+    <section
+      data-msg={msg}
+      className="reveal-on-load relative pt-[136px] desk:pt-[200px] pb-16 desk:pb-[120px]"
+    >
       <div className="wrap">
         <h1 className={`type-display m-0 ${size}`}>
           <span aria-hidden="true">

@@ -10,7 +10,16 @@ import {
 import { cx } from '../lib/cx';
 import { addTick } from './engine';
 import { useReducedMotion } from './hooks';
-import { type Body, type Drag, createBodies, isAtRest, layoutRest, step, toss } from './physics';
+import {
+  type Body,
+  type Drag,
+  createBodies,
+  isAtRest,
+  isQuiet,
+  layoutRest,
+  step,
+  toss,
+} from './physics';
 import { observeViewport } from './viewport';
 
 export interface TileDef {
@@ -33,6 +42,8 @@ interface PhysicsTilesProps {
 }
 
 const STEP_MS = 1000 / 60;
+/** Frames of near stillness (half a second) before the simulation sleeps. A tile at the top of a throw is still for only a frame or two. */
+const QUIET_FRAMES = 30;
 
 /**
  * Tiles you can grab and throw (footer). The simulation only runs while the
@@ -57,6 +68,7 @@ export function PhysicsTiles({ tiles, label, height = 380, className }: PhysicsT
     let stopTick: (() => void) | null = null;
     let visible = false;
     let acc = 0;
+    let quiet = 0;
     const size = () => ({ width: el.clientWidth, height: el.clientHeight });
 
     const paint = () => {
@@ -81,10 +93,12 @@ export function PhysicsTiles({ tiles, label, height = 380, className }: PhysicsT
       }
       if (n === 4) acc = 0;
       paint();
-      if (!drag && isAtRest(bodies, h)) sleep();
+      quiet = !drag && isQuiet(bodies) ? quiet + n : 0;
+      if (!drag && (isAtRest(bodies, h) || quiet >= QUIET_FRAMES)) sleep();
     };
 
     const wake = () => {
+      quiet = 0;
       if (visible) stopTick ??= addTick(frame);
     };
     const sleep = () => {
