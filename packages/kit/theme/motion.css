@@ -1,0 +1,545 @@
+/*
+ * Motion styles. Hidden "before" states and looping animations only apply
+ * under :root[data-motion='full'], which the boot script sets. With reduced
+ * motion, or with no JS, everything renders in its final, visible state.
+ */
+@layer components {
+  /* Pause CSS animations while off screen (set by the viewport observer). */
+  [data-paused],
+  [data-paused] * {
+    animation-play-state: paused !important;
+  }
+
+  /* Reveal on enter */
+  [data-motion='full'] .rv {
+    opacity: 0;
+    transform: translate3d(0, 46px, 0);
+    transition:
+      opacity 900ms var(--ease-reveal) var(--rv-delay, 0s),
+      transform 1200ms var(--ease-reveal) var(--rv-delay, 0s);
+  }
+  [data-motion='full'] [data-in] .rv {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Headline line mask */
+  .ml {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.04em;
+  }
+  .ml > span {
+    display: flex;
+    align-items: center;
+  }
+  [data-motion='full'] .ml > span {
+    transform: translate3d(0, 106%, 0);
+    transition: transform 1200ms var(--ease-reveal) var(--ml-delay, 0s);
+  }
+  [data-motion='full'] [data-in] .ml > span {
+    transform: none;
+  }
+
+  /*
+   * Above-the-fold heroes: reveal with CSS from first paint instead of
+   * waiting for JS and the in-view observer, so the headline (usually the LCP
+   * element) paints within a frame or two of first contentful paint.
+   */
+  [data-motion='full'] .reveal-on-load .ml > span {
+    transition: none;
+    animation: kit-rise 1200ms var(--ease-reveal) calc(var(--ml-delay, 0s) + 0.1s) forwards;
+  }
+  /* Rise without the fade: text that is visible from first paint counts for LCP then. */
+  [data-motion='full'] .reveal-on-load .rv {
+    opacity: 1;
+    transition: none;
+    animation: kit-rise 1200ms var(--ease-reveal) calc(var(--rv-delay, 0s) + 0.1s) both;
+  }
+
+  /* Scroll-lit words */
+  .wl {
+    color: var(--wl-off, var(--color-text-dim));
+    transition: color 400ms;
+  }
+  .wl[data-on],
+  :root:not([data-motion='full']) .wl {
+    color: var(--wl-on, var(--color-ink));
+  }
+
+  /* Morphing tile with cycling glyphs */
+  .morph-tile {
+    position: relative;
+    display: inline-block;
+    flex: none;
+    width: 0.78em;
+    height: 0.78em;
+    margin: 0 0.09em;
+    overflow: hidden;
+    vertical-align: middle;
+    transition: transform 600ms var(--ease-reveal);
+  }
+  .morph-glyph {
+    position: absolute;
+    left: 18%;
+    top: 18%;
+    width: 64%;
+    height: 64%;
+    opacity: 0;
+  }
+  .morph-glyph:first-child {
+    opacity: 1;
+  }
+  [data-motion='full'] .morph-tile {
+    animation: kit-morph 9.6s var(--ease-morph) infinite;
+    animation-delay: var(--tile-delay, 0s);
+  }
+  [data-motion='full'] .morph-tile:hover {
+    transform: rotate(90deg) scale(1.06);
+  }
+  [data-motion='full'] .morph-glyph {
+    opacity: 0;
+    animation: kit-cycle 9.6s var(--ease-reveal) infinite;
+    animation-delay: var(--glyph-delay, 0s);
+  }
+  [data-motion='full'] .morph-glyph-solo {
+    opacity: 1;
+    animation: none;
+  }
+
+  /* Expandable panels (ExpandGroup) */
+  .expand-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 800ms var(--ease-reveal);
+  }
+  .expand-panel[data-open='true'] {
+    grid-template-rows: 1fr;
+  }
+  .expand-content > * {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 700ms var(--ease-reveal),
+      transform 800ms var(--ease-reveal);
+  }
+  .expand-panel[data-open='true'] .expand-content > * {
+    opacity: 1;
+    transform: none;
+  }
+  :root:not([data-motion='full']) .expand-panel,
+  :root:not([data-motion='full']) .expand-content > * {
+    transition: none;
+  }
+
+  /* Tiles that widen when active (FlexTiles) */
+  .flex-tile {
+    flex: 1 1 0;
+    min-width: 0;
+    transition: flex-grow 900ms var(--ease-reveal);
+  }
+  .flex-tile[data-active='true'] {
+    flex-grow: 2.3;
+  }
+  @media (max-width: 900px) {
+    .flex-tile,
+    .flex-tile[data-active='true'] {
+      flex: none;
+    }
+  }
+
+  /* Marquee */
+  .mq-row {
+    display: flex;
+    width: max-content;
+    white-space: nowrap;
+    will-change: transform;
+  }
+  .mq-row > span {
+    padding-right: 0.4em;
+  }
+
+  /* Stacked sticky cards */
+  .stack-card {
+    position: relative;
+    display: block;
+  }
+  .stack-inner {
+    position: relative;
+    height: 100%;
+    transform-origin: 50% 0;
+  }
+  .stack-shade {
+    position: absolute;
+    inset: 0;
+    background: var(--color-ink);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Auto-playing steps: the current step's progress bar */
+  .astep {
+    position: relative;
+  }
+  .astep-bar {
+    position: absolute;
+    left: var(--astep-bar-x, 26px);
+    right: var(--astep-bar-x, 26px);
+    bottom: var(--astep-bar-y, 12px);
+    height: 3px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--astep-track, rgb(255 255 255 / 0.18));
+    opacity: 0;
+    transition: opacity 300ms;
+  }
+  .astep-bar[data-show='true'] {
+    opacity: 1;
+  }
+  .astep-bar i {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--astep-fill, var(--color-accent));
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    animation: kit-fill var(--astep-ms, 3s) linear forwards;
+  }
+  [data-autoplay='paused'] .astep-bar i {
+    animation-play-state: paused;
+  }
+
+  /* Pinned horizontal track */
+  .htrack-vp {
+    overflow-x: auto;
+    margin-top: 36px;
+    padding-bottom: 8px;
+  }
+  .htrack-row {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+
+  /* Cursor-following element inside a region */
+  .follow-target {
+    position: absolute;
+    left: 50%;
+    top: var(--follow-rest-y, 50%);
+    transform: translate(-50%, -50%);
+  }
+
+  /* Global cursor label */
+  .cursor-label {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 150;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 116px;
+    height: 116px;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    will-change: transform;
+    transition: opacity 300ms;
+  }
+  .cursor-label[data-on] {
+    opacity: 1;
+  }
+
+  /* Floating preview card for a hovered list row */
+  .hover-preview {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 60;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    will-change: transform;
+    transition: opacity 400ms var(--ease-reveal);
+  }
+  .hover-preview[data-on] {
+    opacity: 1;
+  }
+
+  /* Physics playground. Before JS takes over, tiles sit at rest in a row. */
+  .phys {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    align-items: flex-end;
+    gap: 16px;
+    padding-left: 60px;
+    box-sizing: border-box;
+    touch-action: pan-y;
+    /* Tiles may fly above the box but never widen the page. */
+    overflow-x: clip;
+  }
+  @media (max-width: 900px) {
+    .phys {
+      padding-left: 0;
+    }
+  }
+  .phys-tile {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
+  .phys[data-ready] {
+    display: block;
+    padding-left: 0;
+  }
+  .phys[data-ready] .phys-tile {
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: grab;
+    touch-action: none;
+    will-change: transform;
+  }
+  .phys[data-ready] .phys-tile:active {
+    cursor: grabbing;
+  }
+
+  /* Wordmark that fills its container and stretches near the pointer */
+  .wm {
+    container-type: inline-size;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding-top: 8px;
+  }
+  .wm-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: calc(98.5cqw / var(--wm-k, 5));
+    line-height: 0.8;
+    white-space: nowrap;
+    letter-spacing: -0.03em;
+  }
+  .wm-letter {
+    display: inline-block;
+    transform-origin: 50% 100%;
+  }
+  .wm-measure {
+    position: absolute;
+    visibility: hidden;
+    font-size: 100px;
+    white-space: nowrap;
+    letter-spacing: -0.03em;
+  }
+
+  /* Typing line */
+  .typing-caret {
+    display: inline-block;
+    width: 2px;
+    height: 0.95em;
+    margin-left: 3px;
+    border-radius: 2px;
+    background: var(--color-accent);
+    vertical-align: -0.12em;
+  }
+  [data-motion='full'] .typing-caret {
+    animation: kit-caret 900ms steps(1) infinite;
+  }
+
+  /* Page hand-off overlay (call-to-action morph) */
+  .handoff {
+    position: fixed;
+    z-index: 300;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 999px;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+  .handoff-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+    opacity: 0;
+    transform: scale(0.7) rotate(-90deg);
+    transition:
+      opacity 500ms var(--ease-reveal),
+      transform 900ms var(--ease-reveal);
+  }
+  .handoff[data-content] .handoff-content {
+    opacity: 1;
+    transform: none;
+  }
+  :root[data-handoff='arrive'] .handoff {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    opacity: 1;
+  }
+  :root[data-handoff='arrive'] .handoff-content {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  /* Cover-to-case transition fallback (no View Transitions API) */
+  .cover-overlay {
+    position: fixed;
+    z-index: 250;
+    pointer-events: none;
+  }
+
+  /* Pointer-only niceties: hide the system cursor where a follower replaces it. */
+  @media (hover: hover) and (pointer: fine) {
+    [data-motion='full'] .cursor-label {
+      display: flex;
+    }
+    [data-motion='full'] [data-cursor] {
+      cursor: none;
+    }
+    [data-motion='full'] [data-follow-ready] {
+      cursor: none;
+    }
+    [data-motion='full'] [data-follow-ready] .follow-target {
+      left: 0;
+      top: 0;
+      will-change: transform;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) and (min-width: 901px) {
+    [data-motion='full'] .hover-preview {
+      display: flex;
+    }
+  }
+
+  /* Pinned and sticky layouts only run on wide screens with full motion. */
+  @media (min-width: 901px) and (max-height: 1299px) {
+    [data-motion='full'] .stack-card {
+      position: sticky;
+    }
+    [data-motion='full'] .htrack {
+      height: calc(100svh + var(--htrack-dist, 0px) + 160px);
+    }
+    [data-motion='full'] .htrack-sticky {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--htrack-pad, 64px 0 40px);
+      box-sizing: border-box;
+    }
+    [data-motion='full'] .htrack-vp {
+      overflow: hidden;
+    }
+    [data-motion='full'] .psteps {
+      height: calc(var(--psteps-len, 3.2) * 100svh);
+    }
+    [data-motion='full'] .psteps-frame {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      overflow: hidden;
+    }
+  }
+}
+
+@keyframes kit-morph {
+  0%,
+  22% {
+    border-radius: 0;
+  }
+  25%,
+  47% {
+    border-radius: 50%;
+  }
+  50%,
+  72% {
+    border-radius: 26%;
+  }
+  75%,
+  97% {
+    border-radius: 50% 0 50% 0;
+  }
+  100% {
+    border-radius: 0;
+  }
+}
+
+@keyframes kit-cycle {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-90deg);
+  }
+  3% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  24% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  27% {
+    opacity: 0;
+    transform: scale(0.3) rotate(90deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.3) rotate(90deg);
+  }
+}
+
+@keyframes kit-fill {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes kit-rise {
+  to {
+    transform: none;
+  }
+}
+
+@keyframes kit-caret {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Cover-to-case transition (CoverLink, CoverTarget): the card morphs into the stage. */
+::view-transition-group(kit-cover) {
+  animation-duration: 900ms;
+  animation-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
+}
+::view-transition-old(kit-cover),
+::view-transition-new(kit-cover) {
+  height: 100%;
+  object-fit: cover;
+}
+:root[data-cover]::view-transition-old(root),
+:root[data-cover]::view-transition-new(root) {
+  animation-duration: 450ms;
+}

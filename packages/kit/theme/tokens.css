@@ -1,0 +1,52 @@
+/*
+ * Kit design tokens. These are neutral defaults so a fresh site renders. A site
+ * sets its own values on :root (unlayered, so they win over this theme layer).
+ * The kit never hard-codes a brand colour: components only read these tokens.
+ */
+@theme {
+  /* Surfaces and ink */
+  --color-ground: #e4e4e4;
+  --color-ink: #111111;
+  --color-panel: #ffffff;
+  --color-accent: #3d3d3d;
+  --color-on-accent: #ffffff;
+
+  /* Neutral scale, light to dark */
+  --color-grey-50: #f2f2f2;
+  --color-grey-100: #ededed;
+  --color-grey-150: #e6e6e6;
+  --color-grey-200: #cfcfcf;
+  --color-grey-300: #bdbdbd;
+  --color-grey-400: #8a8a8a;
+  --color-grey-500: #7a7a7a;
+  --color-grey-600: #5c5c5c;
+  --color-grey-700: #3d3d3d;
+  --color-grey-800: #262626;
+  --color-grey-850: #1c1c1c;
+  --color-grey-900: #161616;
+
+  /* Text that is present but not yet highlighted (scroll-lit words, inactive
+     steps). Sites should pick a value that still meets WCAG AA on its surface. */
+  --color-text-dim: #767676;
+
+  /* Glass */
+  --color-glass-dark: rgb(18 18 20 / 0.62);
+  --color-glass-light: rgb(255 255 255 / 0.5);
+
+  /* Type families. Sites point these at their next/font variables. */
+  --font-text: system-ui, sans-serif;
+  --font-display: var(--font-text);
+  --font-display-wide: var(--font-text);
+  --font-mono: ui-monospace, monospace;
+
+  /* Motion */
+  --ease-reveal: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-morph: cubic-bezier(0.7, 0, 0.2, 1);
+
+  /* Layout */
+  --breakpoint-desk: 56.3125rem; /* 901px: above this, pinned and scrubbed motion runs */
+  --container-site: 90rem; /* 1440px */
+  --spacing-gutter: 2.5rem; /* 40px */
+  --spacing-gutter-sm: 1.25rem; /* 20px */
+  --radius-card: 2rem;
+}

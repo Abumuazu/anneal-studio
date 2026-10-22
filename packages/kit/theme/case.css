@@ -1,0 +1,181 @@
+/* Case study template (sections/Case.tsx). */
+@layer components {
+  .case-dim {
+    color: var(--case-dim, var(--color-grey-600));
+  }
+
+  .case-crumb {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 4px;
+    transition: text-decoration-color 300ms;
+  }
+  .case-crumb:hover {
+    text-decoration-color: currentColor;
+  }
+
+  /* Stage: a fixed-size artwork canvas, scaled down to fit small screens. */
+  .case-stage {
+    --fit: var(--stage-fit-sm, 0.36);
+    position: relative;
+    height: calc(var(--stage-h, 900px) * var(--fit));
+    overflow: hidden;
+  }
+  .case-stage-fit {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--stage-w, 1100px);
+    height: var(--stage-h, 900px);
+    transform: translateX(-50%) scale(var(--fit));
+    transform-origin: 50% 0;
+  }
+  .case-stage-art {
+    position: absolute;
+    inset: 0;
+  }
+  @media (min-width: 640px) {
+    .case-stage {
+      --fit: var(--stage-fit-md, 0.64);
+    }
+  }
+  @media (min-width: 901px) {
+    .case-stage {
+      height: var(--stage-h, 900px);
+    }
+    .case-stage-fit {
+      left: 0;
+      width: 100%;
+      transform: none;
+    }
+  }
+
+  /* Question cards */
+  .case-q {
+    display: grid;
+    gap: 32px;
+    align-items: start;
+    min-height: 380px;
+    padding: 28px;
+    box-sizing: border-box;
+    border-radius: 28px;
+  }
+  @media (min-width: 901px) {
+    .case-q {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 5fr) minmax(0, 4fr);
+      padding: 48px;
+    }
+  }
+  .case-q-light {
+    background: var(--color-panel);
+  }
+  .case-q-mid {
+    background: var(--color-grey-150);
+  }
+  .case-q-light .case-q-body,
+  .case-q-mid .case-q-body {
+    color: var(--color-grey-700);
+  }
+  .case-q-dark {
+    background: var(--case-dark, var(--color-ink));
+    color: var(--color-panel);
+  }
+  .case-q-dark .case-q-body {
+    color: var(--case-dark-muted, var(--color-grey-300));
+  }
+
+  /* Feature cards */
+  .case-feat {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 260px;
+    padding: 30px;
+    box-sizing: border-box;
+    border-radius: 24px;
+    background: var(--color-panel);
+  }
+  .case-feat-tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    background: var(--color-ink);
+    color: var(--color-panel);
+    font-family: var(--font-display);
+    font-size: 28px;
+  }
+  [data-motion='full'] .case-feat {
+    transition:
+      transform 700ms var(--ease-reveal),
+      box-shadow 700ms var(--ease-reveal);
+  }
+  [data-motion='full'] .case-feat:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px rgb(11 11 12 / 0.12);
+  }
+  [data-motion='full'] .case-feat-tile {
+    transition:
+      border-radius 700ms var(--ease-reveal),
+      transform 700ms var(--ease-reveal);
+  }
+  [data-motion='full'] .case-feat:hover .case-feat-tile {
+    border-radius: 50%;
+    transform: rotate(-90deg);
+  }
+
+  /* Next case card: ink rises on hover */
+  .case-next {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    isolation: isolate;
+    padding: 32px;
+    border-radius: 32px;
+    background: var(--color-panel);
+  }
+  @media (min-width: 901px) {
+    .case-next {
+      padding: 64px;
+    }
+  }
+  .case-next::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-ink);
+    transform: translateY(101%);
+    transition: transform 900ms var(--ease-reveal);
+  }
+  .case-next:hover::before {
+    transform: none;
+  }
+  .case-next-t {
+    transition: color 600ms var(--ease-reveal);
+  }
+  .case-next:hover .case-next-t {
+    color: var(--color-panel);
+  }
+  .case-next-arrow {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background: var(--color-ink);
+    color: var(--color-panel);
+    font-size: 34px;
+    transition:
+      transform 700ms var(--ease-reveal),
+      background-color 600ms;
+  }
+  .case-next:hover .case-next-arrow {
+    transform: rotate(45deg);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+}

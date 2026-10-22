@@ -1,0 +1,12 @@
+/*
+ * Kit stylesheet entry. Import after `@import 'tailwindcss';` in the site's
+ * global CSS, then set the site's token values on :root.
+ */
+@import './tokens.css';
+@import './base.css';
+@import './type.css';
+@import './ui.css';
+@import './motion.css';
+@import './case.css';
+
+@source '../';
