@@ -4,10 +4,9 @@
  */
 
 export const privacyCopy = {
-  banner: 'Draft · needs legal review before launch',
   title: 'Privacy',
   lead: "The short version: we collect what you send us, use it to reply and do the work, and don't sell it to anyone. The details are below.",
-  date: 'Last updated 20 October 2026',
+  date: 'Last updated 22 October 2026',
   tocLabel: 'On this page',
   msg: {
     hero: 'The short version is first.',
@@ -17,7 +16,7 @@ export const privacyCopy = {
     {
       title: 'Who we are',
       body: [
-        'Anneal Studio, based in Lagos and Barcelona, runs this site. Registered address: [registered address]. We decide how the personal data described here is used, which makes us its controller.',
+        'Anneal Studio, led by Muazu Abu and based in Lagos and Barcelona, runs this site. We decide how the personal data described here is used, which makes us its controller.',
       ],
     },
     {
@@ -40,7 +39,7 @@ export const privacyCopy = {
     {
       title: 'Who we share it with',
       body: [
-        'Only the services we need to run the studio: Google Workspace for email, Cal.com for call bookings, Resend to deliver brief and waitlist emails, Notion to keep a record of briefs, Vercel to host the site and Plausible for analytics. Each one processes data on our behalf.',
+        'Only the services we need to run the studio: Private Email for the studio inbox, Cal.com for call bookings, Resend to deliver brief and waitlist emails, Notion to keep a record of briefs, Vercel to host the site and Plausible for analytics. Each one processes data on our behalf.',
       ],
     },
     {
@@ -149,6 +148,3 @@ export const startCopy = {
     ],
   },
 } as const;
-
-/** The appendix keeps this as a visible placeholder until the address is supplied. */
-export const REGISTERED_ADDRESS_PLACEHOLDER = '[registered address]';

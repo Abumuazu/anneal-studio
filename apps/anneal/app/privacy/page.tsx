@@ -3,7 +3,7 @@ import { ScrollSpyNav } from '@studio/kit/sections';
 import type { Metadata } from 'next';
 
 import { SiteChrome } from '@/components/SiteChrome';
-import { REGISTERED_ADDRESS_PLACEHOLDER, privacyCopy as pc } from '@/content/appendix';
+import { privacyCopy as pc } from '@/content/appendix';
 import { chromeCopy } from '@/content/pages';
 import { pageMetadata } from '@/lib/seo';
 
@@ -12,19 +12,6 @@ export const metadata: Metadata = pageMetadata({
   description: pc.lead,
   path: '/privacy',
 });
-
-/** Shows the address placeholder dimmed, as on the board, so it is hard to miss before launch. */
-function Body({ text }: { text: string }) {
-  const [before, after] = text.split(REGISTERED_ADDRESS_PLACEHOLDER);
-  if (after === undefined) return <>{text}</>;
-  return (
-    <>
-      {before}
-      <mark className="bg-grey-100 px-1 text-grey-600">{REGISTERED_ADDRESS_PLACEHOLDER}</mark>
-      {after}
-    </>
-  );
-}
 
 export default function PrivacyPage() {
   const toc = pc.sections.map((s, i) => ({ id: `p${i + 1}`, label: s.title }));
@@ -35,9 +22,6 @@ export default function PrivacyPage() {
         className="reveal-on-load relative pt-[136px] desk:pt-[200px] pb-20"
       >
         <div className="wrap">
-          <Reveal className="inline-flex h-[38px] items-center gap-2.5 rounded-full bg-ink px-4 text-panel">
-            <span className="type-label">{pc.banner}</span>
-          </Reveal>
           <h1 className="type-display mt-[30px] mb-0 text-[clamp(80px,14vw,220px)]">
             <LineMask>{pc.title}</LineMask>
           </h1>
@@ -73,7 +57,7 @@ export default function PrivacyPage() {
                   <h2 className="type-h3 mt-3 mb-0 text-4xl">{s.title}</h2>
                   {s.body.map((p) => (
                     <p key={p} className="type-body mt-4 mb-0 text-grey-700">
-                      <Body text={p} />
+                      {p}
                     </p>
                   ))}
                   {'list' in s ? (

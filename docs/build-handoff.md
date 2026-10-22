@@ -16,7 +16,7 @@ Copy for every slot is in `copy-deck-v3.md`. The visual spec is in `../design/v6
 | The glass footer slides over a sticky closing section on every page, with physics icons, the wordmark and the currency switcher | All pages |
 | Icons: a desktop or browser glyph for Website, a phone glyph for Mobile MVP | All pages |
 | "Work with us" morph: the destination reads a timestamped hand-off flag, so the reveal works on every navigation, not only the first | All pages |
-| Team: Muazu Abu (Founder, photo in `design/assets`) plus three placeholders (Camila Reyes, Product designer; Mateus Oliveira, Mobile engineer; Jonas Weber, Backend engineer). Replace the placeholders before launch | Studio |
+| Team: Muazu Abu (Founder, photo in `design/assets`) is the only confirmed public profile. Add collaborators only after their names and roles are approved. | Studio |
 | Currency default comes from `x-vercel-ip-country`: NG shows NGN, euro-area countries show EUR, everywhere else USD. The choice is remembered in a cookie | All price views |
 
 ## 2. Case studies

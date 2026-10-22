@@ -19,13 +19,6 @@ export const metadata: Metadata = pageMetadata({
   path: '/studio',
 });
 
-/** The three team placeholders are named in the deck; replace before launch (build-handoff, open items). */
-const PLACEHOLDERS = [
-  { n: 2, initials: 'CR', gradient: 'linear-gradient(160deg,#d6d2cb,#a9a49b)' },
-  { n: 3, initials: 'MO', gradient: 'linear-gradient(160deg,#cfd4d8,#9ea6ad)' },
-  { n: 4, initials: 'JW', gradient: 'linear-gradient(160deg,#d8d0c8,#aca196)' },
-] as const;
-
 const PRINCIPLES = [1, 2, 3, 4] as const;
 
 export default function StudioPage() {
@@ -155,14 +148,14 @@ export default function StudioPage() {
               {copy['studio.team.x']}
             </Reveal>
           </div>
-          <ul className="mt-9 grid list-none grid-cols-2 gap-2.5 p-0 desk:mt-16 desk:grid-cols-4 desk:gap-5">
+          <ul className="mt-9 grid max-w-[340px] list-none p-0 desk:mt-16">
             <Reveal as="li" className="overflow-hidden rounded-3xl bg-panel">
-              <div className="relative h-[190px] bg-grey-150 desk:h-[340px]">
+              <div className="relative h-[340px] bg-grey-150">
                 <Image
                   src="/images/team-muazu-abu.jpg"
                   alt={st.founder.name}
                   fill
-                  sizes="(min-width: 901px) 25vw, (min-width: 640px) 50vw, 100vw"
+                  sizes="340px"
                   className="object-cover object-[50%_22%]"
                 />
               </div>
@@ -171,32 +164,6 @@ export default function StudioPage() {
                 <p className="type-label mt-2 mb-0 text-grey-600">{st.founder.role}</p>
               </div>
             </Reveal>
-            {PLACEHOLDERS.map((p, i) => (
-              <Reveal
-                as="li"
-                key={p.n}
-                step={(i + 1) as 1 | 2 | 3}
-                className="overflow-hidden rounded-3xl bg-panel"
-              >
-                <div
-                  aria-hidden="true"
-                  className="flex h-[190px] items-end p-3.5 desk:h-[340px] desk:p-[22px]"
-                  style={{ background: p.gradient }}
-                >
-                  <span className="type-display text-[72px] leading-[0.8] text-panel/75 desk:text-[120px]">
-                    {p.initials}
-                  </span>
-                </div>
-                <div className="p-3.5 desk:p-[22px]">
-                  <h3 className="type-h3 m-0 text-[16px] desk:text-[22px]">
-                    {copy[`studio.team.${p.n}.name`]}
-                  </h3>
-                  <p className="type-label mt-2 mb-0 text-grey-600">
-                    {copy[`studio.team.${p.n}.role`]}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
           </ul>
         </div>
       </InView>

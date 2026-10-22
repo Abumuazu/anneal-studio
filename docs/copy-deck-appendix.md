@@ -71,7 +71,7 @@ These pages kept their approved Iteration 5 and 6 wording, so their copy was onl
 | Sector | Marketplace, payments |
 | Platform | iOS, Android and web |
 | What we did | Payments design, product design and the full build |
-| Year | Not listed (open item) |
+| Year | Omit until confirmed |
 
 **Brief (scroll-lit paragraph):** Buyers wanted to offer a price instead of paying the sticker one. Sellers wanted to accept, decline or counter, and know an accepted offer would actually pay. The usual answer is a custom escrow that holds the buyer's money until the deal closes. Here, building one would have meant taking on the compliance that comes with holding other people's money.
 
@@ -138,15 +138,12 @@ Phone labels: Gold ring · Your offer · Buyer's card.
 
 ## Privacy (`/privacy`)
 
-- **Banner:** Draft · needs legal review before launch
 - **Title:** Privacy
 - **Lead:** The short version: we collect what you send us, use it to reply and do the work, and don't sell it to anyone. The details are below.
-- **Date:** Last updated 20 October 2026
+- **Date:** Last updated 22 October 2026
 - **Side navigation label:** On this page
 
-**01 Who we are:** Anneal Studio, based in Lagos and Barcelona, runs this site. Registered address: [registered address]. We decide how the personal data described here is used, which makes us its controller.
-
-The registered address is an open item. Keep it as a visible placeholder until it is supplied.
+**01 Who we are:** Anneal Studio, led by Muazu Abu and based in Lagos and Barcelona, runs this site. We decide how the personal data described here is used, which makes us its controller.
 
 **02 What we collect:** Only what you give us and a little about how the site is used.
 - From the brief form: your name, email, company, project details, timing and, if you give one, a budget.
@@ -157,7 +154,7 @@ The registered address is an open item. Keep it as a visible placeholder until i
 
 **03 Why we use it:** To reply to you, run calls, write proposals, tell you when something on the waitlist is ready, and learn which channels bring in the right projects and improve the site. We don't sell your data and we don't use it for advertising.
 
-**04 Who we share it with:** Only the services we need to run the studio: Google Workspace for email, Cal.com for call bookings, Resend to deliver brief and waitlist emails, Notion to keep a record of briefs, Vercel to host the site and Plausible for analytics. Each one processes data on our behalf.
+**04 Who we share it with:** Only the services we need to run the studio: Private Email for the studio inbox, Cal.com for call bookings, Resend to deliver brief and waitlist emails, Notion to keep a record of briefs, Vercel to host the site and Plausible for analytics. Each one processes data on our behalf.
 
 **05 How long we keep it:** We keep briefs and emails for 24 months after our last contact, and waitlist emails until you ask to be removed or the list is closed. If we start working together, our contract sets the terms from then on.
 

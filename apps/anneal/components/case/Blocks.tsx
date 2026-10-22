@@ -27,7 +27,7 @@ interface CaseHeroProps {
   slug: string;
   msg: string;
   lines: string[];
-  meta: { client: string; sector: string; platform: string; did: string; year: string };
+  meta: { client: string; sector: string; platform: string; did: string; year?: string };
 }
 
 export function CaseHero({ slug, msg, lines, meta }: CaseHeroProps) {
@@ -43,7 +43,7 @@ export function CaseHero({ slug, msg, lines, meta }: CaseHeroProps) {
         { label: labels.sector, value: meta.sector },
         { label: labels.platform, value: meta.platform },
         { label: labels.did, value: meta.did },
-        { label: labels.year, value: meta.year },
+        ...(meta.year ? [{ label: labels.year, value: meta.year }] : []),
       ]}
     />
   );

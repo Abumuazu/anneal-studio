@@ -355,8 +355,7 @@ export const deck = {
   'studio.engines.ventures.x': 'Later, a small number of venture partnerships with founders.',
   'studio.principles.h2': 'How we work.',
   'studio.team.h2': 'The team.',
-  'studio.team.x':
-    'Anneal is led by Muazu Abu. The people you meet on the first call are the people who build your product.',
+  'studio.team.x': 'Anneal is led by Muazu Abu.',
   'studio.ven.h2': 'Products we build for ourselves.',
   'studio.wait.h2.1': 'More of our own',
   'studio.wait.h2.2': 'is on the way.',
@@ -466,10 +465,4 @@ export const deck = {
   'hero.ans.1': 'Website · 3 to 5 days',
   'hero.ans.2': 'AI feature · 1 to 2 weeks',
   'hero.ans.3': 'Mobile MVP · 6 to 10 weeks',
-  'studio.team.2.name': 'Camila Reyes',
-  'studio.team.2.role': 'Product designer',
-  'studio.team.3.name': 'Mateus Oliveira',
-  'studio.team.3.role': 'Mobile engineer',
-  'studio.team.4.name': 'Jonas Weber',
-  'studio.team.4.role': 'Backend engineer',
 } as const;

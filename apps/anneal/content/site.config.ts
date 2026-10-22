@@ -5,7 +5,6 @@ import { boardCopy } from './copy';
 /** Site-wide settings for Anneal. Everything brand-specific the kit needs comes from here. */
 export const site = {
   name: 'Anneal Studio',
-  /** Placeholder until the domain and mailboxes are set up (build-handoff, open items). */
   email: 'hello@raum.africa',
   startHref: '/start',
   cities: [

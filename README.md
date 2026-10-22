@@ -66,7 +66,7 @@ Vercel, one project per site:
 
 1. Import the repository and set **Root Directory** to `apps/anneal`. Vercel detects Next.js and Turborepo.
 2. Add the variables from `apps/anneal/.env.example` for Production (`NEXT_PUBLIC_SITE_URL=https://anneal.raum.africa`, `NEXT_PUBLIC_PLAUSIBLE_DOMAIN=anneal.raum.africa`). For Preview, point Notion at test databases or set `INTEGRATIONS=memory`, so testing a preview never creates real bookings or records.
-3. Domains: `anneal.raum.africa` is the site; add `anneal.io` to the same project as a permanent redirect to it, so search engines index one address.
+3. Domains: `anneal.raum.africa` is the site. Add a separate brand domain as a permanent redirect only after the studio owns and controls it.
 4. Every pull request then gets a preview deployment.
 
 Before launch, work through [`docs/launch-checklist.md`](docs/launch-checklist.md).

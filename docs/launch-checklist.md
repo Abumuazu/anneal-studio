@@ -26,7 +26,7 @@ Everything in **Built and checked** is covered by CI (lint, typecheck, Vitest, P
 
 | Item | Owner | Where it lands |
 | --- | --- | --- |
-| Domain `anneal.raum.africa` (set as `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`); add `anneal.io` in Vercel as a redirect to it | Studio | Vercel domains and env |
+| Domain `anneal.raum.africa` (set as `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`); add a separate brand domain only after ownership is secured | Studio | Vercel domains and env |
 | Studio email and social links (`hello@raum.africa` until then) | Studio | `content/site.config.ts`, `content/copy.ts` |
 | Cal.com: API key and the 30-minute event type id | Studio | Vercel env |
 | Resend: API key, verified sending domain, `MAIL_FROM` | Studio | Vercel env |
@@ -36,9 +36,9 @@ Everything in **Built and checked** is covered by CI (lint, typecheck, Vitest, P
 | Payment methods for NGN, USD and EUR | Studio | Copy deck, then the site |
 | Wisp client sign-off | Studio | |
 | Lawyer review of the case studies and the Privacy page | Studio, counsel | Appendix, then the site |
-| Registered address on the Privacy page | Studio | `docs/copy-deck-appendix.md` |
+| Confirm the public identity and privacy contact details | Studio | `docs/copy-deck-appendix.md` |
 | Jewellery case year | Studio | `content/cases/jewellery-marketplace.mdx` |
-| Replace the three placeholder team members | Studio | Deck `studio.team.*`, Studio page |
+| Add further team profiles only after names and roles are approved | Studio | Deck `studio.team.*`, Studio page |
 | Centiiv and Clekey wordmarks, and a one-line Centiiv description | Studio | Deck, Products and Studio |
 | Copy for: 404, form and booking failures, the Wisp flow pause control | Copy | Deck or appendix |
 | Jewellery product photography, licensed coin icons for the exchange | Design | `components/mockups` |

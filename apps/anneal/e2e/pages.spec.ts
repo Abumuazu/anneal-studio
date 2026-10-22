@@ -80,17 +80,19 @@ test.describe('privacy', () => {
     await expect(nav.locator('[aria-current="location"]')).toContainText('How long we keep it');
   });
 
-  test('keeps the registered address as a visible placeholder', async ({ page }) => {
+  test('identifies the studio without a registered-address placeholder', async ({ page }) => {
     await page.goto('/privacy');
-    await expect(page.locator('mark', { hasText: '[registered address]' })).toBeVisible();
+    await expect(page.getByText('Anneal Studio, led by Muazu Abu', { exact: false })).toBeVisible();
+    await expect(page.getByText('[registered address]')).toHaveCount(0);
   });
 });
 
 test.describe('studio', () => {
-  test('lists the four team members', async ({ page }) => {
+  test('shows the confirmed founder without placeholder profiles', async ({ page }) => {
     await page.goto('/studio');
-    for (const name of ['Muazu Abu', 'Camila Reyes', 'Mateus Oliveira', 'Jonas Weber']) {
-      await expect(page.getByRole('heading', { level: 3, name })).toBeAttached();
+    await expect(page.getByRole('heading', { level: 3, name: 'Muazu Abu' })).toBeAttached();
+    for (const name of ['Camila Reyes', 'Mateus Oliveira', 'Jonas Weber']) {
+      await expect(page.getByRole('heading', { level: 3, name })).toHaveCount(0);
     }
     await expect(page.getByRole('img', { name: 'Muazu Abu' })).toBeVisible();
   });
