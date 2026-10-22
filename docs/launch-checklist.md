@@ -16,7 +16,7 @@ Everything in **Built and checked** is covered by CI (lint, typecheck, Vitest, P
 | Performance | LCP under 2.5s, CLS under 0.05, TBT under 200ms on every page (mobile, throttled) | Lighthouse CI |
 | Layout | No horizontal overflow at any width; snapshots at 1440, 1024, 768 and 390 | Playwright |
 | Booking | Cal.com v2 slots and bookings through route handlers; times in the visitor's zone | Vitest (request shape), Playwright end to end (memory mode) |
-| Brief | Four steps, Zod-validated Server Action, stored in Notion and emailed through Resend; UTM tags and referrer kept | Vitest, Playwright end to end |
+| Brief | Four steps with no starting prices in offer choices and an optional client budget; Zod-validated Server Action attempts Notion storage and Resend email; UTM tags and referrer kept | Vitest, Playwright end to end |
 | Waitlist | Stored in Notion; the form only confirms a stored address | Vitest, Playwright |
 | Analytics | Plausible, no cookies; all eight handoff events | Playwright (events captured) |
 | Search | Titles, descriptions and canonicals per page; sitemap; robots; JSON-LD Organization | Playwright |
@@ -29,7 +29,7 @@ Everything in **Built and checked** is covered by CI (lint, typecheck, Vitest, P
 | Item | Owner | Where it lands |
 | --- | --- | --- |
 | Domain `anneal.raum.africa` — complete; add a separate brand domain only after ownership is secured | Studio | Vercel domains and env |
-| Studio email and social links (`hello@raum.africa` until then) | Studio | `content/site.config.ts`, `content/copy.ts` |
+| Studio email (`hello@raum.africa` until then); LinkedIn and X now link to Muazu's profiles | Studio | `content/site.config.ts` |
 | Cal.com: API key and the 30-minute event type id | Studio | Vercel env |
 | Resend: API key, verified sending domain, `MAIL_FROM` | Studio | Vercel env |
 | Notion: integration token and the two databases (properties in `.env.example`) | Studio | Vercel env |

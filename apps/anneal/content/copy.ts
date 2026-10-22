@@ -61,7 +61,6 @@ export const boardCopy = {
   currencyGroup: 'Currency',
   pricesIn: 'Prices in',
   sayHello: 'Say hello',
-  socials: 'LinkedIn · X · Instagram',
   copyright: '© 2026 Anneal Studio',
   madeIn: 'Made in Lagos and Barcelona',
   privacy: 'Privacy',

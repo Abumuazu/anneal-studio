@@ -185,7 +185,28 @@ function Footer({ msg }: { msg: string }) {
           <a href={`mailto:${site.email}`} className="type-h3 text-2xl">
             {site.email}
           </a>
-          <span className="type-body text-base text-grey-300">{boardCopy.socials}</span>
+          <nav
+            aria-label="Social profiles"
+            className="type-body flex gap-2 text-base text-grey-300"
+          >
+            {site.socials.map((social, index) => (
+              <span key={social.href}>
+                {index > 0 && (
+                  <span aria-hidden="true" className="mr-2">
+                    ·
+                  </span>
+                )}
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white"
+                >
+                  {social.label}
+                </a>
+              </span>
+            ))}
+          </nav>
           <CurrencySwitch
             className="mt-2"
             options={currencyOptions}

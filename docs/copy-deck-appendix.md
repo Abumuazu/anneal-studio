@@ -188,15 +188,15 @@ Phone labels: Gold ring · Your offer · Buyer's card.
 
 | Step | Content |
 | --- | --- |
-| 1 · What do you need? | Helper: Pick the closest one. You can change it on the call. Options, each with its "from" price in the visitor's currency: Website · AI feature · Web MVP · Mobile MVP · Product Growth & Engineering · Something else (shows "Quoted after your brief"). Currency row: Prices in |
+| 1 · What do you need? | Helper: Pick the closest one. You can change it on the call. Options without prices: Website · AI feature · Web MVP · Mobile MVP · Product Growth & Engineering · Something else. |
 | 2 · Where is it today? | Just an idea · Designs or a prototype · Live product · Live, but struggling |
-| 3 · Timing | Label: When do you want to start? Options: As soon as possible · In 1 to 3 months · Just exploring. Field: Anything specific about budget? (optional) |
+| 3 · Timing | Label: When do you want to start? Options: As soon as possible · In 1 to 3 months · Just exploring. Field: What budget are you considering? (optional) |
 | 4 · About you | Name · Email · Company or project (optional) · Anything else we should know (optional) · How did you hear about us? (optional), with chips LinkedIn · X · A referral · A designer or agency · Search · Somewhere else. Note: We also note the campaign tags in the link you arrived from, so we know which channel to thank. |
 
 **Brief sketch card**
 - Title: Your brief so far
 - Empty state: Your brief will appear here as you fill it in.
-- Filled: the chosen answers joined with " · ", for example "Mobile MVP · from $8,000 · live product · as soon as possible"
+- Filled: the chosen answers joined with " · ", for example "Mobile MVP · live product · as soon as possible"
 
 **Sent state**
 - Label: Brief received

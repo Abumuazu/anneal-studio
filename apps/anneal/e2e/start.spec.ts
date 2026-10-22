@@ -63,27 +63,24 @@ test.describe('start', () => {
       .locator('..')
       .click();
     const sketch = page.getByText('Your brief so far').locator('..');
-    await expect(sketch).toContainText('Mobile MVP · from $8,000', { useInnerText: true });
+    await expect(sketch).toContainText('Mobile MVP', { useInnerText: true });
     await page.getByRole('button', { name: 'Continue' }).click();
     await expect(page.getByRole('heading', { name: 'Where is it today?' })).toBeFocused();
     await page.getByRole('radio', { name: 'Live product' }).locator('..').click();
     await page.getByRole('button', { name: 'Continue' }).click();
     await page.getByRole('radio', { name: 'As soon as possible' }).locator('..').click();
     await page
-      .getByLabel('Anything specific about budget? (optional)')
-      .fill('Around the Mobile MVP price');
+      .getByLabel('What budget are you considering? (optional)')
+      .fill('₦5,000,000 to ₦7,000,000');
     await page.getByRole('button', { name: 'Continue' }).click();
     await expect(page.getByRole('heading', { name: 'About you' })).toBeFocused();
     await page.getByLabel('Name', { exact: true }).fill('Ada Obi');
     await page.getByLabel('Email', { exact: true }).fill(`${tag}@example.com`);
     await page.getByLabel('Company or project (optional)').fill('Obi Labs');
     await page.getByRole('radio', { name: 'A referral' }).locator('..').click();
-    await expect(sketch).toContainText(
-      'Mobile MVP · from $8,000 · live product · as soon as possible',
-      {
-        useInnerText: true,
-      },
-    );
+    await expect(sketch).toContainText('Mobile MVP · live product · as soon as possible', {
+      useInnerText: true,
+    });
     await page.getByRole('button', { name: 'Send brief' }).click();
     await expect(page.getByText('Thanks. It is with us.')).toBeVisible();
     await expect(page.getByText('Done', { exact: true })).toBeVisible();
@@ -98,9 +95,9 @@ test.describe('start', () => {
       timing: 'As soon as possible',
       name: 'Ada Obi',
       company: 'Obi Labs',
+      budget: '₦5,000,000 to ₦7,000,000',
       heard: 'A referral',
       utm_source: 'linkedin',
-      currency: 'USD',
       landing: '/start',
     });
     const mail = sent.mail.find((m) => m.replyTo === `${tag}@example.com`);
@@ -121,21 +118,15 @@ test.describe('start', () => {
     await expect(page.getByText('Thanks. It is with us.')).toHaveCount(0);
   });
 
-  test('offer prices follow the currency switch', async ({ page }) => {
+  test('the brief asks for a client budget without showing starting prices', async ({ page }) => {
     await page.goto('/start');
-    await page
-      .getByRole('radio', { name: /Web MVP/ })
-      .locator('..')
-      .click();
-    await page
-      .getByRole('group', { name: 'Currency' })
-      .first()
-      .getByRole('button', { name: 'NGN ₦' })
-      .click();
-    await expect(page.getByText('Your brief so far').locator('..')).toContainText(
-      'Web MVP · from ₦6,300,000',
-      { useInnerText: true },
-    );
+    const brief = page.locator('form', { has: page.locator('input[name="offer"]') });
+    await expect(brief.getByRole('radio', { name: 'Web MVP' })).toBeVisible();
+    await expect(brief.getByText(/from [₦$€]/i)).toHaveCount(0);
+    await expect(brief.getByText('Prices in')).toHaveCount(0);
+    await brief.getByRole('button', { name: 'Continue' }).click();
+    await brief.getByRole('button', { name: 'Continue' }).click();
+    await expect(brief.getByLabel('What budget are you considering? (optional)')).toBeVisible();
   });
 });
 

@@ -6,6 +6,10 @@ import { boardCopy } from './copy';
 export const site = {
   name: 'Anneal Studio',
   email: 'hello@raum.africa',
+  socials: [
+    { label: 'LinkedIn', href: 'https://linkedin.com/in/muazu' },
+    { label: 'X', href: 'https://x.com/muazudev' },
+  ],
   startHref: '/start',
   cities: [
     { name: 'Lagos', timeZone: 'Africa/Lagos', zone: 'WAT' },

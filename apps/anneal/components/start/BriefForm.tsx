@@ -1,15 +1,12 @@
 'use client';
 
 import { track } from '@studio/kit/lib';
-import { CURRENCY_EVENT, CurrencySwitch, Price, readCurrency } from '@studio/kit/ui';
 import { type ReactNode, useActionState, useEffect, useId, useRef, useState } from 'react';
 
 import { type BriefResult, sendBrief } from '@/app/actions/brief';
 import { startCopy } from '@/content/appendix';
-import { boardCopy, copy } from '@/content/copy';
-import { CURRENCY_COOKIE, currencyOptions } from '@/content/currency';
+import { copy } from '@/content/copy';
 import { startBoardCopy } from '@/content/pages';
-import { type Offer, priceValues } from '@/content/prices';
 import { ATTRIBUTION_KEYS, OFFERS } from '@/lib/brief-fields';
 
 import { captureAttribution, readAttribution } from './attribution';
@@ -17,32 +14,21 @@ import { captureAttribution, readAttribution } from './attribution';
 const b = startCopy.brief;
 const STEPS = 4;
 
-/** The price each offer starts from, in the order the deck lists them ("Something else" has none). */
-const OFFER_PRICES: readonly (Offer | null)[] = [
-  'website',
-  'aiFeature',
-  'webMvp',
-  'mobileMvp',
-  'care',
-  null,
-];
-
 interface ChoicesProps {
   name: string;
   options: readonly string[];
   value: string;
   onPick: (value: string) => void;
   small?: boolean;
-  /** On phones, one pill per row with the extra text at the right. */
+  /** On phones, one pill per row. */
   stack?: boolean;
-  extra?: (index: number) => ReactNode;
 }
 
 /** A single-choice group drawn as pills, on native radios. */
-function Choices({ name, options, value, onPick, small, stack, extra }: ChoicesProps) {
+function Choices({ name, options, value, onPick, small, stack }: ChoicesProps) {
   return (
     <div className={`flex flex-wrap gap-2.5 ${stack ? 'max-desk:flex-col max-desk:gap-2' : ''}`}>
-      {options.map((o, i) => (
+      {options.map((o) => (
         <label
           key={o}
           className={`${small ? 'opt opt-sm' : 'opt'} ${stack ? 'max-desk:w-full max-desk:justify-between' : ''}`}
@@ -56,7 +42,6 @@ function Choices({ name, options, value, onPick, small, stack, extra }: ChoicesP
             className="sr-only"
           />
           {o}
-          {extra?.(i)}
         </label>
       ))}
     </div>
@@ -73,7 +58,6 @@ export function BriefForm() {
   const [stage, setStage] = useState('');
   const [timing, setTiming] = useState('');
   const [heard, setHeard] = useState('');
-  const [currency, setCurrency] = useState('');
   const [attribution, setAttribution] = useState<Record<string, string>>({});
   const started = useRef(false);
   const heading = useRef<HTMLHeadingElement>(null);
@@ -84,10 +68,6 @@ export function BriefForm() {
     // This effect can run before the site-wide one, so capture here too (it only keeps the first).
     captureAttribution();
     setAttribution(readAttribution());
-    const sync = () => setCurrency(readCurrency() ?? '');
-    sync();
-    window.addEventListener(CURRENCY_EVENT, sync);
-    return () => window.removeEventListener(CURRENCY_EVENT, sync);
   }, []);
 
   // After Back or Continue, take the reader to the new step's heading.
@@ -114,20 +94,8 @@ export function BriefForm() {
     setStep(Math.max(1, Math.min(STEPS, to)));
   };
 
-  const offerIndex = OFFERS.indexOf(offer);
-  const offerPrice = offerIndex >= 0 ? OFFER_PRICES[offerIndex] : null;
   const sketch: ReactNode[] = [];
-  if (offer) {
-    sketch.push(
-      offerPrice ? (
-        <span key="offer">
-          {offer} · {b.from} <Price values={priceValues(offerPrice)} />
-        </span>
-      ) : (
-        offer
-      ),
-    );
-  }
+  if (offer) sketch.push(offer);
   if (stage) sketch.push(stage.toLowerCase());
   if (timing) sketch.push(timing.toLowerCase());
 
@@ -179,7 +147,6 @@ export function BriefForm() {
         </div>
       ) : (
         <form id={id} action={action} onChange={begin} className="flex flex-1 flex-col gap-[26px]">
-          <input type="hidden" name="currency" value={currency} />
           {ATTRIBUTION_KEYS.map((k) => (
             <input key={k} type="hidden" name={k} value={attribution[k] ?? ''} />
           ))}
@@ -205,27 +172,6 @@ export function BriefForm() {
                 setOffer(o);
                 track('offer_chosen', { offer: o });
               }}
-              extra={(i) => {
-                const key = OFFER_PRICES[i];
-                return (
-                  <span className="type-label ml-3 opacity-60">
-                    {key ? (
-                      <>
-                        {b.from} <Price values={priceValues(key)} />
-                      </>
-                    ) : (
-                      b.quoted
-                    )}
-                  </span>
-                );
-              }}
-            />
-            <CurrencySwitch
-              className="mt-1.5"
-              options={currencyOptions}
-              cookie={CURRENCY_COOKIE}
-              label={boardCopy.currencyGroup}
-              prefix={<span className="type-label mr-1.5 text-grey-600">{boardCopy.pricesIn}</span>}
             />
           </fieldset>
 

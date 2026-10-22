@@ -21,6 +21,20 @@ for (const p of PAGES) {
   });
 }
 
+test('the footer links to the active social profiles', async ({ page }) => {
+  await page.goto('/');
+  const socials = page.getByRole('navigation', { name: 'Social profiles' });
+  await expect(socials.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
+    'href',
+    'https://linkedin.com/in/muazu',
+  );
+  await expect(socials.getByRole('link', { name: 'X' })).toHaveAttribute(
+    'href',
+    'https://x.com/muazudev',
+  );
+  await expect(socials.getByRole('link', { name: 'Instagram' })).toHaveCount(0);
+});
+
 test.describe('services', () => {
   test('the FAQ opens one answer at a time', async ({ page, isMobile }) => {
     test.skip(isMobile, 'keyboard flow');
