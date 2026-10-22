@@ -1,5 +1,7 @@
 # Launch checklist
 
+Status checked 22 October 2026: `anneal.raum.africa` is live on Vercel with valid DNS and HTTPS. The Privacy page was approved by the studio and its draft label and registered-address placeholder were removed. A production test brief was received and its notification email was delivered. Live Cal.com availability was visible; a production booking was not created during the check.
+
 Everything in **Built and checked** is covered by CI (lint, typecheck, Vitest, Playwright, axe, visual snapshots, Lighthouse). Everything in **Before launch** needs a decision, an account or a person, and is not in the code's hands.
 
 ## Built and checked
@@ -26,7 +28,7 @@ Everything in **Built and checked** is covered by CI (lint, typecheck, Vitest, P
 
 | Item | Owner | Where it lands |
 | --- | --- | --- |
-| Domain `anneal.raum.africa` (set as `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`); add a separate brand domain only after ownership is secured | Studio | Vercel domains and env |
+| Domain `anneal.raum.africa` — complete; add a separate brand domain only after ownership is secured | Studio | Vercel domains and env |
 | Studio email and social links (`hello@raum.africa` until then) | Studio | `content/site.config.ts`, `content/copy.ts` |
 | Cal.com: API key and the 30-minute event type id | Studio | Vercel env |
 | Resend: API key, verified sending domain, `MAIL_FROM` | Studio | Vercel env |
@@ -35,7 +37,7 @@ Everything in **Built and checked** is covered by CI (lint, typecheck, Vitest, P
 | Approve the Care, Growth, sprint, add-on and Discovery prices | Studio | `content/prices.ts` |
 | Payment methods for NGN, USD and EUR | Studio | Copy deck, then the site |
 | Wisp client sign-off | Studio | |
-| Lawyer review of the case studies and the Privacy page | Studio, counsel | Appendix, then the site |
+| Privacy page — studio confirmed approved; case-study rights and any other legal review still require studio confirmation | Studio, counsel | Appendix, then the site |
 | Confirm the public identity and privacy contact details | Studio | `docs/copy-deck-appendix.md` |
 | Jewellery case year | Studio | `content/cases/jewellery-marketplace.mdx` |
 | Add further team profiles only after names and roles are approved | Studio | Deck `studio.team.*`, Studio page |
