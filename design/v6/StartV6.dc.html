@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Anneal Studio · Start v6</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Gothic:wdth,wght@75..125,400..700&amp;family=Special+Gothic+Condensed+One&amp;family=Special+Gothic+Expanded+One&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+:root{--e:cubic-bezier(.2,.8,.2,1);--s:cubic-bezier(.7,0,.2,1)}
+body{margin:0;background:#D9D9D9;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+.sg{font-family:'Special Gothic',system-ui,sans-serif}
+.kx{font-family:'Special Gothic Condensed One','Special Gothic',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:-.004em;line-height:.86}
+.xw{font-family:'Special Gothic Expanded One','Special Gothic',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:-.025em;line-height:.9}
+.mono{font-family:'Geist Mono',ui-monospace,monospace;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;font-weight:500}
+.wrap{max-width:1440px;margin:0 auto;padding-left:40px;padding-right:40px;box-sizing:border-box}
+.g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}
+.h2{font-family:'Special Gothic',sans-serif;font-weight:500;letter-spacing:-.035em;line-height:1}
+.h3{font-family:'Special Gothic',sans-serif;font-weight:600;letter-spacing:-.025em;line-height:1.06}
+.body{font-family:'Special Gothic',sans-serif;font-size:18px;line-height:1.5;letter-spacing:-.003em}
+.lead{font-family:'Special Gothic',sans-serif;font-size:22px;line-height:1.38;letter-spacing:-.012em;font-weight:400}
+.ph{opacity:.6}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #7A5CFF;outline-offset:3px}
+.mark{display:inline-grid;grid-template-columns:1fr 1fr;gap:12%;width:1em;height:1em;flex:none}
+.mark i{display:block;background:currentColor}
+.mark i:nth-child(1){border-radius:0}.mark i:nth-child(2){border-radius:50%}.mark i:nth-child(3){border-radius:26%}.mark i:nth-child(4){border-radius:50% 0 50% 0}
+.glass{background:rgba(22,22,24,.55);-webkit-backdrop-filter:blur(22px) saturate(1.8);backdrop-filter:blur(22px) saturate(1.8);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 14px 40px rgba(0,0,0,.22)}
+.glass-l{background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 10px 30px rgba(11,11,12,.08)}
+.tbar{position:absolute;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;gap:32px;height:88px;padding:0 40px;box-sizing:border-box}
+.tl{font-family:'Special Gothic',sans-serif;font-weight:500;font-size:15px;transition:opacity 300ms}
+.tl:hover{opacity:.5}
+.tpill{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 20px;border-radius:999px;font-family:'Special Gothic',sans-serif;font-weight:600;font-size:14px;transition:transform 400ms var(--e)}
+.tpill:hover{transform:translateY(-2px)}
+.pbtn{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 28px;border-radius:999px;font-family:'Special Gothic',sans-serif;font-weight:600;font-size:16px;transition:color 400ms var(--e);border:0;cursor:pointer}
+.pbtn::before{content:'';position:absolute;inset:0;border-radius:inherit;background:#7A5CFF;transform:translateY(102%);transition:transform 550ms var(--e);z-index:-1}
+.pbtn:hover::before{transform:none}.pbtn:hover{color:#0B0B0C !important}
+.pbtn.acc::before{background:#FFFFFF}
+.ar{display:inline-block;transition:transform 450ms var(--e)}
+.pbtn:hover .ar,.alink:hover .ar{transform:translate(4px,-4px)}
+.alink{display:inline-flex;align-items:center;gap:8px;font-family:'Special Gothic',sans-serif;font-weight:500;font-size:16px;transition:opacity 300ms}
+.alink:hover{opacity:.7}
+.tile{position:relative;display:inline-block;flex:none;width:.78em;height:.78em;margin:0 .09em;overflow:hidden;vertical-align:middle;animation:morph 9.6s var(--s) infinite}
+@keyframes morph{0%,22%{border-radius:0}25%,47%{border-radius:50%}50%,72%{border-radius:26%}75%,97%{border-radius:50% 0 50% 0}100%{border-radius:0}}
+.gl{position:absolute;left:18%;top:18%;width:64%;height:64%;opacity:0;animation:cyc 9.6s var(--e) infinite}
+@keyframes cyc{0%{opacity:0;transform:scale(.3) rotate(-90deg)}3%{opacity:1;transform:scale(1) rotate(0deg)}24%{opacity:1;transform:scale(1) rotate(0deg)}27%{opacity:0;transform:scale(.3) rotate(90deg)}100%{opacity:0;transform:scale(.3) rotate(90deg)}}
+.k0{animation-delay:0s}.k1{animation-delay:-7.2s}.k2{animation-delay:-4.8s}.k3{animation-delay:-2.4s}
+.tag{display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+.rv{opacity:0;transform:translateY(42px);transition:opacity 900ms var(--e),transform 1200ms var(--e)}
+.rv.on{opacity:1;transform:none}
+.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}.rv.d5{transition-delay:.4s}
+.ml{display:block;overflow:hidden;padding-bottom:.04em}
+.ml > span{display:flex;align-items:center;flex-wrap:nowrap;transform:translateY(106%);transition:transform 1200ms var(--e)}
+.mlw.on .ml > span{transform:none}
+.mlw.on .ml.m2 > span{transition-delay:.1s}.mlw.on .ml.m3 > span{transition-delay:.2s}.mlw.on .ml.m4 > span{transition-delay:.3s}
+.clrow{display:flex;width:max-content;white-space:nowrap;will-change:transform;font-size:clamp(48px,6.8vw,104px)}
+.clrow span{padding-right:.4em}
+.flink{display:flex;align-items:baseline;gap:14px;font-family:'Special Gothic',sans-serif;font-weight:500;font-size:clamp(36px,4.4vw,64px);letter-spacing:-.035em;line-height:1.08;transition:transform 600ms var(--e)}
+.flink .ar{font-size:.5em;opacity:0;transform:translateX(-10px);transition:opacity 400ms,transform 500ms var(--e)}
+.flink:hover{transform:translateX(14px)}
+.flink:hover .ar{opacity:1;transform:none}
+.wml{display:inline-block;transform-origin:50% 100%;will-change:transform}
+.bnav{position:fixed;left:50%;bottom:22px;z-index:90;display:flex;align-items:center;gap:10px;padding:6px 6px 6px 18px;border-radius:999px;color:#FFFFFF;transition:transform 700ms var(--e),opacity 500ms}
+.msg{display:inline-block;font-family:'Special Gothic',sans-serif;font-size:14px;font-weight:500;white-space:nowrap;min-width:260px}
+.ma{animation:msgA 600ms var(--e)}.mb{animation:msgB 600ms var(--e)}
+@keyframes msgA{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes msgB{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.bcta{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 20px;border-radius:999px;font-family:'Special Gothic',sans-serif;font-weight:600;font-size:14px}
+.cur{position:fixed;left:0;top:0;z-index:150;pointer-events:none;display:flex;align-items:center;justify-content:center;width:116px;height:116px;border-radius:50%;color:#FFFFFF;will-change:transform;transition:opacity 300ms}
+[data-view]{cursor:none}
+.phone{position:absolute;width:250px;height:524px;border-radius:44px;background:#050505;padding:9px;box-sizing:border-box;box-shadow:0 40px 80px rgba(0,0,0,.3),inset 0 0 0 1.5px #2A2A2A}
+.scr{position:relative;height:100%;border-radius:36px;overflow:hidden;display:flex;flex-direction:column;padding:44px 18px 18px 18px;box-sizing:border-box}
+.notch{position:absolute;left:50%;top:12px;width:80px;height:23px;margin-left:-40px;border-radius:999px;background:#050505}
+.wwu{position:fixed;z-index:300;left:0;top:0;width:0;height:0;border-radius:999px;pointer-events:none;opacity:0;display:flex;align-items:center;justify-content:center;overflow:hidden;will-change:left,top,width,height,transform}
+.wwu .wm2{display:flex;flex-direction:column;align-items:center;gap:26px;opacity:0;transform:scale(.7) rotate(-90deg);transition:opacity 500ms var(--e),transform 900ms var(--e)}
+.wwu.txt .wm2{opacity:1;transform:none}
+.wwu .wm2 .mark i{animation:mk 3.2s var(--s) infinite}
+.wwu .wm2 .mark i:nth-child(2){animation-delay:-.8s}.wwu .wm2 .mark i:nth-child(3){animation-delay:-1.6s}.wwu .wm2 .mark i:nth-child(4){animation-delay:-2.4s}
+@keyframes mk{0%,20%{border-radius:0}25%,45%{border-radius:50%}50%,70%{border-radius:26%}75%,95%{border-radius:50% 0 50% 0}100%{border-radius:0}}
+.day{all:unset;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:74px;border-radius:16px;cursor:pointer;font-family:'Special Gothic',sans-serif;transition:background-color 400ms var(--e),color 400ms var(--e),transform 500ms var(--e)}
+.day:hover{transform:translateY(-3px)}
+.opt{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;height:48px;padding:0 20px;border-radius:999px;cursor:pointer;font-family:'Special Gothic',sans-serif;font-weight:600;font-size:15px;transition:background-color 400ms var(--e),color 400ms var(--e),transform 500ms var(--e)}
+.opt:hover{transform:translateY(-2px)}
+.inp,.ta{box-sizing:border-box;width:100%;border:0;border-radius:16px;padding:0 18px;font-family:'Special Gothic',sans-serif;font-size:16px;background:#F2F2F2;color:#0B0B0C}
+.inp{height:54px}.ta{height:120px;padding:16px 18px;resize:vertical}
+.inp.dk{background:#1C1C1C;color:#FFFFFF;border-radius:999px;padding:0 22px}
+.inp.dk::placeholder{color:#8A8A8A}
+.fld{display:flex;flex-direction:column;gap:8px}
+.sbtn{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 26px;border-radius:999px;cursor:pointer;font-family:'Special Gothic',sans-serif;font-weight:600;font-size:15px;transition:transform 500ms var(--e)}
+.sbtn:hover{transform:translateY(-2px)}
+.stp{border-radius:24px;background:#FFFFFF;padding:30px;transition:transform 700ms var(--e)}
+.stp:hover{transform:translateY(-6px)}
+@media (max-width:900px){.days{grid-template-columns:repeat(3,minmax(0,1fr)) !important}}
+@media (hover:none){.cur{display:none}[data-view]{cursor:auto}}
+@media (max-width:900px){
+.wrap{padding-left:20px;padding-right:20px}.tbar{padding:0 20px}.tlinks,.tclock{display:none !important}
+.g12{grid-template-columns:1fr;row-gap:24px}.g12 > *{grid-column:auto !important}
+.two,.fcols,.three{grid-template-columns:1fr !important}
+.msg{display:none}.sticky-s{position:static !important}
+}
+@media (prefers-reduced-motion:reduce){.tile,.gl{animation:none}.gl.k0{opacity:1}.rv,.ml > span{transition:none;opacity:1;transform:none}}
+.cb{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;cursor:pointer;transition:background-color 300ms,color 300ms,transform 400ms var(--e)}
+.cb:hover{transform:translateY(-2px)}
+.cb:focus-visible{outline:2px solid #7A5CFF;outline-offset:2px}
+.ptile{position:absolute;left:0;top:0;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;user-select:none;will-change:transform}
+.ptile:active{cursor:grabbing}
+</style>
+</helmet>
+
+<div ref="{{rootRef}}" onMouseMove="{{onMove}}" onMouseLeave="{{onLeave}}" style="position: relative; background: #D9D9D9; color: #0B0B0C; overflow-x: clip">
+<svg width="0" height="0" aria-hidden="true" style="position: absolute">
+<defs>
+<symbol id="g-spark" viewBox="0 0 48 48"><path d="M24 4C26 18 30 22 44 24C30 26 26 30 24 44C22 30 18 26 4 24C18 22 22 18 24 4Z" fill="currentColor"></path></symbol>
+<symbol id="g-dots" viewBox="0 0 48 48"><circle cx="15" cy="15" r="8" fill="currentColor"></circle><circle cx="33" cy="15" r="8" fill="currentColor"></circle><circle cx="15" cy="33" r="8" fill="currentColor"></circle><circle cx="33" cy="33" r="8" fill="currentColor"></circle></symbol>
+<symbol id="g-arrow" viewBox="0 0 48 48"><path d="M13 35L33 15M17 14H34V31" fill="none" stroke="currentColor" stroke-width="5.5"></path></symbol>
+<symbol id="g-cursor" viewBox="0 0 48 48"><path d="M12 7L38 26L27 28L33 40L27 43L21 31L13 38Z" fill="currentColor"></path></symbol>
+<symbol id="g-app" viewBox="0 0 48 48"><rect x="13" y="4" width="22" height="40" rx="6" fill="none" stroke="currentColor" stroke-width="4"></rect><rect x="19" y="9" width="10" height="3.5" rx="1.75" fill="currentColor"></rect><rect x="20" y="36" width="8" height="3" rx="1.5" fill="currentColor"></rect></symbol>
+<symbol id="g-code" viewBox="0 0 48 48"><path d="M17 12L6 24L17 36M31 12L42 24L31 36" fill="none" stroke="currentColor" stroke-width="5"></path></symbol>
+<symbol id="g-stack" viewBox="0 0 48 48"><path d="M24 7L42 16L24 25L6 16Z" fill="currentColor"></path><path d="M6 24L24 33L42 24M6 32L24 41L42 32" fill="none" stroke="currentColor" stroke-width="4"></path></symbol>
+<symbol id="g-ring" viewBox="0 0 200 200"><ellipse cx="100" cy="118" rx="64" ry="50" fill="none" stroke="currentColor" stroke-width="11"></ellipse><path d="M84 60L100 40L116 60L100 76Z" fill="currentColor"></path></symbol>
+<symbol id="g-web" viewBox="0 0 48 48"><rect x="5" y="8" width="38" height="28" rx="4" fill="none" stroke="currentColor" stroke-width="4"></rect><path d="M5 16H43" stroke="currentColor" stroke-width="4"></path><circle cx="10.5" cy="12" r="1.6" fill="currentColor"></circle><circle cx="15.5" cy="12" r="1.6" fill="currentColor"></circle><path d="M17 43H31M24 36V43" stroke="currentColor" stroke-width="4"></path></symbol></defs>
+</svg>
+<div ref="{{curRef}}" class="cur glass" aria-hidden="true" style="opacity: {{curOp}}"><span class="mono" style="font-size: 11px">{{curLabel}}</span></div>
+<header class="tbar">
+<a href="HomeV6.dc.html" style="display: inline-flex; align-items: center; gap: 12px"><span class="mark" style="font-size: 24px"><i></i><i></i><i></i><i></i></span><span class="xw" style="font-size: 19px">Anneal</span></a>
+<nav class="tlinks" aria-label="Primary" style="display: flex; gap: 32px; margin-left: 48px"><a href="WorkV6.dc.html" class="tl">Work</a><a href="ServicesV6.dc.html" class="tl">Services</a><a href="ProductsV6.dc.html" class="tl">Products</a><a href="StudioV6.dc.html" class="tl">Studio</a><a onClick="{{wwu}}" href="StartV6.dc.html" class="tl" aria-current="page" style="opacity: .45">Start</a></nav>
+<span class="mono tclock" style="margin-left: auto; color: #5C5C5C">Lagos {{lag}} · Barcelona {{bcn}}</span>
+<a onClick="{{wwu}}" href="StartV6.dc.html" class="tpill glass-l">Work with us <span class="ar" aria-hidden="true">↗</span></a>
+</header>
+<section data-msg="Call or write. Both reach the team." style="position: relative; padding: 200px 0 80px 0">
+<div class="wrap">
+
+<div class="g12" style="align-items: end">
+<h1 class="kx mlw" style="grid-column: span 8; margin: 0; font-weight: 400; font-size: clamp(64px, 10vw, 156px)">
+<span class="ml"><span>Tell us what</span></span>
+<span class="ml m2"><span><span style="color: #6E6E6E">you're building.</span></span></span>
+</h1>
+<p class="lead rv d2" style="grid-column: 9 / span 4; margin: 0 0 10px 0; color: #3D3D3D">Book a call if you'd rather talk, or send a brief if you'd rather write it down. Either way, you'll hear back within one working day.</p>
+</div>
+</div>
+</section>
+
+<section style="position: relative; padding: 0 0 120px 0">
+<div class="wrap two" style="display: grid; grid-template-columns: 5fr 7fr; gap: 20px; align-items: stretch">
+
+<div class="rv" data-msg="Pick a slot. We'll send the invite." style="background: #0B0B0C; color: #FFFFFF; border-radius: 28px; padding: 36px; display: flex; flex-direction: column; gap: 26px; min-height: 680px; box-sizing: border-box">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><h2 class="h3" style="margin: 0; font-size: 32px">Book a 30-minute call</h2><span class="mono" style="color: #8A8A8A">Times shown in WAT</span></div>
+<sc-if value="{{booked}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px">
+<span class="mono" style="color: #8A8A8A">Booked</span>
+<span class="kx" style="font-size: 72px">{{bookLabel}}</span>
+<span class="body" style="color: #BDBDBD">A calendar invite is on its way.</span>
+<button type="button" class="sbtn" onClick="{{rebook}}" style="align-self: flex-start; background: #1C1C1C; color: #FFFFFF">Pick another time</button>
+</div>
+</sc-if>
+<sc-if value="{{notBooked}}" hint-placeholder-val="{{ true }}">
+<div>
+<div class="mono" style="color: #8A8A8A; margin-bottom: 12px">1. Pick a day</div>
+<div class="days" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{days}}" as="d" hint-placeholder-count="10">
+<button type="button" class="day" onClick="{{d.pick}}" aria-pressed="{{d.pressed}}" style="background: {{d.bg}}; color: {{d.fg}}"><span class="mono" style="font-size: 9.5px">{{d.wd}}</span><span style="font-weight: 600; font-size: 22px; letter-spacing: -.02em">{{d.dn}}</span></button>
+</sc-for>
+</div>
+</div>
+<div>
+<div class="mono" style="color: #8A8A8A; margin-bottom: 12px">2. Pick a time</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{slots}}" as="s" hint-placeholder-count="4"><button type="button" class="opt" onClick="{{s.pick}}" aria-pressed="{{s.pressed}}" style="background: {{s.bg}}; color: {{s.fg}}">{{s.t}}</button></sc-for>
+</div>
+</div>
+<form onSubmit="{{book}}" style="display: flex; flex-direction: column; gap: 12px; margin-top: auto">
+<label for="bk-email" class="mono" style="color: #8A8A8A">3. Your email</label>
+<input id="bk-email" class="inp dk" type="email" required placeholder="you@company.com" autocomplete="email">
+<button type="submit" class="sbtn" style="background: {{accent}}; color: {{onAccent}}; opacity: {{bookOp}}">Confirm {{pickLabel}}</button>
+</form>
+</sc-if>
+</div>
+
+<div class="rv d1" data-msg="Four short steps. No essays." style="background: #FFFFFF; border-radius: 28px; padding: 36px; display: flex; flex-direction: column; gap: 26px; min-height: 680px; box-sizing: border-box">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><h2 class="h3" style="margin: 0; font-size: 32px">Send a brief</h2><span class="mono" style="color: #5C5C5C">{{stepLabel}}</span></div>
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px"><sc-for list="{{bars}}" as="b" hint-placeholder-count="4"><span style="height: 6px; border-radius: 6px; background: {{b.bg}}; transition: background-color 500ms"></span></sc-for></div>
+
+<sc-if value="{{s1}}" hint-placeholder-val="{{ true }}">
+<fieldset style="border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px">
+<legend class="kx" style="font-size: 64px; padding: 0; margin-bottom: 16px">What do you need?</legend>
+<span class="mono" style="color: #5C5C5C">Pick the closest one. You can change it on the call.</span>
+<div style="display: flex; flex-wrap: wrap; gap: 10px"><sc-for list="{{offers}}" as="k" hint-placeholder-count="6"><button type="button" class="opt" onClick="{{k.pick}}" aria-pressed="{{k.pressed}}" style="background: {{k.bg}}; color: {{k.fg}}">{{k.t}}<span class="mono" style="margin-left: 12px; opacity: .6">{{k.pr}}</span></button></sc-for></div>
+<div role="group" aria-label="Currency" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 6px"><span class="mono" style="color: #5C5C5C; margin-right: 6px">Prices in</span><sc-for list="{{curs}}" as="c" hint-placeholder-count="3"><button type="button" class="cb" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="background: {{c.bg}}; color: {{c.fg}}">{{c.t}}</button></sc-for></div>
+</fieldset>
+</sc-if>
+<sc-if value="{{s2}}" hint-placeholder-val="{{ false }}">
+<fieldset style="border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px">
+<legend class="kx" style="font-size: 64px; padding: 0; margin-bottom: 16px">Where is it today?</legend>
+<div style="display: flex; flex-wrap: wrap; gap: 10px"><sc-for list="{{stages}}" as="k" hint-placeholder-count="4"><button type="button" class="opt" onClick="{{k.pick}}" aria-pressed="{{k.pressed}}" style="background: {{k.bg}}; color: {{k.fg}}">{{k.t}}</button></sc-for></div>
+</fieldset>
+</sc-if>
+<sc-if value="{{s3}}" hint-placeholder-val="{{ false }}">
+<fieldset style="border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px">
+<legend class="kx" style="font-size: 64px; padding: 0; margin-bottom: 16px">Timing</legend>
+<span class="mono" style="color: #5C5C5C">When do you want to start?</span>
+<div style="display: flex; flex-wrap: wrap; gap: 10px"><sc-for list="{{timings}}" as="k" hint-placeholder-count="3"><button type="button" class="opt" onClick="{{k.pick}}" aria-pressed="{{k.pressed}}" style="background: {{k.bg}}; color: {{k.fg}}">{{k.t}}</button></sc-for></div>
+<div class="fld" style="margin-top: 8px"><label for="b-bud" class="mono" style="color: #5C5C5C">Anything specific about budget? (optional)</label><input id="b-bud" class="inp" type="text"></div>
+</fieldset>
+</sc-if>
+<sc-if value="{{s4}}" hint-placeholder-val="{{ false }}">
+<form id="brief" onSubmit="{{send}}" style="display: flex; flex-direction: column; gap: 14px">
+<div class="kx" style="font-size: 64px; margin-bottom: 6px">About you</div>
+<div class="two" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+<div class="fld"><label for="b-name" class="mono" style="color: #5C5C5C">Name</label><input id="b-name" class="inp" type="text" required autocomplete="name"></div>
+<div class="fld"><label for="b-email" class="mono" style="color: #5C5C5C">Email</label><input id="b-email" class="inp" type="email" required autocomplete="email"></div>
+</div>
+<div class="fld"><label for="b-co" class="mono" style="color: #5C5C5C">Company or project (optional)</label><input id="b-co" class="inp" type="text" autocomplete="organization"></div>
+<div class="fld"><label for="b-msg" class="mono" style="color: #5C5C5C">Anything else we should know (optional)</label><textarea id="b-msg" class="ta"></textarea></div>
+<div class="fld"><span class="mono" style="color: #5C5C5C">How did you hear about us? (optional)</span><div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{sources}}" as="k" hint-placeholder-count="6"><button type="button" class="opt" onClick="{{k.pick}}" aria-pressed="{{k.pressed}}" style="background: {{k.bg}}; color: {{k.fg}}; height: 40px; padding: 0 16px; font-size: 14px">{{k.t}}</button></sc-for></div></div>
+<p class="mono" style="margin: 0; color: #8A8A8A">We also note the campaign tags in the link you arrived from, so we know which channel to thank.</p>
+</form>
+</sc-if>
+<sc-if value="{{sent}}" hint-placeholder-val="{{ false }}">
+<div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 18px">
+<span class="mono" style="color: #5C5C5C">Brief received</span>
+<span class="kx" style="font-size: 96px">Thanks. It's with us.</span>
+<span class="lead" style="max-width: 500px; color: #3D3D3D">We'll read it properly and reply within one working day. For a website, expect a short scope and a payment link. For anything bigger, expect a few questions or a time to talk.</span>
+</div>
+</sc-if>
+<sc-if value="{{notSent}}" hint-placeholder-val="{{ true }}">
+<div style="border-radius: 16px; background: #F2F2F2; padding: 14px 18px"><div class="mono" style="color: #5C5C5C">Your brief so far</div><div class="sg" style="font-size: 16px; font-weight: 500; margin-top: 6px">{{sketch}}</div></div>
+</sc-if>
+<sc-if value="{{showNav}}" hint-placeholder-val="{{ true }}">
+<div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center; padding-top: 12px">
+<button type="button" class="sbtn" onClick="{{back}}" style="background: #F2F2F2; color: #0B0B0C; visibility: {{backVis}}">Back</button>
+<sc-if value="{{notLast}}" hint-placeholder-val="{{ true }}"><button type="button" class="sbtn" onClick="{{next}}" style="background: #0B0B0C; color: #FFFFFF">Continue <span aria-hidden="true">→</span></button></sc-if>
+<sc-if value="{{isLast}}" hint-placeholder-val="{{ false }}"><button type="submit" form="brief" class="sbtn" style="background: {{accent}}; color: {{onAccent}}">Send brief</button></sc-if>
+</div>
+</sc-if>
+</div>
+
+</div>
+
+<div class="wrap" style="margin-top: 100px">
+<div class="mono rv" style="color: #5C5C5C">What happens next</div>
+<div class="three" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 26px">
+<div class="stp rv"><div class="kx" style="font-size: 96px">01</div><div class="h3" style="font-size: 26px; margin-top: 20px">We read your brief</div><p class="body" style="margin: 10px 0 0 0; color: #3D3D3D">Then reply with questions or a time to talk.</p></div>
+<div class="stp rv d1"><div class="kx" style="font-size: 96px">02</div><div class="h3" style="font-size: 26px; margin-top: 20px">A 30-minute call</div><p class="body" style="margin: 10px 0 0 0; color: #3D3D3D">Goals, limits and whether we're the right team.</p></div>
+<div class="stp rv d2" style="background: #0B0B0C; color: #FFFFFF"><div class="kx" style="font-size: 96px; color: {{accent}}">03</div><div class="h3" style="font-size: 26px; margin-top: 20px">A written quote</div><p class="body" style="margin: 10px 0 0 0; color: #BDBDBD">The scope, the price and the date, for you to approve before paying.</p></div>
+</div>
+</div>
+</section>
+<div style="position: relative; z-index: 3; background: #0B0B0C">
+<section data-clip="1" data-msg="Still here? The form is just up there." style="position: sticky; top: 0; z-index: 1; background: #0B0B0C; color: #FFFFFF; padding: 130px 0 230px 0; overflow: hidden">
+<div class="xw" style="display: flex; flex-direction: column; gap: 8px">
+<div data-mq="-1" class="clrow"><span>Bring us the idea,</span><span>Bring us the idea,</span><span>Bring us the idea,</span></div>
+<div data-mq="1" class="clrow" style="color: #7A7A7A"><span>the deadline</span><span>the deadline</span><span>the deadline</span></div>
+<div data-mq="-1" class="clrow"><span>and the budget.</span><span>and the budget.</span><span>and the budget.</span></div>
+</div>
+<div class="wrap mono" style="margin-top: 56px; color: #8A8A8A">Lagos {{lag}} · Barcelona {{bcn}} · hello@raum.africa</div>
+</section>
+<footer data-msg="You made it to the bottom. Thanks." class="glass" style="position: relative; z-index: 2; color: #FFFFFF; padding: 96px 0 40px 0; margin-top: -120px; border-radius: 32px 32px 0 0; background: rgba(18,18,20,.62); box-shadow: inset 0 1px 0 rgba(255,255,255,.1)">
+<div class="wrap">
+<div class="fcols" style="display: grid; grid-template-columns: 5fr 4fr 3fr; gap: 40px; align-items: start">
+<nav aria-label="Footer" style="display: flex; flex-direction: column; gap: 4px">
+<a href="WorkV6.dc.html" class="flink">Work <span class="ar" aria-hidden="true">↗</span></a>
+<a href="ServicesV6.dc.html" class="flink">Services <span class="ar" aria-hidden="true">↗</span></a>
+<a href="ProductsV6.dc.html" class="flink">Products <span class="ar" aria-hidden="true">↗</span></a>
+<a href="StudioV6.dc.html" class="flink">Studio <span class="ar" aria-hidden="true">↗</span></a>
+<a onClick="{{wwu}}" href="StartV6.dc.html" class="flink">Start <span class="ar" aria-hidden="true">↗</span></a>
+</nav>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+<div class="glass" style="border-radius: 22px; padding: 22px; background: rgba(255,255,255,.06)"><div class="kx" style="font-size: 76px">{{lag}}</div><div class="mono" style="color: #8A8A8A; margin-top: 14px">Lagos · WAT</div></div>
+<div class="glass" style="border-radius: 22px; padding: 22px; background: rgba(255,255,255,.06)"><div class="kx" style="font-size: 76px">{{bcn}}</div><div class="mono" style="color: #8A8A8A; margin-top: 14px">Barcelona · {{bcnZone}}</div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start">
+<span class="mono" style="color: #8A8A8A">Say hello</span>
+<span class="h3" style="font-size: 24px">hello@raum.africa</span>
+<span class="body" style="font-size: 16px; color: #BDBDBD">LinkedIn · X · Instagram</span>
+<div role="group" aria-label="Currency" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 8px"><span class="mono" style="color: #8A8A8A; margin-right: 6px">Prices in</span><sc-for list="{{cursD}}" as="c" hint-placeholder-count="3"><button type="button" class="cb" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="background: {{c.bg}}; color: {{c.fg}}">{{c.t}}</button></sc-for></div>
+<a onClick="{{wwu}}" href="StartV6.dc.html" class="pbtn" style="margin-top: 14px; background: #FFFFFF; color: #0B0B0C; height: 50px">Work with us <span class="ar" aria-hidden="true">↗</span></a>
+</div>
+</div>
+
+<div ref="{{playRef}}" style="position: relative; height: 380px; margin-top: 64px">
+<span class="mono" style="position: absolute; left: 0; top: 0; color: #8A8A8A">Go on, throw these around.</span>
+<sc-for list="{{ptiles}}" as="t" hint-placeholder-count="10">
+<span ref="{{t.ref}}" class="ptile" onPointerDown="{{t.down}}" aria-hidden="true" style="width: {{t.s}}; height: {{t.s}}; border-radius: {{t.rad}}; background: {{t.bg}}; color: {{t.fg}}; transform: translate(-200px, -400px)"><svg viewBox="0 0 48 48" style="width: 54%; height: 54%; pointer-events: none"><use href="#{{t.g}}"></use></svg></span>
+</sc-for>
+</div>
+
+<div ref="{{wmWrapRef}}" style="position: relative; width: 100%; overflow: hidden; padding-top: 8px">
+<span ref="{{wmMeasRef}}" class="xw" aria-hidden="true" style="position: absolute; visibility: hidden; font-size: 100px; white-space: nowrap; letter-spacing: -.03em">ANNEAL</span>
+<div class="xw" aria-label="Anneal" style="display: flex; justify-content: space-between; font-size: {{wmSize}}; line-height: .8; white-space: nowrap; letter-spacing: -.03em"><span class="wml">A</span><span class="wml">N</span><span class="wml">N</span><span class="wml">E</span><span class="wml">A</span><span class="wml">L</span></div>
+</div>
+
+<div class="mono" style="display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 30px; color: #8A8A8A">
+<span>© 2026 Anneal Studio</span><span>Made in Lagos and Barcelona</span><a href="PrivacyV6.dc.html">Privacy</a><a href="#top" style="color: #FFFFFF">Back to top ↑</a>
+</div>
+</div>
+</footer>
+</div>
+<nav class="bnav glass" aria-label="Quick" style="transform: translate(-50%, {{navY}}); opacity: {{navOp}}">
+<span class="mark" style="font-size: 18px; color: #FFFFFF"><i></i><i></i><i></i><i></i></span>
+<span class="msg {{msgCls}}">{{msg}}</span>
+<a onClick="{{wwu}}" href="StartV6.dc.html" class="bcta" style="background: {{accent}}; color: {{onAccent}}">Work with us</a>
+</nav>
+<div ref="{{wwuRef}}" class="wwu" aria-hidden="true" style="background: {{accent}}; color: {{onAccent}}"><div class="wm2"><span class="mark" style="font-size: 120px"><i></i><i></i><i></i><i></i></span><span class="mono" style="font-size: 12px">Work with us</span></div></div>
+<a ref="{{wwuLinkRef}}" href="StartV6.dc.html" tabindex="-1" aria-hidden="true" style="display: none">Work with us</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#7A5CFF","section":"Brand"},"$preview":{"width":1440,"height":4300}}'>
+class Component extends DCLogic {
+  get startMsg() { return 'Call or write. Both reach the team.'; }
+
+  wwuGo(e) {
+    const E = this.E || {};
+    const o = E.wwu, link = E.wwuLink;
+    if (!o || !link || this.reduce) return;
+    if (e && e.preventDefault) e.preventDefault();
+    if (this.wwuBusy) return;
+    [this.wt1, this.wt2, this.wt3, this.wt4, this.wt5].forEach((t) => clearTimeout(t));
+    o.classList.remove('txt');
+    this.wwuBusy = true;
+    const el = e && e.currentTarget;
+    const W = window.innerWidth, H = window.innerHeight;
+    const r = el && el.getBoundingClientRect ? el.getBoundingClientRect() : { left: W / 2 - 80, top: H - 80, width: 160, height: 50 };
+    const S = o.style;
+    S.transition = 'none'; S.transform = 'none';
+    S.left = r.left + 'px'; S.top = r.top + 'px'; S.width = r.width + 'px'; S.height = r.height + 'px';
+    S.borderRadius = (r.height / 2) + 'px'; S.opacity = '1';
+    o.getBoundingClientRect();
+    const ease = 'cubic-bezier(.7,0,.2,1)';
+    S.transition = ['left', 'top', 'width', 'height', 'border-radius'].map((p) => p + ' 560ms ' + ease).join(',');
+    const cw = Math.min(260, W * 0.5), ch = Math.min(380, H * 0.62);
+    const cx = Math.min(W - cw / 2 - 24, Math.max(cw / 2 + 24, r.left + r.width / 2));
+    const cy = Math.min(H - ch / 2 - 24, Math.max(ch / 2 + 24, r.top + r.height / 2));
+    S.left = (cx - cw / 2) + 'px'; S.top = (cy - ch / 2) + 'px'; S.width = cw + 'px'; S.height = ch + 'px'; S.borderRadius = '32px';
+    this.wt1 = setTimeout(() => {
+      S.transition = ['left', 'top', 'width', 'height', 'border-radius'].map((p) => p + ' 720ms ' + ease).join(',');
+      S.left = '0px'; S.top = '0px'; S.width = W + 'px'; S.height = H + 'px'; S.borderRadius = '0px';
+      o.classList.add('txt');
+    }, 600);
+    this.wt2 = setTimeout(() => { try { sessionStorage.setItem('anneal-wwu', String(Date.now())); } catch (er) {} link.click(); }, 1500);
+    this.wt3 = setTimeout(() => { S.transition = 'none'; S.opacity = '0'; S.transform = 'none'; S.width = '0px'; S.height = '0px'; o.classList.remove('txt'); this.wwuBusy = false; }, 1900);
+  }
+  wwuArrive() {
+    let f = false;
+    if (this.wwuBusy) return false;
+    try { const v = sessionStorage.getItem('anneal-wwu'); if (v) { sessionStorage.removeItem('anneal-wwu'); f = v === '1' || (Date.now() - Number(v)) < 6000; } } catch (er) {}
+    const o = (this.E || {}).wwuEl || (this.E || {}).wwu;
+    clearTimeout(this.wt4); clearTimeout(this.wt5);
+    if (!f || !o || this.reduce) return false;
+    const S = o.style;
+    S.transition = 'none'; S.left = '0px'; S.top = '0px'; S.width = '100vw'; S.height = '100vh'; S.borderRadius = '0px'; S.opacity = '1'; S.transform = 'none';
+    o.classList.add('txt');
+    this.holdRv = performance.now() + 1100;
+    this.wt4 = setTimeout(() => {
+      o.classList.remove('txt');
+      S.transition = 'transform 1000ms cubic-bezier(.7,0,.2,1), border-radius 1000ms cubic-bezier(.7,0,.2,1)';
+      S.transform = 'translateY(-102%)'; S.borderRadius = '0 0 48px 48px';
+    }, 450);
+    this.wt5 = setTimeout(() => { S.transition = 'none'; S.opacity = '0'; S.transform = 'none'; }, 1550);
+    return true;
+  }
+
+  componentDidMount() {
+    this.alive = true;
+    this.drag = -1;
+    this.onUp = () => { this.drag = -1; };
+    this.onPM = (e) => { if (this.drag > -1) { this.mx = e.clientX; this.my = e.clientY; } };
+    window.addEventListener('pointerup', this.onUp);
+    window.addEventListener('pointermove', this.onPM);
+    this.reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    this.mx = -999; this.my = -999; this.cx = -999; this.cy = -999;
+    this.lastTop = null; this.vel = 0; this.mqx = []; this.wmS = []; this.fr = 0;
+    this.tickClock();
+    this.clockT = setInterval(() => { this.ticks = (this.ticks || 0) + 1; this.tickClock(); }, 1000);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (this.alive) this.fitWM(); });
+    setTimeout(() => { this.fitWM(); this.scan(); }, 400);
+    this.onResize = () => { this.fitWM(); this.measure(); };
+    window.addEventListener('resize', this.onResize);
+    this.measure();
+    this.wwuArrive();
+    if (this.pageMount) this.pageMount();
+    this.loop = this.loop.bind(this);
+    this.raf = requestAnimationFrame(this.loop);
+  }
+  componentWillUnmount() {
+    this.alive = false;
+    window.removeEventListener('pointerup', this.onUp);
+    window.removeEventListener('pointermove', this.onPM);
+    cancelAnimationFrame(this.raf);
+    clearInterval(this.clockT);
+    [this.wt1, this.wt2, this.wt3, this.wt4, this.wt5].forEach((t) => clearTimeout(t));
+    window.removeEventListener('resize', this.onResize);
+    if (this.pageUnmount) this.pageUnmount();
+  }
+  measure() {
+    const vh = window.innerHeight;
+    const pin = !this.reduce && vh < 1300 && window.innerWidth > 900;
+    if (vh !== this.state.vh || pin !== this.state.pin) this.setState({ vh: vh, pin: pin });
+  }
+  ref(k) {
+    this.E = this.E || {};
+    this._refs = this._refs || {};
+    if (!this._refs[k]) this._refs[k] = (el) => { this.E[k] = el; };
+    return this._refs[k];
+  }
+  ink(hex) {
+    const h = String(hex || '#000000').replace('#', '');
+    const n = parseInt(h.length === 3 ? h.split('').map((c) => c + c).join('') : h, 16);
+    const ch = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => { const c = v / 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); });
+    const L = 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2];
+    return (L + 0.05) / 0.0534 >= 1.05 / (L + 0.05) ? '#0B0B0C' : '#FFFFFF';
+  }
+  tickClock() {
+    const f = (tz) => { try { return new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: tz }).format(new Date()); } catch (e) { return '--:--'; } };
+    let zone = 'CET';
+    try { const p = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Madrid', timeZoneName: 'short' }).formatToParts(new Date()).find((x) => x.type === 'timeZoneName'); if (p) zone = p.value; } catch (e) {}
+    this.setState({ lag: f('Africa/Lagos'), bcn: f('Europe/Madrid'), zone: zone, tk: this.ticks || 0 });
+  }
+  fitWM() {
+    const E = this.E || {};
+    if (!E.wmWrap || !E.wmMeas) return;
+    const ratio = E.wmMeas.scrollWidth / 100;
+    if (!ratio) return;
+    const size = Math.floor((E.wmWrap.clientWidth / ratio) * 0.985);
+    if (size !== this.state.wmSize) this.setState({ wmSize: size });
+  }
+  scan() {
+    const E = this.E || {};
+    const root = E.root; if (!root) return;
+    this.rvEls = Array.prototype.slice.call(root.querySelectorAll('.rv, .mlw'));
+    this.parEls = Array.prototype.slice.call(root.querySelectorAll('[data-par]'));
+    this.clipEls = Array.prototype.slice.call(root.querySelectorAll('[data-clip]'));
+    this.zoomEls = Array.prototype.slice.call(root.querySelectorAll('[data-zoom]'));
+    this.mqEls = Array.prototype.slice.call(root.querySelectorAll('[data-mq]'));
+    this.msgEls = Array.prototype.slice.call(root.querySelectorAll('[data-msg]'));
+    this.wmEls = Array.prototype.slice.call(root.querySelectorAll('.wml'));
+    this.wordEls = Array.prototype.slice.call(root.querySelectorAll('[data-words]'));
+    this.stackEls = Array.prototype.slice.call(root.querySelectorAll('[data-stack]'));
+  }
+  words(vh) {
+    const we = this.wordEls || [];
+    for (let i = 0; i < we.length; i++) {
+      const el = we[i]; const r = el.getBoundingClientRect();
+      const fp = this.reduce ? 1 : Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.25)));
+      const sp = el.querySelectorAll('.w'); const lit = Math.round(fp * sp.length);
+      if (el._lit === lit) continue; el._lit = lit;
+      const on = el.getAttribute('data-on') || '#0B0B0C', off = el.getAttribute('data-off') || '#C4C4C4';
+      for (let j = 0; j < sp.length; j++) sp[j].style.color = j < lit ? on : off;
+    }
+  }
+  stacks(vh) {
+    const se = this.stackEls || [];
+    for (let i = 0; i < se.length - 1; i++) {
+      const el = se[i], nx = se[i + 1];
+      if (el.parentNode !== nx.parentNode) { el.style.transform = ''; continue; }
+      const top = parseFloat(getComputedStyle(el).top) || 0;
+      const q = Math.min(1, Math.max(0, 1 - (nx.getBoundingClientRect().top - top - 30) / (vh * 0.6)));
+      el.style.transform = 'scale(' + (1 - q * 0.05).toFixed(4) + ')';
+      el.style.filter = q > 0.01 ? 'brightness(' + (1 - q * 0.25).toFixed(3) + ')' : 'none';
+    }
+  }
+  loop() {
+    if (!this.alive) return;
+    this.raf = requestAnimationFrame(this.loop);
+    this.fr++;
+    if (this.fr % 8 === 0 && !this.wwuBusy) this.wwuArrive();
+    if (!this.rvEls || this.fr % 45 === 0) this.scan();
+    const vh = window.innerHeight;
+    const E = this.E || {};
+    const big = !this.reduce && window.innerWidth > 900;
+    if (E.root) {
+      const rt = E.root.getBoundingClientRect().top;
+      if (this.lastTop != null) this.vel = this.vel * 0.86 + (this.lastTop - rt) * 0.14;
+      this.lastTop = rt;
+      const navOn = rt < -320;
+      if (navOn !== !!this.state.navOn) this.setState({ navOn: navOn });
+    }
+    const rv = (this.holdRv && performance.now() < this.holdRv) ? [] : (this.rvEls || []);
+    for (let i = 0; i < rv.length; i++) { const el = rv[i]; if (!el.classList.contains('on') && el.getBoundingClientRect().top < vh * 0.9) el.classList.add('on'); }
+    if (big) {
+      const pe = this.parEls || [];
+      for (let i = 0; i < pe.length; i++) {
+        const el = pe[i]; const r = el.parentNode.getBoundingClientRect();
+        const t = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+        const k = parseFloat(el.getAttribute('data-par')) || 80;
+        const rot = parseFloat(el.getAttribute('data-rot') || '0');
+        el.style.transform = 'translate3d(0,' + ((0.5 - t) * k).toFixed(1) + 'px,0)' + (rot ? ' rotate(' + rot + 'deg)' : '');
+      }
+      const ce = this.clipEls || [];
+      for (let i = 0; i < ce.length; i++) {
+        const el = ce[i]; const r = el.getBoundingClientRect();
+        const e = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.85))); const k = 1 - e;
+        el.style.clipPath = k < 0.002 ? 'none' : 'inset(0 ' + (k * 40).toFixed(1) + 'px round ' + (k * 40).toFixed(1) + 'px)';
+      }
+      const ze = this.zoomEls || [];
+      for (let i = 0; i < ze.length; i++) {
+        const el = ze[i]; const r = el.parentNode.getBoundingClientRect();
+        const e = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.9)));
+        el.style.transform = 'scale(' + (1 + (1 - e) * 0.14).toFixed(4) + ')';
+      }
+    }
+    const me = this.mqEls || [];
+    for (let i = 0; i < me.length; i++) {
+      const el = me[i]; const unit = el.scrollWidth / 3; if (!unit) continue;
+      const dir = parseFloat(el.getAttribute('data-mq')) || -1;
+      const speed = this.reduce ? 0 : (0.6 + Math.min(14, Math.abs(this.vel)) * 0.5);
+      this.mqx[i] = (this.mqx[i] || 0) + dir * speed;
+      if (this.mqx[i] <= -unit) this.mqx[i] += unit;
+      if (this.mqx[i] > 0) this.mqx[i] -= unit;
+      el.style.transform = 'translate3d(' + this.mqx[i].toFixed(1) + 'px,0,0)';
+    }
+    const ms = this.msgEls || [];
+    let m = this.startMsg || '';
+    for (let i = 0; i < ms.length; i++) { if (ms[i].getBoundingClientRect().top < vh * 0.5) m = ms[i].getAttribute('data-msg'); }
+    if (m !== this.state.msg) this.setState({ msg: m, msgN: (this.state.msgN || 0) + 1 });
+    const L = this.wmEls || [];
+    if (L.length && !this.reduce) {
+      for (let i = 0; i < L.length; i++) {
+        const el = L[i]; const r = el.getBoundingClientRect();
+        const inside = this.my > r.top - 260 && this.my < r.bottom + 40;
+        const d = Math.abs(this.mx - (r.left + r.width / 2));
+        const k = inside ? Math.exp(-Math.pow(d / 180, 2)) : 0;
+        this.wmS[i] = this.wmS[i] || 1;
+        this.wmS[i] += (1 + 0.3 * k - this.wmS[i]) * 0.15;
+        el.style.transform = 'scaleY(' + this.wmS[i].toFixed(4) + ')';
+      }
+    }
+    if (E.cur) {
+      this.cx += (this.mx - this.cx) * 0.2; this.cy += (this.my - this.cy) * 0.2;
+      E.cur.style.transform = 'translate3d(' + (this.cx - 58).toFixed(1) + 'px,' + (this.cy - 58).toFixed(1) + 'px,0)';
+    }
+    if (!this.B && E.play && E.play.getBoundingClientRect().top < vh * 0.9) this.initPhys();
+    if (this.B) this.stepPhys();
+    this.words(vh);
+    if (big) this.stacks(vh);
+    if (this.pageLoop) this.pageLoop(vh, E, big);
+  }
+  baseVals() {
+    const accent = this.props.accent ?? '#7A5CFF';
+    const onAccent = this.ink(accent);
+    this.onAccent = onAccent;
+    if (!this._mv) {
+      this._mv = (e) => {
+        this.mx = e.clientX; this.my = e.clientY;
+        const t = e.target && e.target.closest ? e.target.closest('[data-view]') : null;
+        const lab = t ? t.getAttribute('data-view') : '';
+        if (lab !== (this.state.view || '')) this.setState({ view: lab });
+      };
+      this._lv = () => { if (this.state.view) this.setState({ view: '' }); };
+    }
+    return {
+      accent: accent, onAccent: onAccent,
+      lag: this.state.lag || '--:--', bcn: this.state.bcn || '--:--', bcnZone: this.state.zone || 'CET',
+      msg: this.state.msg || this.startMsg || '', msgCls: (this.state.msgN || 0) % 2 ? 'ma' : 'mb',
+      navY: this.state.navOn ? '0' : '160%', navOp: this.state.navOn ? '1' : '0',
+      wmSize: (this.state.wmSize || 220) + 'px', wmWrapRef: this.ref('wmWrap'), wmMeasRef: this.ref('wmMeas'),
+      rootRef: this.ref('root'), curRef: this.ref('cur'), curOp: this.state.view ? '1' : '0', curLabel: this.state.view || 'View',
+      onMove: this._mv, onLeave: this._lv,
+      wwu: this._wwu || (this._wwu = (e) => this.wwuGo(e)), wwuRef: this.ref('wwu'), wwuLinkRef: this.ref('wwuLink'),
+      playRef: this.ref('play'), ptiles: this.tileVals(accent, onAccent), cursD: this.curSwitch(true)
+    };
+  }
+  tdefs(a, oa) {
+    return [
+      { s: 92, rad: '0', bg: '#FFFFFF', fg: '#0B0B0C', g: 'g-spark' },
+      { s: 74, rad: '50%', bg: a, fg: oa, g: 'g-arrow' },
+      { s: 100, rad: '26%', bg: '#FFFFFF', fg: '#0B0B0C', g: 'g-code' },
+      { s: 66, rad: '50% 0 50% 0', bg: '#3A3A3A', fg: '#FFFFFF', g: 'g-dots' },
+      { s: 84, rad: '0', bg: '#FFFFFF', fg: '#0B0B0C', g: 'g-app' },
+      { s: 72, rad: '50%', bg: '#FFFFFF', fg: '#0B0B0C', g: 'g-cursor' },
+      { s: 96, rad: '50% 0 50% 0', bg: a, fg: oa, g: 'g-stack' },
+      { s: 62, rad: '26%', bg: '#3A3A3A', fg: '#FFFFFF', g: 'g-spark' },
+      { s: 80, rad: '50%', bg: '#FFFFFF', fg: '#0B0B0C', g: 'g-dots' },
+      { s: 88, rad: '0', bg: '#FFFFFF', fg: '#0B0B0C', g: 'g-arrow' }
+    ];
+  }
+  tileVals(a, oa) {
+    if (!this._td) this._td = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (e) => { if (e && e.preventDefault) e.preventDefault(); if (!this.B) this.initPhys(); this.drag = i; this.mx = e.clientX; this.my = e.clientY; });
+    return this.tdefs(a, oa).map((t, i) => ({ s: t.s + 'px', rad: t.rad, bg: t.bg, fg: t.fg, g: t.g, ref: this.ref('t' + i), down: this._td[i] }));
+  }
+  initPhys() {
+    const E = this.E || {};
+    if (!E.play || this.B) return;
+    const W = E.play.clientWidth;
+    this.B = this.tdefs('', '').map((t, i) => ({ x: 120 + ((i * 137) % Math.max(200, W - 240)), y: -120 - i * 110, vx: (Math.random() - 0.5) * 3, vy: 0, a: Math.random() * 40 - 20, va: 0, r: t.s / 2, s: t.s }));
+    if (this.reduce) {
+      const H = E.play.clientHeight; let x = 60;
+      this.B.forEach((b) => { b.x = Math.min(W - b.r, x + b.r); b.y = H - b.r; x += b.s + 16; });
+    }
+  }
+  stepPhys() {
+    const E = this.E || {}; const B = this.B;
+    if (!E.play || !B) return;
+    const W = E.play.clientWidth, H = E.play.clientHeight;
+    const pr = E.play.getBoundingClientRect();
+    const pxm = this.mx - pr.left, pym = this.my - pr.top;
+    for (let i = 0; i < B.length; i++) {
+      const b = B[i];
+      if (i === this.drag) { b.vx = (pxm - b.x) * 0.35; b.vy = (pym - b.y) * 0.35; b.x += b.vx; b.y += b.vy; b.va = b.vx * 0.6; }
+      else if (!this.reduce) { b.vy += 0.55; b.x += b.vx; b.y += b.vy; b.vx *= 0.995; b.va *= 0.97; }
+      b.a += b.va;
+      if (b.y + b.r > H) { b.y = H - b.r; b.vy *= -0.32; b.vx *= 0.9; b.va = b.vx * 1.4; if (Math.abs(b.vy) < 0.6) b.vy = 0; }
+      if (b.x - b.r < 0) { b.x = b.r; b.vx *= -0.5; }
+      if (b.x + b.r > W) { b.x = W - b.r; b.vx *= -0.5; }
+    }
+    for (let it = 0; it < 2; it++) {
+      for (let i = 0; i < B.length; i++) for (let j = i + 1; j < B.length; j++) {
+        const p = B[i], q = B[j];
+        const dx = q.x - p.x, dy = q.y - p.y, d = Math.hypot(dx, dy) || 0.01, m = p.r + q.r;
+        if (d < m) {
+          const nx = dx / d, ny = dy / d, o = m - d;
+          const wp = i === this.drag ? 0 : (j === this.drag ? 1 : 0.5), wq = 1 - wp;
+          p.x -= nx * o * wp; p.y -= ny * o * wp; q.x += nx * o * wq; q.y += ny * o * wq;
+          const rv = (q.vx - p.vx) * nx + (q.vy - p.vy) * ny;
+          if (rv < 0) { const jv = -1.3 * rv / 2; p.vx -= jv * nx; p.vy -= jv * ny; q.vx += jv * nx; q.vy += jv * ny; p.va -= jv * 0.8; q.va += jv * 0.8; }
+        }
+      }
+    }
+    for (let i = 0; i < B.length; i++) {
+      const el = E['t' + i]; if (!el) continue; const b = B[i];
+      el.style.transform = 'translate3d(' + (b.x - b.s / 2).toFixed(1) + 'px,' + (b.y - b.s / 2).toFixed(1) + 'px,0) rotate(' + b.a.toFixed(1) + 'deg)';
+    }
+  }
+  renderVals() {
+    const b = this.baseVals();
+    return Object.assign(b, this.pageVals ? this.pageVals(b.accent, b.onAccent) : {});
+  }
+  chips(list, key, multi) {
+    if (!this._chipFns) this._chipFns = {};
+    const cur = this.state[key];
+    return list.map((t) => {
+      const on = multi ? !!(cur && cur.indexOf(t) >= 0) : cur === t;
+      const id = key + ':' + t;
+      if (!this._chipFns[id]) this._chipFns[id] = () => {
+        if (multi) { const a = (this.state[key] || []).slice(); const i = a.indexOf(t); if (i >= 0) a.splice(i, 1); else a.push(t); this.setState({ [key]: a }); }
+        else this.setState({ [key]: t });
+      };
+      return { t: t, pressed: on ? 'true' : 'false', bg: on ? '#0B0B0C' : '#F2F2F2', fg: on ? '#FFFFFF' : '#0B0B0C', pick: this._chipFns[id] };
+    });
+  }
+  detectCur() {
+    if (this._cur) return this._cur;
+    let c = null;
+    try { c = localStorage.getItem('anneal-cur'); } catch (er) {}
+    if (c !== 'USD' && c !== 'EUR' && c !== 'NGN') {
+      let tz = '';
+      try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (er) {}
+      const eu = ['Europe/Madrid', 'Europe/Paris', 'Europe/Berlin', 'Europe/Rome', 'Europe/Amsterdam', 'Europe/Brussels', 'Europe/Lisbon', 'Europe/Vienna', 'Europe/Dublin', 'Europe/Helsinki', 'Europe/Athens', 'Europe/Luxembourg', 'Europe/Malta', 'Europe/Riga', 'Europe/Tallinn', 'Europe/Vilnius', 'Europe/Bratislava', 'Europe/Ljubljana', 'Europe/Zagreb', 'Atlantic/Canary', 'Africa/Ceuta'];
+      c = tz === 'Africa/Lagos' ? 'NGN' : (eu.indexOf(tz) > -1 ? 'EUR' : 'USD');
+    }
+    this._cur = c;
+    return c;
+  }
+  setCur(c) {
+    this._cur = c;
+    try { localStorage.setItem('anneal-cur', c); } catch (er) {}
+    this.setState({ curN: (this.state.curN || 0) + 1 });
+  }
+  money(k) {
+    const P = { site: { USD: 400, EUR: 360, NGN: 560000 }, ai: { USD: 2500, EUR: 2250, NGN: 3500000 }, web: { USD: 4500, EUR: 4000, NGN: 6300000 }, mobile: { USD: 8000, EUR: 7200, NGN: 11200000 }, care: { USD: 400, EUR: 360, NGN: 560000 }, growth: { USD: 3000, EUR: 2700, NGN: 4200000 }, sprint: { USD: 2000, EUR: 1800, NGN: 2800000 }, admin: { USD: 1500, EUR: 1350, NGN: 2100000 }, ailayer: { USD: 1500, EUR: 1350, NGN: 2100000 }, mobadd: { USD: 3500, EUR: 3150, NGN: 4900000 }, page: { USD: 150, EUR: 135, NGN: 210000 }, disc: { USD: 900, EUR: 810, NGN: 1260000 } };
+    const S = { USD: '$', EUR: '€', NGN: '₦' };
+    const c = this.detectCur();
+    return S[c] + P[k][c].toLocaleString('en-US');
+  }
+  curSwitch(dark) {
+    if (!this._cpk) this._cpk = { USD: () => this.setCur('USD'), EUR: () => this.setCur('EUR'), NGN: () => this.setCur('NGN') };
+    const cc = this.detectCur();
+    const L = { USD: 'USD $', EUR: 'EUR €', NGN: 'NGN ₦' };
+    return ['USD', 'EUR', 'NGN'].map((c) => {
+      const on = cc === c;
+      return { t: L[c], pressed: on ? 'true' : 'false', bg: on ? (dark ? '#FFFFFF' : '#0B0B0C') : (dark ? 'rgba(255,255,255,.1)' : '#FFFFFF'), fg: on ? (dark ? '#0B0B0C' : '#FFFFFF') : (dark ? '#FFFFFF' : '#0B0B0C'), pick: this._cpk[c] };
+    });
+  }
+  priceVals() {
+    const pr = {};
+    ['site', 'ai', 'web', 'mobile', 'care', 'growth', 'sprint', 'admin', 'ailayer', 'mobadd', 'page', 'disc'].forEach((k) => { pr[k] = this.money(k); });
+    return { pr: pr, curs: this.curSwitch(false), cursD: this.curSwitch(true) };
+  }
+  pageVals(accent, onAccent) {
+    const days = [];
+    const d0 = new Date(); d0.setHours(12, 0, 0, 0);
+    if (!this._dayFns) this._dayFns = {};
+    for (let i = 1; days.length < 10 && i < 30; i++) {
+      const d = new Date(d0.getTime() + i * 86400000);
+      const wd = d.getDay(); if (wd === 0 || wd === 6) continue;
+      const key = d.toISOString().slice(0, 10);
+      const on = this.state.day === key;
+      if (!this._dayFns[key]) this._dayFns[key] = () => this.setState({ day: key });
+      days.push({ key: key, pressed: on ? 'true' : 'false', wd: d.toLocaleDateString('en-GB', { weekday: 'short' }), dn: String(d.getDate()), label: d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }), bg: on ? accent : '#1C1C1C', fg: on ? onAccent : '#FFFFFF', pick: this._dayFns[key] });
+    }
+    if (!this._slotFns) this._slotFns = {};
+    const slots = ['10:00', '11:30', '14:00', '16:30'].map((t) => {
+      const on = this.state.slot === t;
+      if (!this._slotFns[t]) this._slotFns[t] = () => this.setState({ slot: t });
+      return { t: t, pressed: on ? 'true' : 'false', bg: on ? accent : '#1C1C1C', fg: on ? onAccent : '#FFFFFF', pick: this._slotFns[t] };
+    });
+    const dayObj = days.filter((d) => d.key === this.state.day)[0];
+    const ready = !!(dayObj && this.state.slot);
+    const step = this.state.step || 1;
+    const sent = !!this.state.sent;
+    if (!this._fx) {
+      this._fx = {
+        book: (e) => { if (e && e.preventDefault) e.preventDefault(); const dd = this._ready; if (!dd) return; this.setState({ booked: true, bookedLabel: dd }); },
+        rebook: () => this.setState({ booked: false }),
+        next: () => this.setState({ step: Math.min(4, (this.state.step || 1) + 1) }),
+        back: () => this.setState({ step: Math.max(1, (this.state.step || 1) - 1) }),
+        send: (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ sent: true }); }
+      };
+    }
+    this._ready = ready ? (dayObj.label + ', ' + this.state.slot + ' WAT') : null;
+    const bars = [1, 2, 3, 4].map((n) => ({ bg: sent || n <= step ? (sent ? accent : '#0B0B0C') : '#EDEDED' }));
+    const P = this.priceVals();
+    const offDefs = [['site', 'Website', 'site'], ['ai', 'AI feature', 'ai'], ['web', 'Web MVP', 'web'], ['mobile', 'Mobile MVP', 'mobile'], ['growth', 'Product Growth & Engineering', 'care'], ['else', 'Something else', null]];
+    if (!this._offFns) this._offFns = {};
+    const offers = offDefs.map((d) => {
+      const on = this.state.offer === d[0];
+      if (!this._offFns[d[0]]) this._offFns[d[0]] = () => this.setState({ offer: d[0] });
+      return { id: d[0], t: d[1], pr: d[2] ? 'from ' + this.money(d[2]) : 'Quoted after your brief', pressed: on ? 'true' : 'false', bg: on ? '#0B0B0C' : '#F2F2F2', fg: on ? '#FFFFFF' : '#0B0B0C', pick: this._offFns[d[0]] };
+    });
+    const offObj = offers.filter((o) => o.pressed === 'true')[0];
+    const bits = [];
+    if (offObj) bits.push(offObj.t + (offObj.id === 'else' ? '' : ' · ' + offObj.pr));
+    if (this.state.stage) bits.push(this.state.stage.toLowerCase());
+    if (this.state.timing) bits.push(this.state.timing.toLowerCase());
+    const sketch = bits.length ? bits.join(' · ') : 'Your brief will appear here as you fill it in.';
+    return Object.assign({}, P, {
+      offers: offers, sketch: sketch, notSent: !sent,
+      days: days, slots: slots,
+      pickLabel: ready ? (dayObj.label + ', ' + this.state.slot) : 'a time', bookOp: ready ? '1' : '0.45',
+      booked: !!this.state.booked, notBooked: !this.state.booked, bookLabel: this.state.bookedLabel || '',
+      book: this._fx.book, rebook: this._fx.rebook,
+      stages: this.chips(['Just an idea', 'Designs or a prototype', 'Live product', 'Live, but struggling'], 'stage', false),
+      sources: this.chips(['LinkedIn', 'X', 'A referral', 'A designer or agency', 'Search', 'Somewhere else'], 'src', false),
+      timings: this.chips(['As soon as possible', 'In 1 to 3 months', 'Just exploring'], 'timing', false),
+      s1: !sent && step === 1, s2: !sent && step === 2, s3: !sent && step === 3, s4: !sent && step === 4,
+      sent: sent, showNav: !sent, bars: bars,
+      stepLabel: sent ? 'Done' : 'Step ' + step + ' of 4',
+      backVis: step > 1 ? 'visible' : 'hidden', notLast: step < 4, isLast: step === 4,
+      next: this._fx.next, back: this._fx.back, send: this._fx.send
+    });
+  }
+}
+</script>
+</body>
+</html>

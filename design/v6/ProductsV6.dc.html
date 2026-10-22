@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Anneal Studio · Products v6</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Gothic:wdth,wght@75..125,400..700&amp;family=Special+Gothic+Condensed+One&amp;family=Special+Gothic+Expanded+One&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+:root{--e:cubic-bezier(.2,.8,.2,1);--s:cubic-bezier(.7,0,.2,1)}
+body{margin:0;background:#D9D9D9;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+.sg{font-family:'Special Gothic',system-ui,sans-serif}
+.kx{font-family:'Special Gothic Condensed One','Special Gothic',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:-.004em;line-height:.86}
+.xw{font-family:'Special Gothic Expanded One','Special Gothic',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:-.025em;line-height:.9}
+.mono{font-family:'Geist Mono',ui-monospace,monospace;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;font-weight:500}
+.wrap{max-width:1440px;margin:0 auto;padding-left:40px;padding-right:40px;box-sizing:border-box}
+.g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}
+.h2{font-family:'Special Gothic',sans-serif;font-weight:500;letter-spacing:-.035em;line-height:1}
+.h3{font-family:'Special Gothic',sans-serif;font-weight:600;letter-spacing:-.025em;line-height:1.06}
+.body{font-family:'Special Gothic',sans-serif;font-size:18px;line-height:1.5;letter-spacing:-.003em}
+.lead{font-family:'Special Gothic',sans-serif;font-size:22px;line-height:1.38;letter-spacing:-.012em;font-weight:400}
+.ph{opacity:.6}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #7A5CFF;outline-offset:3px}
+.mark{display:inline-grid;grid-template-columns:1fr 1fr;gap:12%;width:1em;height:1em;flex:none}
+.mark i{display:block;background:currentColor}
+.mark i:nth-child(1){border-radius:0}.mark i:nth-child(2){border-radius:50%}.mark i:nth-child(3){border-radius:26%}.mark i:nth-child(4){border-radius:50% 0 50% 0}
+.glass{background:rgba(22,22,24,.55);-webkit-backdrop-filter:blur(22px) saturate(1.8);backdrop-filter:blur(22px) saturate(1.8);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 14px 40px rgba(0,0,0,.22)}
+.glass-l{background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 10px 30px rgba(11,11,12,.08)}
+.tbar{position:absolute;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;gap:32px;height:88px;padding:0 40px;box-sizing:border-box}
+.tl{font-family:'Special Gothic',sans-serif;font-weight:500;font-size:15px;transition:opacity 300ms}
+.tl:hover{opacity:.5}
+.tpill{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 20px;border-radius:999px;font-family:'Special Gothic',sans-serif;font-weight:600;font-size:14px;transition:transform 400ms var(--e)}
+.tpill:hover{transform:translateY(-2px)}
+.pbtn{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 28px;border-radius:999px;font-family:'Special Gothic',sans-serif;font-weight:600;font-size:16px;transition:color 400ms var(--e);border:0;cursor:pointer}
+.pbtn::before{content:'';position:absolute;inset:0;border-radius:inherit;background:#7A5CFF;transform:translateY(102%);transition:transform 550ms var(--e);z-index:-1}
+.pbtn:hover::before{transform:none}.pbtn:hover{color:#0B0B0C !important}
+.pbtn.acc::before{background:#FFFFFF}
+.ar{display:inline-block;transition:transform 450ms var(--e)}
+.pbtn:hover .ar,.alink:hover .ar{transform:translate(4px,-4px)}
+.alink{display:inline-flex;align-items:center;gap:8px;font-family:'Special Gothic',sans-serif;font-weight:500;font-size:16px;transition:opacity 300ms}
+.alink:hover{opacity:.7}
+.tile{position:relative;display:inline-block;flex:none;width:.78em;height:.78em;margin:0 .09em;overflow:hidden;vertical-align:middle;animation:morph 9.6s var(--s) infinite}
+@keyframes morph{0%,22%{border-radius:0}25%,47%{border-radius:50%}50%,72%{border-radius:26%}75%,97%{border-radius:50% 0 50% 0}100%{border-radius:0}}
+.gl{position:absolute;left:18%;top:18%;width:64%;height:64%;opacity:0;animation:cyc 9.6s var(--e) infinite}
+@keyframes cyc{0%{opacity:0;transform:scale(.3) rotate(-90deg)}3%{opacity:1;transform:scale(1) rotate(0deg)}24%{opacity:1;transform:scale(1) rotate(0deg)}27%{opacity:0;transform:scale(.3) rotate(90deg)}100%{opacity:0;transform:scale(.3) rotate(90deg)}}
+.k0{animation-delay:0s}.k1{animation-delay:-7.2s}.k2{animation-delay:-4.8s}.k3{animation-delay:-2.4s}
+.tag{display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+.rv{opacity:0;transform:translateY(42px);transition:opacity 900ms var(--e),transform 1200ms var(--e)}
+.rv.on{opacity:1;transform:none}
+.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}.rv.d5{transition-delay:.4s}
+.ml{display:block;overflow:hidden;padding-bottom:.04em}
+.ml > span{display:flex;align-items:center;flex-wrap:nowrap;transform:translateY(106%);transition:transform 1200ms var(--e)}
+.mlw.on .ml > span{transform:none}
+.mlw.on .ml.m2 > span{transition-delay:.1s}.mlw.on .ml.m3 > span{transition-delay:.2s}.mlw.on .ml.m4 > span{transition-delay:.3s}
+.clrow{display:flex;width:max-content;white-space:nowrap;will-change:transform;font-size:clamp(48px,6.8vw,104px)}
+.clrow span{padding-right:.4em}
+.flink{display:flex;align-items:baseline;gap:14px;font-family:'Special Gothic',sans-serif;font-weight:500;font-size:clamp(36px,4.4vw,64px);letter-spacing:-.035em;line-height:1.08;transition:transform 600ms var(--e)}
+.flink .ar{font-size:.5em;opacity:0;transform:translateX(-10px);transition:opacity 400ms,transform 500ms var(--e)}
+.flink:hover{transform:translateX(14px)}
+.flink:hover .ar{opacity:1;transform:none}
+.wml{display:inline-block;transform-origin:50% 100%;will-change:transform}
+.bnav{position:fixed;left:50%;bottom:22px;z-index:90;display:flex;align-items:center;gap:10px;padding:6px 6px 6px 18px;border-radius:999px;color:#FFFFFF;transition:transform 700ms var(--e),opacity 500ms}
+.msg{display:inline-block;font-family:'Special Gothic',sans-serif;font-size:14px;font-weight:500;white-space:nowrap;min-width:260px}
+.ma{animation:msgA 600ms var(--e)}.mb{animation:msgB 600ms var(--e)}
+@keyframes msgA{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes msgB{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.bcta{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 20px;border-radius:999px;font-family:'Special Gothic',sans-serif;font-weight:600;font-size:14px}
+.cur{position:fixed;left:0;top:0;z-index:150;pointer-events:none;display:flex;align-items:center;justify-content:center;width:116px;height:116px;border-radius:50%;color:#FFFFFF;will-change:transform;transition:opacity 300ms}
+[data-view]{cursor:none}
+.phone{position:absolute;width:250px;height:524px;border-radius:44px;background:#050505;padding:9px;box-sizing:border-box;box-shadow:0 40px 80px rgba(0,0,0,.3),inset 0 0 0 1.5px #2A2A2A}
+.scr{position:relative;height:100%;border-radius:36px;overflow:hidden;display:flex;flex-direction:column;padding:44px 18px 18px 18px;box-sizing:border-box}
+.notch{position:absolute;left:50%;top:12px;width:80px;height:23px;margin-left:-40px;border-radius:999px;background:#050505}
+.wwu{position:fixed;z-index:300;left:0;top:0;width:0;height:0;border-radius:999px;pointer-events:none;opacity:0;display:flex;align-items:center;justify-content:center;overflow:hidden;will-change:left,top,width,height,transform}
+.wwu .wm2{display:flex;flex-direction:column;align-items:center;gap:26px;opacity:0;transform:scale(.7) rotate(-90deg);transition:opacity 500ms var(--e),transform 900ms var(--e)}
+.wwu.txt .wm2{opacity:1;transform:none}
+.wwu .wm2 .mark i{animation:mk 3.2s var(--s) infinite}
+.wwu .wm2 .mark i:nth-child(2){animation-delay:-.8s}.wwu .wm2 .mark i:nth-child(3){animation-delay:-1.6s}.wwu .wm2 .mark i:nth-child(4){animation-delay:-2.4s}
+@keyframes mk{0%,20%{border-radius:0}25%,45%{border-radius:50%}50%,70%{border-radius:26%}75%,95%{border-radius:50% 0 50% 0}100%{border-radius:0}}
+.track{border-radius:28px;padding:36px;box-sizing:border-box;min-height:420px;display:flex;flex-direction:column;will-change:transform;transition:box-shadow 700ms var(--e)}
+.track:hover{box-shadow:0 30px 60px rgba(11,11,12,.14)}
+.why{padding:36px 0;transition:color 600ms var(--e)}
+.mem{border-radius:24px;overflow:hidden;background:#FFFFFF}
+.mem .ph1{height:340px;background:#E6E6E6;display:flex;align-items:center;justify-content:center}
+.mem .ph1 .mk{width:90px;height:90px;animation:morph 9.6s var(--s) infinite;transition:transform 800ms var(--e)}
+.mem:hover .mk{transform:rotate(90deg) scale(1.1)}
+.vens{display:flex;gap:16px;height:480px}
+.ven{position:relative;flex:1 1 0;min-width:0;border-radius:28px;overflow:hidden;transition:flex-grow 900ms var(--e)}
+.ven .vtop{position:absolute;left:30px;right:30px;top:28px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.ven .vbot{position:absolute;left:30px;right:30px;bottom:30px}
+.ven .vdesc{max-width:340px;transition:opacity 600ms var(--e),transform 700ms var(--e)}
+.shot{position:absolute;width:160px;border-radius:22px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.3);transition:opacity 700ms var(--e)}
+.shot img{display:block;width:100%;height:auto}
+.inp{box-sizing:border-box;height:58px;border-radius:999px;border:0;padding:0 24px;font-family:'Special Gothic',sans-serif;font-size:16px;background:rgba(255,255,255,.1);color:#FFFFFF;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);min-width:0;flex:1}
+.inp::placeholder{color:#8A8A8A}
+@media (max-width:900px){.tracks,.team,.locs{grid-template-columns:1fr !important}.vens{flex-direction:column;height:auto}.ven{height:400px;flex:none !important}.wl{flex-direction:column}}
+@media (hover:none){.cur{display:none}[data-view]{cursor:auto}}
+@media (max-width:900px){
+.wrap{padding-left:20px;padding-right:20px}.tbar{padding:0 20px}.tlinks,.tclock{display:none !important}
+.g12{grid-template-columns:1fr;row-gap:24px}.g12 > *{grid-column:auto !important}
+.two,.fcols,.three{grid-template-columns:1fr !important}
+.msg{display:none}.sticky-s{position:static !important}
+}
+@media (prefers-reduced-motion:reduce){.tile,.gl{animation:none}.gl.k0{opacity:1}.rv,.ml > span{transition:none;opacity:1;transform:none}}
+.ptile{position:absolute;left:0;top:0;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;user-select:none;will-change:transform}
+.ptile:active{cursor:grabbing}
+.cb{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;cursor:pointer;transition:background-color 300ms,color 300ms,transform 400ms var(--e)}
+.cb:hover{transform:translateY(-2px)}
+.cb:focus-visible{outline:2px solid #7A5CFF;outline-offset:2px}
+</style>
+</helmet>
+
+<div ref="{{rootRef}}" onMouseMove="{{onMove}}" onMouseLeave="{{onLeave}}" style="position: relative; background: #D9D9D9; color: #0B0B0C; overflow-x: clip">
+<svg width="0" height="0" aria-hidden="true" style="position: absolute">
+<defs>
+<symbol id="g-spark" viewBox="0 0 48 48"><path d="M24 4C26 18 30 22 44 24C30 26 26 30 24 44C22 30 18 26 4 24C18 22 22 18 24 4Z" fill="currentColor"></path></symbol>
+<symbol id="g-dots" viewBox="0 0 48 48"><circle cx="15" cy="15" r="8" fill="currentColor"></circle><circle cx="33" cy="15" r="8" fill="currentColor"></circle><circle cx="15" cy="33" r="8" fill="currentColor"></circle><circle cx="33" cy="33" r="8" fill="currentColor"></circle></symbol>
+<symbol id="g-arrow" viewBox="0 0 48 48"><path d="M13 35L33 15M17 14H34V31" fill="none" stroke="currentColor" stroke-width="5.5"></path></symbol>
+<symbol id="g-cursor" viewBox="0 0 48 48"><path d="M12 7L38 26L27 28L33 40L27 43L21 31L13 38Z" fill="currentColor"></path></symbol>
+<symbol id="g-app" viewBox="0 0 48 48"><rect x="13" y="4" width="22" height="40" rx="6" fill="none" stroke="currentColor" stroke-width="4"></rect><rect x="19" y="9" width="10" height="3.5" rx="1.75" fill="currentColor"></rect><rect x="20" y="36" width="8" height="3" rx="1.5" fill="currentColor"></rect></symbol>
+<symbol id="g-code" viewBox="0 0 48 48"><path d="M17 12L6 24L17 36M31 12L42 24L31 36" fill="none" stroke="currentColor" stroke-width="5"></path></symbol>
+<symbol id="g-stack" viewBox="0 0 48 48"><path d="M24 7L42 16L24 25L6 16Z" fill="currentColor"></path><path d="M6 24L24 33L42 24M6 32L24 41L42 32" fill="none" stroke="currentColor" stroke-width="4"></path></symbol>
+<symbol id="g-ring" viewBox="0 0 200 200"><ellipse cx="100" cy="118" rx="64" ry="50" fill="none" stroke="currentColor" stroke-width="11"></ellipse><path d="M84 60L100 40L116 60L100 76Z" fill="currentColor"></path></symbol>
+<symbol id="g-web" viewBox="0 0 48 48"><rect x="5" y="8" width="38" height="28" rx="4" fill="none" stroke="currentColor" stroke-width="4"></rect><path d="M5 16H43" stroke="currentColor" stroke-width="4"></path><circle cx="10.5" cy="12" r="1.6" fill="currentColor"></circle><circle cx="15.5" cy="12" r="1.6" fill="currentColor"></circle><path d="M17 43H31M24 36V43" stroke="currentColor" stroke-width="4"></path></symbol></defs>
+</svg>
+<div ref="{{curRef}}" class="cur glass" aria-hidden="true" style="opacity: {{curOp}}"><span class="mono" style="font-size: 11px">{{curLabel}}</span></div>
+<header class="tbar">
+<a href="HomeV6.dc.html" style="display: inline-flex; align-items: center; gap: 12px"><span class="mark" style="font-size: 24px"><i></i><i></i><i></i><i></i></span><span class="xw" style="font-size: 19px">Anneal</span></a>
+<nav class="tlinks" aria-label="Primary" style="display: flex; gap: 32px; margin-left: 48px"><a href="WorkV6.dc.html" class="tl">Work</a><a href="ServicesV6.dc.html" class="tl">Services</a><a href="ProductsV6.dc.html" class="tl" aria-current="page" style="opacity: .45">Products</a><a href="StudioV6.dc.html" class="tl">Studio</a><a onClick="{{wwu}}" href="StartV6.dc.html" class="tl">Start</a></nav>
+<span class="mono tclock" style="margin-left: auto; color: #5C5C5C">Lagos {{lag}} · Barcelona {{bcn}}</span>
+<a onClick="{{wwu}}" href="StartV6.dc.html" class="tpill glass-l">Work with us <span class="ar" aria-hidden="true">↗</span></a>
+</header>
+<section data-msg="Our own, not for hire." style="position: relative; padding: 200px 0 120px 0">
+<div class="wrap">
+
+<h1 class="kx mlw" style="margin: 0; font-weight: 400; font-size: clamp(64px, 10.4vw, 164px)">
+<span class="ml"><span>Products we</span></span>
+<span class="ml m2"><span><span style="color: #6E6E6E">build</span><span class="tile" style="background: {{accent}}; color: {{onAccent}}"><svg class="gl k0" viewBox="0 0 48 48" aria-hidden="true"><use href="#g-code"></use></svg><svg class="gl k1" viewBox="0 0 48 48" aria-hidden="true"><use href="#g-stack"></use></svg><svg class="gl k2" viewBox="0 0 48 48" aria-hidden="true"><use href="#g-spark"></use></svg><svg class="gl k3" viewBox="0 0 48 48" aria-hidden="true"><use href="#g-dots"></use></svg></span></span></span>
+<span class="ml m3"><span>for ourselves.</span></span>
+</h1>
+<p class="lead rv d2" style="margin: 56px 0 0 0; max-width: 680px; color: #3D3D3D">Alongside client work, we build tools and ventures of our own. Here is what we have built so far and what is coming.</p>
+</div>
+</section>
+
+<section data-msg="Three ventures, one exit." style="position: relative; background: #FFFFFF; padding: 160px 0">
+<div class="wrap">
+
+<h2 class="h2 rv d1" style="margin: 0 0 56px 0; font-size: clamp(44px, 5.4vw, 80px)">What we have built so far.</h2>
+<div class="vens rv d2">
+<div class="ven" onMouseEnter="{{venA}}" style="flex-grow: {{vf0}}; background: {{raumBg}}; color: {{raumFg}}">
+<div class="vtop"><img src="/_blob/27035bc4656065bff9ac8b975be77f11" alt="Raum" style="height: 30px; width: auto; display: block"><span class="tag" style="background: rgba(255,255,255,.16); color: {{raumFg}}">Co-founded</span></div>
+<div class="shot" style="right: 200px; top: 90px; opacity: {{shotOp}}; transform: rotate(-6deg)"><img src="/_blob/61886d68d3b7064a3de0490b61d47f35" alt="Raum app screen"></div>
+<div class="shot" style="right: 30px; top: 120px; opacity: {{shotOp}}; transform: rotate(5deg)"><img src="/_blob/ac7de152b2afd8ea5e69a664fd1b644d" alt="Raum app screen"></div>
+<div class="vbot"><div class="xw" style="font-size: 46px">Raum</div><p class="body vdesc" style="margin: 12px 0 0 0; font-size: 17px; opacity: .86">AI infrastructure for real estate operations.</p></div>
+</div>
+<div class="ven" onMouseEnter="{{venB}}" style="flex-grow: {{vf1}}; background: {{centiivBg}}; color: {{centiivFg}}">
+<div class="vtop"><span class="mono" style="opacity: .7">Venture · 02</span><span class="tag" style="background: rgba(127,127,127,.18); color: {{centiivFg}}">Co-founded · Exited</span></div>
+<div style="position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); display: flex; justify-content: center"><span class="xw" style="font-size: clamp(36px, 4vw, 62px)">Centiiv</span></div>
+<div class="vbot"><p class="body vdesc" style="margin: 0; font-size: 17px; opacity: .8">Co-founded and exited.</p></div>
+</div>
+<div class="ven" onMouseEnter="{{venC}}" style="flex-grow: {{vf2}}; background: {{clekeyBg}}; color: {{clekeyFg}}">
+<div class="vtop"><span class="mono" style="opacity: .7">Venture · 03</span><span class="tag" style="background: rgba(127,127,127,.18); color: {{clekeyFg}}">2026 · In stealth</span></div>
+<div style="position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); display: flex; justify-content: center"><span class="xw" style="font-size: clamp(36px, 4vw, 62px)">Clekey</span></div>
+<div class="vbot"><p class="body vdesc" style="margin: 0; font-size: 17px; opacity: .8">Built with a partner. More when it's ready.</p></div>
+</div>
+<div class="ven" onMouseEnter="{{venD}}" style="flex-grow: {{vf3}}; background: {{accent}}; color: {{onAccent}}">
+<div class="vtop"><span class="mono" style="opacity: .75">Next · Our own</span><span class="tag" style="background: rgba(11,11,12,.14); color: {{onAccent}}">Coming soon</span></div>
+<div style="position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); display: flex; justify-content: center"><span class="xw" style="font-size: clamp(32px, 3.6vw, 56px); text-align: center; line-height: .98">Anneal<br>tools</span></div>
+<div class="vbot"><p class="body vdesc" style="margin: 0; font-size: 17px; opacity: .86">Our own products, coming soon.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<section data-msg="Builders who ship their own." style="position: relative; padding: 160px 0">
+<div class="wrap">
+
+<h2 class="h2 rv d1" style="margin: 0 0 64px 0; font-size: clamp(44px, 5.4vw, 80px)">Client work and our own, side by side.</h2>
+<div class="tracks" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: start">
+<div class="track" data-par="30" style="background: #FFFFFF; min-height: 340px">
+<div style="display: flex; justify-content: space-between"><span class="tag" style="background: #EDEDED">01</span></div>
+<h3 class="h3" style="margin: auto 0 0 0; font-size: 36px">Builders who ship</h3>
+<p class="body" style="margin: 14px 0 0 0; color: #3D3D3D">The people building your product also ship their own, so they know what it takes to launch.</p>
+</div>
+<div class="track" data-par="100" style="background: #FFFFFF; min-height: 340px">
+<div style="display: flex; justify-content: space-between"><span class="tag" style="background: #EDEDED">02</span></div>
+<h3 class="h3" style="margin: auto 0 0 0; font-size: 36px">Tested on ourselves</h3>
+<p class="body" style="margin: 14px 0 0 0; color: #3D3D3D">We use our own tools before anyone else does, so we know what holds up.</p>
+</div>
+<div class="track" data-par="170" style="background: #0B0B0C; color: #FFFFFF; min-height: 340px">
+<div style="display: flex; justify-content: space-between"><span class="tag" style="background: {{accent}}; color: {{onAccent}}">03</span></div>
+<h3 class="h3" style="margin: auto 0 0 0; font-size: 36px">Lessons that carry over</h3>
+<p class="body" style="margin: 14px 0 0 0; color: #BDBDBD">What we learn building our own products goes into yours.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section data-msg="What is coming next." style="position: relative; background: #FFFFFF; padding: 160px 0">
+<div class="wrap g12" style="align-items: start">
+<div style="grid-column: span 5">
+
+<h2 class="h2 mlw" style="margin: 0; font-size: clamp(44px, 5.4vw, 80px)"><span class="ml"><span>What opens</span></span><span class="ml m2"><span style="color: #8A8A8A">next.</span></span></h2>
+</div>
+<div style="grid-column: 7 / span 6; display: flex; flex-direction: column; gap: 20px">
+<div class="rv" style="border-radius: 28px; background: #D9D9D9; padding: 36px">
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="h3" style="font-size: 32px">Anneal tools</span><span class="tag" style="background: {{accent}}; color: {{onAccent}}">Coming soon</span></div>
+<p class="body" style="margin: 16px 0 0 0; color: #3D3D3D">Small products we use ourselves, opened up to everyone once they are ready.</p>
+</div>
+<div class="rv d1" style="border-radius: 28px; background: #0B0B0C; color: #FFFFFF; padding: 36px">
+<div style="display: flex; justify-content: space-between; align-items: center"><span class="h3" style="font-size: 32px">Ventures with founders</span><span class="tag" style="background: rgba(255,255,255,.14)">Not open yet</span></div>
+<p class="body" style="margin: 16px 0 0 0; color: #BDBDBD">Later, a small number of venture partnerships with founders. Join the waitlist to hear first.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section data-msg="Want in early? Leave an email." data-clip="1" style="position: relative; background: #0B0B0C; color: #FFFFFF; padding: 160px 0">
+<div class="wrap g12" style="align-items: end">
+<div style="grid-column: span 7">
+<h2 class="xw mlw" style="margin: 0; font-weight: 400; font-size: clamp(44px, 5.6vw, 88px)"><span class="ml"><span>Hear first when</span></span><span class="ml m2"><span style="color: #7A7A7A">something opens.</span></span></h2>
+<p class="lead rv d1" style="margin: 30px 0 0 0; color: #BDBDBD; max-width: 560px">Leave your email and we will write once, when the first tool or venture partnership opens. Nothing else.</p>
+</div>
+<div class="rv d2" style="grid-column: 8 / span 5">
+<sc-if value="{{notJoined}}" hint-placeholder-val="{{ true }}">
+<form onSubmit="{{join}}" class="glass" style="border-radius: 28px; padding: 28px; background: rgba(255,255,255,.06)">
+<label for="wl-email" class="mono" style="color: #8A8A8A">Email address</label>
+<div class="wl" style="display: flex; gap: 10px; margin-top: 14px">
+<input id="wl-email" class="inp" type="email" required placeholder="you@company.com" autocomplete="email">
+<button type="submit" class="pbtn acc" style="background: {{accent}}; color: {{onAccent}}; height: 58px">Join the waitlist</button>
+</div>
+<p class="body" style="margin: 16px 0 0 0; font-size: 14px; color: #8A8A8A">We keep your email only for this list. <a href="PrivacyV6.dc.html" style="text-decoration: underline">How we handle it</a></p>
+</form>
+</sc-if>
+<sc-if value="{{joined}}" hint-placeholder-val="{{ false }}">
+<div class="glass" style="border-radius: 28px; padding: 32px; background: rgba(255,255,255,.06)"><div class="mono" style="color: #8A8A8A">On the list</div><div class="h3" style="font-size: 30px; margin-top: 14px">You're on the list. We'll write when something opens.</div></div>
+</sc-if>
+</div>
+</div>
+</section>
+
+<section data-msg="Need one built for you?" style="position: relative; padding: 160px 0">
+<div class="wrap g12" style="align-items: end">
+<div style="grid-column: span 7">
+
+<h2 class="h2 rv d1" style="margin: 0; font-size: clamp(44px, 5.4vw, 80px)">Want something built for you?</h2>
+</div>
+<div class="rv d2" style="grid-column: 9 / span 4; display: flex; flex-direction: column; gap: 18px; align-items: flex-start">
+<p class="body" style="margin: 0; color: #3D3D3D">The same team builds products for founders and teams. See what we build and pick the one closest to your idea.</p>
+<a href="ServicesV6.dc.html" class="pbtn" style="background: #0B0B0C; color: #FFFFFF">See what we build <span class="ar" aria-hidden="true">↗</span></a>
+</div>
+</div>
+</section>
+<div style="position: relative; z-index: 3; background: #0B0B0C">
+<section data-clip="1" data-msg="Come and build something with us." style="position: sticky; top: 0; z-index: 1; background: #0B0B0C; color: #FFFFFF; padding: 130px 0 230px 0; overflow: hidden">
+<div class="xw" style="display: flex; flex-direction: column; gap: 8px">
+<div data-mq="-1" class="clrow"><span>Bring us the idea,</span><span>Bring us the idea,</span><span>Bring us the idea,</span></div>
+<div data-mq="1" class="clrow" style="color: #7A7A7A"><span>the deadline</span><span>the deadline</span><span>the deadline</span></div>
+<div data-mq="-1" class="clrow"><span>and the budget.</span><span>and the budget.</span><span>and the budget.</span></div>
+</div>
+<div class="wrap" style="display: flex; align-items: center; gap: 28px; margin-top: 56px; flex-wrap: wrap">
+<a onClick="{{wwu}}" href="StartV6.dc.html" class="pbtn acc" style="background: {{accent}}; color: {{onAccent}}; height: 64px; padding: 0 34px; font-size: 18px">Work with us <span class="ar" aria-hidden="true">↗</span></a>
+<a onClick="{{wwu}}" href="StartV6.dc.html" class="alink" style="color: #BDBDBD">Or book a 30-minute call <span class="ar" aria-hidden="true">→</span></a>
+</div>
+</section>
+<footer data-msg="You made it to the bottom. Thanks." class="glass" style="position: relative; z-index: 2; color: #FFFFFF; padding: 96px 0 40px 0; margin-top: -120px; border-radius: 32px 32px 0 0; background: rgba(18,18,20,.62); box-shadow: inset 0 1px 0 rgba(255,255,255,.1)">
+<div class="wrap">
+<div class="fcols" style="display: grid; grid-template-columns: 5fr 4fr 3fr; gap: 40px; align-items: start">
+<nav aria-label="Footer" style="display: flex; flex-direction: column; gap: 4px">
+<a href="WorkV6.dc.html" class="flink">Work <span class="ar" aria-hidden="true">↗</span></a>
+<a href="ServicesV6.dc.html" class="flink">Services <span class="ar" aria-hidden="true">↗</span></a>
+<a href="ProductsV6.dc.html" class="flink">Products <span class="ar" aria-hidden="true">↗</span></a>
+<a href="StudioV6.dc.html" class="flink">Studio <span class="ar" aria-hidden="true">↗</span></a>
+<a onClick="{{wwu}}" href="StartV6.dc.html" class="flink">Start <span class="ar" aria-hidden="true">↗</span></a>
+</nav>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+<div class="glass" style="border-radius: 22px; padding: 22px; background: rgba(255,255,255,.06)"><div class="kx" style="font-size: 76px">{{lag}}</div><div class="mono" style="color: #8A8A8A; margin-top: 14px">Lagos · WAT</div></div>
+<div class="glass" style="border-radius: 22px; padding: 22px; background: rgba(255,255,255,.06)"><div class="kx" style="font-size: 76px">{{bcn}}</div><div class="mono" style="color: #8A8A8A; margin-top: 14px">Barcelona · {{bcnZone}}</div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start">
+<span class="mono" style="color: #8A8A8A">Say hello</span>
+<span class="h3" style="font-size: 24px">hello@raum.africa</span>
+<span class="body" style="font-size: 16px; color: #BDBDBD">LinkedIn · X · Instagram</span>
+<div role="group" aria-label="Currency" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 8px"><span class="mono" style="color: #8A8A8A; margin-right: 6px">Prices in</span><sc-for list="{{cursD}}" as="c" hint-placeholder-count="3"><button type="button" class="cb" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="background: {{c.bg}}; color: {{c.fg}}">{{c.t}}</button></sc-for></div>
+<a onClick="{{wwu}}" href="StartV6.dc.html" class="pbtn" style="margin-top: 14px; background: #FFFFFF; color: #0B0B0C; height: 50px">Work with us <span class="ar" aria-hidden="true">↗</span></a>
+</div>
+</div>
+
+<div ref="{{playRef}}" style="position: relative; height: 380px; margin-top: 64px">
+<span class="mono" style="position: absolute; left: 0; top: 0; color: #8A8A8A">Go on, throw these around.</span>
+<sc-for list="{{ptiles}}" as="t" hint-placeholder-count="10">
+<span ref="{{t.ref}}" class="ptile" onPointerDown="{{t.down}}" aria-hidden="true" style="width: {{t.s}}; height: {{t.s}}; border-radius: {{t.rad}}; background: {{t.bg}}; color: {{t.fg}}; transform: translate(-200px, -400px)"><svg viewBox="0 0 48 48" style="width: 54%; height: 54%; pointer-events: none"><use href="#{{t.g}}"></use></svg></span>
+</sc-for>
+</div>
+
+<div ref="{{wmWrapRef}}" style="position: relative; width: 100%; overflow: hidden; padding-top: 8px">
+<span ref="{{wmMeasRef}}" class="xw" aria-hidden="true" style="position: absolute; visibility: hidden; font-size: 100px; white-space: nowrap; letter-spacing: -.03em">ANNEAL</span>
+<div class="xw" aria-label="Anneal" style="display: flex; justify-content: space-between; font-size: {{wmSize}}; line-height: .8; white-space: nowrap; letter-spacing: -.03em"><span class="wml">A</span><span class="wml">N</span><span class="wml">N</span><span class="wml">E</span><span class="wml">A</span><span class="wml">L</span></div>
+</div>
+
+<div class="mono" style="display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 30px; color: #8A8A8A">
+<span>© 2026 Anneal Studio</span><span>Made in Lagos and Barcelona</span><a href="PrivacyV6.dc.html">Privacy</a><a href="#top" style="color: #FFFFFF">Back to top ↑</a>
+</div>
+</div>
+</footer>
+</div>
+<nav class="bnav glass" aria-label="Quick" style="transform: translate(-50%, {{navY}}); opacity: {{navOp}}">
+<span class="mark" style="font-size: 18px; color: #FFFFFF"><i></i><i></i><i></i><i></i></span>
+<span class="msg {{msgCls}}">{{msg}}</span>
+<a onClick="{{wwu}}" href="StartV6.dc.html" class="bcta" style="background: {{accent}}; color: {{onAccent}}">Work with us</a>
+</nav>
+<div ref="{{wwuRef}}" class="wwu" aria-hidden="true" style="background: {{accent}}; color: {{onAccent}}"><div class="wm2"><span class="mark" style="font-size: 120px"><i></i><i></i><i></i><i></i></span><span class="mono" style="font-size: 12px">Work with us</span></div></div>
+<a ref="{{wwuLinkRef}}" href="StartV6.dc.html" tabindex="-1" aria-hidden="true" style="display: none">Work with us</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#7A5CFF","section":"Brand"},"raumColor":{"editor":"color","default":"#0000FF","section":"Ventures"},"centiivColor":{"editor":"color","default":"#161616","section":"Ventures"},"clekeyColor":{"editor":"color","default":"#F4F4F4","section":"Ventures"},"$preview":{"width":1440,"height":6500}}'>
+class Component extends DCLogic {
+  get startMsg() { return 'Our own, not for hire.'; }
+
+  wwuGo(e) {
+    const E = this.E || {};
+    const o = E.wwu, link = E.wwuLink;
+    if (!o || !link || this.reduce) return;
+    if (e && e.preventDefault) e.preventDefault();
+    if (this.wwuBusy) return;
+    [this.wt1, this.wt2, this.wt3, this.wt4, this.wt5].forEach((t) => clearTimeout(t));
+    o.classList.remove('txt');
+    this.wwuBusy = true;
+    const el = e && e.currentTarget;
+    const W = window.innerWidth, H = window.innerHeight;
+    const r = el && el.getBoundingClientRect ? el.getBoundingClientRect() : { left: W / 2 - 80, top: H - 80, width: 160, height: 50 };
+    const S = o.style;
+    S.transition = 'none'; S.transform = 'none';
+    S.left = r.left + 'px'; S.top = r.top + 'px'; S.width = r.width + 'px'; S.height = r.height + 'px';
+    S.borderRadius = (r.height / 2) + 'px'; S.opacity = '1';
+    o.getBoundingClientRect();
+    const ease = 'cubic-bezier(.7,0,.2,1)';
+    S.transition = ['left', 'top', 'width', 'height', 'border-radius'].map((p) => p + ' 560ms ' + ease).join(',');
+    const cw = Math.min(260, W * 0.5), ch = Math.min(380, H * 0.62);
+    const cx = Math.min(W - cw / 2 - 24, Math.max(cw / 2 + 24, r.left + r.width / 2));
+    const cy = Math.min(H - ch / 2 - 24, Math.max(ch / 2 + 24, r.top + r.height / 2));
+    S.left = (cx - cw / 2) + 'px'; S.top = (cy - ch / 2) + 'px'; S.width = cw + 'px'; S.height = ch + 'px'; S.borderRadius = '32px';
+    this.wt1 = setTimeout(() => {
+      S.transition = ['left', 'top', 'width', 'height', 'border-radius'].map((p) => p + ' 720ms ' + ease).join(',');
+      S.left = '0px'; S.top = '0px'; S.width = W + 'px'; S.height = H + 'px'; S.borderRadius = '0px';
+      o.classList.add('txt');
+    }, 600);
+    this.wt2 = setTimeout(() => { try { sessionStorage.setItem('anneal-wwu', String(Date.now())); } catch (er) {} link.click(); }, 1500);
+    this.wt3 = setTimeout(() => { S.transition = 'none'; S.opacity = '0'; S.transform = 'none'; S.width = '0px'; S.height = '0px'; o.classList.remove('txt'); this.wwuBusy = false; }, 1900);
+  }
+  wwuArrive() {
+    let f = false;
+    if (this.wwuBusy) return false;
+    try { const v = sessionStorage.getItem('anneal-wwu'); if (v) { sessionStorage.removeItem('anneal-wwu'); f = v === '1' || (Date.now() - Number(v)) < 6000; } } catch (er) {}
+    const o = (this.E || {}).wwuEl || (this.E || {}).wwu;
+    clearTimeout(this.wt4); clearTimeout(this.wt5);
+    if (!f || !o || this.reduce) return false;
+    const S = o.style;
+    S.transition = 'none'; S.left = '0px'; S.top = '0px'; S.width = '100vw'; S.height = '100vh'; S.borderRadius = '0px'; S.opacity = '1'; S.transform = 'none';
+    o.classList.add('txt');
+    this.holdRv = performance.now() + 1100;
+    this.wt4 = setTimeout(() => {
+      o.classList.remove('txt');
+      S.transition = 'transform 1000ms cubic-bezier(.7,0,.2,1), border-radius 1000ms cubic-bezier(.7,0,.2,1)';
+      S.transform = 'translateY(-102%)'; S.borderRadius = '0 0 48px 48px';
+    }, 450);
+    this.wt5 = setTimeout(() => { S.transition = 'none'; S.opacity = '0'; S.transform = 'none'; }, 1550);
+    return true;
+  }
+
+  componentDidMount() {
+    this.alive = true;
+    this.drag = -1;
+    this.onUp = () => { this.drag = -1; };
+    this.onPM = (e) => { if (this.drag > -1) { this.mx = e.clientX; this.my = e.clientY; } };
+    window.addEventListener('pointerup', this.onUp);
+    window.addEventListener('pointermove', this.onPM);
+    this.reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    this.mx = -999; this.my = -999; this.cx = -999; this.cy = -999;
+    this.lastTop = null; this.vel = 0; this.mqx = []; this.wmS = []; this.fr = 0;
+    this.tickClock();
+    this.clockT = setInterval(() => { this.ticks = (this.ticks || 0) + 1; this.tickClock(); }, 1000);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (this.alive) this.fitWM(); });
+    setTimeout(() => { this.fitWM(); this.scan(); }, 400);
+    this.onResize = () => { this.fitWM(); this.measure(); };
+    window.addEventListener('resize', this.onResize);
+    this.measure();
+    this.wwuArrive();
+    if (this.pageMount) this.pageMount();
+    this.loop = this.loop.bind(this);
+    this.raf = requestAnimationFrame(this.loop);
+  }
+  componentWillUnmount() {
+    this.alive = false;
+    window.removeEventListener('pointerup', this.onUp);
+    window.removeEventListener('pointermove', this.onPM);
+    cancelAnimationFrame(this.raf);
+    clearInterval(this.clockT);
+    [this.wt1, this.wt2, this.wt3, this.wt4, this.wt5].forEach((t) => clearTimeout(t));
+    window.removeEventListener('resize', this.onResize);
+    if (this.pageUnmount) this.pageUnmount();
+  }
+  measure() {
+    const vh = window.innerHeight;
+    const pin = !this.reduce && vh < 1300 && window.innerWidth > 900;
+    if (vh !== this.state.vh || pin !== this.state.pin) this.setState({ vh: vh, pin: pin });
+  }
+  ref(k) {
+    this.E = this.E || {};
+    this._refs = this._refs || {};
+    if (!this._refs[k]) this._refs[k] = (el) => { this.E[k] = el; };
+    return this._refs[k];
+  }
+  ink(hex) {
+    const h = String(hex || '#000000').replace('#', '');
+    const n = parseInt(h.length === 3 ? h.split('').map((c) => c + c).join('') : h, 16);
+    const ch = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => { const c = v / 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); });
+    const L = 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2];
+    return (L + 0.05) / 0.0534 >= 1.05 / (L + 0.05) ? '#0B0B0C' : '#FFFFFF';
+  }
+  tickClock() {
+    const f = (tz) => { try { return new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: tz }).format(new Date()); } catch (e) { return '--:--'; } };
+    let zone = 'CET';
+    try { const p = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Madrid', timeZoneName: 'short' }).formatToParts(new Date()).find((x) => x.type === 'timeZoneName'); if (p) zone = p.value; } catch (e) {}
+    this.setState({ lag: f('Africa/Lagos'), bcn: f('Europe/Madrid'), zone: zone, tk: this.ticks || 0 });
+  }
+  fitWM() {
+    const E = this.E || {};
+    if (!E.wmWrap || !E.wmMeas) return;
+    const ratio = E.wmMeas.scrollWidth / 100;
+    if (!ratio) return;
+    const size = Math.floor((E.wmWrap.clientWidth / ratio) * 0.985);
+    if (size !== this.state.wmSize) this.setState({ wmSize: size });
+  }
+  scan() {
+    const E = this.E || {};
+    const root = E.root; if (!root) return;
+    this.rvEls = Array.prototype.slice.call(root.querySelectorAll('.rv, .mlw'));
+    this.parEls = Array.prototype.slice.call(root.querySelectorAll('[data-par]'));
+    this.clipEls = Array.prototype.slice.call(root.querySelectorAll('[data-clip]'));
+    this.zoomEls = Array.prototype.slice.call(root.querySelectorAll('[data-zoom]'));
+    this.mqEls = Array.prototype.slice.call(root.querySelectorAll('[data-mq]'));
+    this.msgEls = Array.prototype.slice.call(root.querySelectorAll('[data-msg]'));
+    this.wmEls = Array.prototype.slice.call(root.querySelectorAll('.wml'));
+    this.wordEls = Array.prototype.slice.call(root.querySelectorAll('[data-words]'));
+    this.stackEls = Array.prototype.slice.call(root.querySelectorAll('[data-stack]'));
+  }
+  words(vh) {
+    const we = this.wordEls || [];
+    for (let i = 0; i < we.length; i++) {
+      const el = we[i]; const r = el.getBoundingClientRect();
+      const fp = this.reduce ? 1 : Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.25)));
+      const sp = el.querySelectorAll('.w'); const lit = Math.round(fp * sp.length);
+      if (el._lit === lit) continue; el._lit = lit;
+      const on = el.getAttribute('data-on') || '#0B0B0C', off = el.getAttribute('data-off') || '#C4C4C4';
+      for (let j = 0; j < sp.length; j++) sp[j].style.color = j < lit ? on : off;
+    }
+  }
+  stacks(vh) {
+    const se = this.stackEls || [];
+    for (let i = 0; i < se.length - 1; i++) {
+      const el = se[i], nx = se[i + 1];
+      if (el.parentNode !== nx.parentNode) { el.style.transform = ''; continue; }
+      const top = parseFloat(getComputedStyle(el).top) || 0;
+      const q = Math.min(1, Math.max(0, 1 - (nx.getBoundingClientRect().top - top - 30) / (vh * 0.6)));
+      el.style.transform = 'scale(' + (1 - q * 0.05).toFixed(4) + ')';
+      el.style.filter = q > 0.01 ? 'brightness(' + (1 - q * 0.25).toFixed(3) + ')' : 'none';
+    }
+  }
+  loop() {
+    if (!this.alive) return;
+    this.raf = requestAnimationFrame(this.loop);
+    this.fr++;
+    if (this.fr % 8 === 0 && !this.wwuBusy) this.wwuArrive();
+    if (!this.rvEls || this.fr % 45 === 0) this.scan();
+    const vh = window.innerHeight;
+    const E = this.E || {};
+    const big = !this.reduce && window.innerWidth > 900;
+    if (E.root) {
+      const rt = E.root.getBoundingClientRect().top;
+      if (this.lastTop != null) this.vel = this.vel * 0.86 + (this.lastTop - rt) * 0.14;
+      this.lastTop = rt;
+      const navOn = rt < -320;
+      if (navOn !== !!this.state.navOn) this.setState({ navOn: navOn });
+    }
+    const rv = (this.holdRv && performance.now() < this.holdRv) ? [] : (this.rvEls || []);
+    for (let i = 0; i < rv.length; i++) { const el = rv[i]; if (!el.classList.contains('on') && el.getBoundingClientRect().top < vh * 0.9) el.classList.add('on'); }
+    if (big) {
+      const pe = this.parEls || [];
+      for (let i = 0; i < pe.length; i++) {
+        const el = pe[i]; const r = el.parentNode.getBoundingClientRect();
+        const t = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+        const k = parseFloat(el.getAttribute('data-par')) || 80;
+        const rot = parseFloat(el.getAttribute('data-rot') || '0');
+        el.style.transform = 'translate3d(0,' + ((0.5 - t) * k).toFixed(1) + 'px,0)' + (rot ? ' rotate(' + rot + 'deg)' : '');
+      }
+      const ce = this.clipEls || [];
+      for (let i = 0; i < ce.length; i++) {
+        const el = ce[i]; const r = el.getBoundingClientRect();
+        const e = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.85))); const k = 1 - e;
+        el.style.clipPath = k < 0.002 ? 'none' : 'inset(0 ' + (k * 40).toFixed(1) + 'px round ' + (k * 40).toFixed(1) + 'px)';
+      }
+      const ze = this.zoomEls || [];
+      for (let i = 0; i < ze.length; i++) {
+        const el = ze[i]; const r = el.parentNode.getBoundingClientRect();
+        const e = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.9)));
+        el.style.transform = 'scale(' + (1 + (1 - e) * 0.14).toFixed(4) + ')';
+      }
+    }
+    const me = this.mqEls || [];
+    for (let i = 0; i < me.length; i++) {
+      const el = me[i]; const unit = el.scrollWidth / 3; if (!unit) continue;
+      const dir = parseFloat(el.getAttribute('data-mq')) || -1;
+      const speed = this.reduce ? 0 : (0.6 + Math.min(14, Math.abs(this.vel)) * 0.5);
+      this.mqx[i] = (this.mqx[i] || 0) + dir * speed;
+      if (this.mqx[i] <= -unit) this.mqx[i] += unit;
+      if (this.mqx[i] > 0) this.mqx[i] -= unit;
+      el.style.transform = 'translate3d(' + this.mqx[i].toFixed(1) + 'px,0,0)';
+    }
+    const ms = this.msgEls || [];
+    let m = this.startMsg || '';
+    for (let i = 0; i < ms.length; i++) { if (ms[i].getBoundingClientRect().top < vh * 0.5) m = ms[i].getAttribute('data-msg'); }
+    if (m !== this.state.msg) this.setState({ msg: m, msgN: (this.state.msgN || 0) + 1 });
+    const L = this.wmEls || [];
+    if (L.length && !this.reduce) {
+      for (let i = 0; i < L.length; i++) {
+        const el = L[i]; const r = el.getBoundingClientRect();
+        const inside = this.my > r.top - 260 && this.my < r.bottom + 40;
+        const d = Math.abs(this.mx - (r.left + r.width / 2));
+        const k = inside ? Math.exp(-Math.pow(d / 180, 2)) : 0;
+        this.wmS[i] = this.wmS[i] || 1;
+        this.wmS[i] += (1 + 0.3 * k - this.wmS[i]) * 0.15;
+        el.style.transform = 'scaleY(' + this.wmS[i].toFixed(4) + ')';
+      }
+    }
+    if (E.cur) {
+      this.cx += (this.mx - this.cx) * 0.2; this.cy += (this.my - this.cy) * 0.2;
+      E.cur.style.transform = 'translate3d(' + (this.cx - 58).toFixed(1) + 'px,' + (this.cy - 58).toFixed(1) + 'px,0)';
+    }
+    if (!this.B && E.play && E.play.getBoundingClientRect().top < vh * 0.9) this.initPhys();
+    if (this.B) this.stepPhys();
+    this.words(vh);
+    if (big) this.stacks(vh);
+    if (this.pageLoop) this.pageLoop(vh, E, big);
+  }
+  baseVals() {
+    const accent = this.props.accent ?? '#7A5CFF';
+    const onAccent = this.ink(accent);
+    this.onAccent = onAccent;
+    if (!this._mv) {
+      this._mv = (e) => {
+        this.mx = e.clientX; this.my = e.clientY;
+        const t = e.target && e.target.closest ? e.target.closest('[data-view]') : null;
+        const lab = t ? t.getAttribute('data-view') : '';
+        if (lab !== (this.state.view || '')) this.setState({ view: lab });
+      };
+      this._lv = () => { if (this.state.view) this.setState({ view: '' }); };
+    }
+    return {
+      accent: accent, onAccent: onAccent,
+      lag: this.state.lag || '--:--', bcn: this.state.bcn || '--:--', bcnZone: this.state.zone || 'CET',
+      msg: this.state.msg || this.startMsg || '', msgCls: (this.state.msgN || 0) % 2 ? 'ma' : 'mb',
+      navY: this.state.navOn ? '0' : '160%', navOp: this.state.navOn ? '1' : '0',
+      wmSize: (this.state.wmSize || 220) + 'px', wmWrapRef: this.ref('wmWrap'), wmMeasRef: this.ref('wmMeas'),
+      rootRef: this.ref('root'), curRef: this.ref('cur'), curOp: this.state.view ? '1' : '0', curLabel: this.state.view || 'View',
+      onMove: this._mv, onLeave: this._lv,
+      wwu: this._wwu || (this._wwu = (e) => this.wwuGo(e)), wwuRef: this.ref('wwu'), wwuLinkRef: this.ref('wwuLink'),
+      playRef: this.ref('play'), ptiles: this.tileVals(accent, onAccent), cursD: this.curSwitch(true)
+    };
+  }
+  tdefs(a, oa) {
+    return [
+      { s: 92, rad: '0', bg: '#FFFFFF', fg: '#0B0B0C', g: 'g-spark' },
+      { s: 74, rad: '50%', bg: a, fg: oa, g: 'g-arrow' },
+      { s: 100, rad: '26%', bg: '#FFFFFF', fg: '#0B0B0C', g: 'g-code' },
+      { s: 66, rad: '50% 0 50% 0', bg: '#3A3A3A', fg: '#FFFFFF', g: 'g-dots' },
+      { s: 84, rad: '0', bg: '#FFFFFF', fg: '#0B0B0C', g: 'g-app' },
+      { s: 72, rad: '50%', bg: '#FFFFFF', fg: '#0B0B0C', g: 'g-cursor' },
+      { s: 96, rad: '50% 0 50% 0', bg: a, fg: oa, g: 'g-stack' },
+      { s: 62, rad: '26%', bg: '#3A3A3A', fg: '#FFFFFF', g: 'g-spark' },
+      { s: 80, rad: '50%', bg: '#FFFFFF', fg: '#0B0B0C', g: 'g-dots' },
+      { s: 88, rad: '0', bg: '#FFFFFF', fg: '#0B0B0C', g: 'g-arrow' }
+    ];
+  }
+  tileVals(a, oa) {
+    if (!this._td) this._td = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (e) => { if (e && e.preventDefault) e.preventDefault(); if (!this.B) this.initPhys(); this.drag = i; this.mx = e.clientX; this.my = e.clientY; });
+    return this.tdefs(a, oa).map((t, i) => ({ s: t.s + 'px', rad: t.rad, bg: t.bg, fg: t.fg, g: t.g, ref: this.ref('t' + i), down: this._td[i] }));
+  }
+  initPhys() {
+    const E = this.E || {};
+    if (!E.play || this.B) return;
+    const W = E.play.clientWidth;
+    this.B = this.tdefs('', '').map((t, i) => ({ x: 120 + ((i * 137) % Math.max(200, W - 240)), y: -120 - i * 110, vx: (Math.random() - 0.5) * 3, vy: 0, a: Math.random() * 40 - 20, va: 0, r: t.s / 2, s: t.s }));
+    if (this.reduce) {
+      const H = E.play.clientHeight; let x = 60;
+      this.B.forEach((b) => { b.x = Math.min(W - b.r, x + b.r); b.y = H - b.r; x += b.s + 16; });
+    }
+  }
+  stepPhys() {
+    const E = this.E || {}; const B = this.B;
+    if (!E.play || !B) return;
+    const W = E.play.clientWidth, H = E.play.clientHeight;
+    const pr = E.play.getBoundingClientRect();
+    const pxm = this.mx - pr.left, pym = this.my - pr.top;
+    for (let i = 0; i < B.length; i++) {
+      const b = B[i];
+      if (i === this.drag) { b.vx = (pxm - b.x) * 0.35; b.vy = (pym - b.y) * 0.35; b.x += b.vx; b.y += b.vy; b.va = b.vx * 0.6; }
+      else if (!this.reduce) { b.vy += 0.55; b.x += b.vx; b.y += b.vy; b.vx *= 0.995; b.va *= 0.97; }
+      b.a += b.va;
+      if (b.y + b.r > H) { b.y = H - b.r; b.vy *= -0.32; b.vx *= 0.9; b.va = b.vx * 1.4; if (Math.abs(b.vy) < 0.6) b.vy = 0; }
+      if (b.x - b.r < 0) { b.x = b.r; b.vx *= -0.5; }
+      if (b.x + b.r > W) { b.x = W - b.r; b.vx *= -0.5; }
+    }
+    for (let it = 0; it < 2; it++) {
+      for (let i = 0; i < B.length; i++) for (let j = i + 1; j < B.length; j++) {
+        const p = B[i], q = B[j];
+        const dx = q.x - p.x, dy = q.y - p.y, d = Math.hypot(dx, dy) || 0.01, m = p.r + q.r;
+        if (d < m) {
+          const nx = dx / d, ny = dy / d, o = m - d;
+          const wp = i === this.drag ? 0 : (j === this.drag ? 1 : 0.5), wq = 1 - wp;
+          p.x -= nx * o * wp; p.y -= ny * o * wp; q.x += nx * o * wq; q.y += ny * o * wq;
+          const rv = (q.vx - p.vx) * nx + (q.vy - p.vy) * ny;
+          if (rv < 0) { const jv = -1.3 * rv / 2; p.vx -= jv * nx; p.vy -= jv * ny; q.vx += jv * nx; q.vy += jv * ny; p.va -= jv * 0.8; q.va += jv * 0.8; }
+        }
+      }
+    }
+    for (let i = 0; i < B.length; i++) {
+      const el = E['t' + i]; if (!el) continue; const b = B[i];
+      el.style.transform = 'translate3d(' + (b.x - b.s / 2).toFixed(1) + 'px,' + (b.y - b.s / 2).toFixed(1) + 'px,0) rotate(' + b.a.toFixed(1) + 'deg)';
+    }
+  }
+  detectCur() {
+    if (this._cur) return this._cur;
+    let c = null;
+    try { c = localStorage.getItem('anneal-cur'); } catch (er) {}
+    if (c !== 'USD' && c !== 'EUR' && c !== 'NGN') {
+      let tz = '';
+      try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (er) {}
+      const eu = ['Europe/Madrid', 'Europe/Paris', 'Europe/Berlin', 'Europe/Rome', 'Europe/Amsterdam', 'Europe/Brussels', 'Europe/Lisbon', 'Europe/Vienna', 'Europe/Dublin', 'Europe/Helsinki', 'Europe/Athens', 'Europe/Luxembourg', 'Europe/Malta', 'Europe/Riga', 'Europe/Tallinn', 'Europe/Vilnius', 'Europe/Bratislava', 'Europe/Ljubljana', 'Europe/Zagreb', 'Atlantic/Canary', 'Africa/Ceuta'];
+      c = tz === 'Africa/Lagos' ? 'NGN' : (eu.indexOf(tz) > -1 ? 'EUR' : 'USD');
+    }
+    this._cur = c;
+    return c;
+  }
+  setCur(c) {
+    this._cur = c;
+    try { localStorage.setItem('anneal-cur', c); } catch (er) {}
+    this.setState({ curN: (this.state.curN || 0) + 1 });
+  }
+  money(k) {
+    const P = { site: { USD: 400, EUR: 360, NGN: 560000 }, ai: { USD: 2500, EUR: 2250, NGN: 3500000 }, web: { USD: 4500, EUR: 4000, NGN: 6300000 }, mobile: { USD: 8000, EUR: 7200, NGN: 11200000 }, care: { USD: 400, EUR: 360, NGN: 560000 }, growth: { USD: 3000, EUR: 2700, NGN: 4200000 }, sprint: { USD: 2000, EUR: 1800, NGN: 2800000 }, admin: { USD: 1500, EUR: 1350, NGN: 2100000 }, ailayer: { USD: 1500, EUR: 1350, NGN: 2100000 }, mobadd: { USD: 3500, EUR: 3150, NGN: 4900000 }, page: { USD: 150, EUR: 135, NGN: 210000 }, disc: { USD: 900, EUR: 810, NGN: 1260000 } };
+    const S = { USD: '$', EUR: '€', NGN: '₦' };
+    const c = this.detectCur();
+    return S[c] + P[k][c].toLocaleString('en-US');
+  }
+  curSwitch(dark) {
+    if (!this._cpk) this._cpk = { USD: () => this.setCur('USD'), EUR: () => this.setCur('EUR'), NGN: () => this.setCur('NGN') };
+    const cc = this.detectCur();
+    const L = { USD: 'USD $', EUR: 'EUR €', NGN: 'NGN ₦' };
+    return ['USD', 'EUR', 'NGN'].map((c) => {
+      const on = cc === c;
+      return { t: L[c], pressed: on ? 'true' : 'false', bg: on ? (dark ? '#FFFFFF' : '#0B0B0C') : (dark ? 'rgba(255,255,255,.1)' : '#FFFFFF'), fg: on ? (dark ? '#0B0B0C' : '#FFFFFF') : (dark ? '#FFFFFF' : '#0B0B0C'), pick: this._cpk[c] };
+    });
+  }
+  priceVals() {
+    const pr = {};
+    ['site', 'ai', 'web', 'mobile', 'care', 'growth', 'sprint', 'admin', 'ailayer', 'mobadd', 'page', 'disc'].forEach((k) => { pr[k] = this.money(k); });
+    return { pr: pr, curs: this.curSwitch(false), cursD: this.curSwitch(true) };
+  }
+  renderVals() {
+    const b = this.baseVals();
+    return Object.assign(b, this.pageVals ? this.pageVals(b.accent, b.onAccent) : {});
+  }
+  pageVals(accent, onAccent) {
+    const raum = this.props.raumColor ?? '#0000FF', cen = this.props.centiivColor ?? '#161616', cle = this.props.clekeyColor ?? '#F4F4F4';
+    const ven = this.state.ven == null ? 0 : this.state.ven;
+    if (!this._vA) {
+      this._vA = () => { if (this.state.ven !== 0) this.setState({ ven: 0 }); };
+      this._vB = () => { if (this.state.ven !== 1) this.setState({ ven: 1 }); };
+      this._vC = () => { if (this.state.ven !== 2) this.setState({ ven: 2 }); };
+      this._vD = () => { if (this.state.ven !== 3) this.setState({ ven: 3 }); };
+      this._join = (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        try { if (window.plausible) window.plausible('waitlist_joined'); } catch (er) {}
+        this.setState({ joined: true });
+      };
+    }
+    return {
+      raumBg: raum, raumFg: this.ink(raum), centiivBg: cen, centiivFg: this.ink(cen), clekeyBg: cle, clekeyFg: this.ink(cle),
+      vf0: ven === 0 ? '2.3' : '1', vf1: ven === 1 ? '2.3' : '1', vf2: ven === 2 ? '2.3' : '1', vf3: ven === 3 ? '2.3' : '1', shotOp: ven === 0 ? '1' : '0',
+      venA: this._vA, venB: this._vB, venC: this._vC, venD: this._vD,
+      joined: !!this.state.joined, notJoined: !this.state.joined, join: this._join
+    };
+  }
+}
+</script>
+</body>
+</html>
