@@ -151,7 +151,7 @@ function PageClosing({ msg }: { msg: string }) {
   );
 }
 
-function Footer({ msg }: { msg: string }) {
+function Footer({ msg, showCurrencySwitch }: { msg: string; showCurrencySwitch: boolean }) {
   return (
     <GlassFooter
       msg={msg}
@@ -207,14 +207,16 @@ function Footer({ msg }: { msg: string }) {
               </span>
             ))}
           </nav>
-          <CurrencySwitch
-            className="mt-2"
-            options={currencyOptions}
-            cookie={CURRENCY_COOKIE}
-            label={boardCopy.currencyGroup}
-            tone="dark"
-            prefix={<span className="type-label mr-1.5 text-grey-400">{boardCopy.pricesIn}</span>}
-          />
+          {showCurrencySwitch && (
+            <CurrencySwitch
+              className="mt-2"
+              options={currencyOptions}
+              cookie={CURRENCY_COOKIE}
+              label={boardCopy.currencyGroup}
+              tone="dark"
+              prefix={<span className="type-label mr-1.5 text-grey-400">{boardCopy.pricesIn}</span>}
+            />
+          )}
           <ButtonLink
             href={site.startHref}
             handoff
@@ -248,6 +250,7 @@ interface SiteChromeProps {
   /** Floating nav messages for the closing section and the footer (they differ per page). */
   closingMsg: string;
   footerMsg: string;
+  showCurrencySwitch?: boolean;
   children: ReactNode;
 }
 
@@ -255,14 +258,20 @@ interface SiteChromeProps {
  * Header, page content, then the closing section with the glass footer sliding
  * over it. The closing differs on Home (a pointer-following pill).
  */
-export function SiteChrome({ variant, closingMsg, footerMsg, children }: SiteChromeProps) {
+export function SiteChrome({
+  variant,
+  closingMsg,
+  footerMsg,
+  showCurrencySwitch = true,
+  children,
+}: SiteChromeProps) {
   return (
     <>
       <Header />
       <main id="main">{children}</main>
       <ClipIn className="relative z-[3] bg-ink">
         {variant === 'home' ? <HomeClosing msg={closingMsg} /> : <PageClosing msg={closingMsg} />}
-        <Footer msg={footerMsg} />
+        <Footer msg={footerMsg} showCurrencySwitch={showCurrencySwitch} />
       </ClipIn>
     </>
   );

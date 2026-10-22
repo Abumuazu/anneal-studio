@@ -123,7 +123,8 @@ test.describe('start', () => {
     const brief = page.locator('form', { has: page.locator('input[name="offer"]') });
     await expect(brief.getByRole('radio', { name: 'Web MVP' })).toBeVisible();
     await expect(brief.getByText(/from [₦$€]/i)).toHaveCount(0);
-    await expect(brief.getByText('Prices in')).toHaveCount(0);
+    await expect(page.getByText('Prices in')).toHaveCount(0);
+    await expect(page.getByRole('group', { name: 'Currency' })).toHaveCount(0);
     await brief.getByRole('button', { name: 'Continue' }).click();
     await brief.getByRole('button', { name: 'Continue' }).click();
     await expect(brief.getByLabel('What budget are you considering? (optional)')).toBeVisible();

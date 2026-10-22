@@ -16,7 +16,7 @@ Everything in **Built and checked** is covered by CI (lint, typecheck, Vitest, P
 | Performance | LCP under 2.5s, CLS under 0.05, TBT under 200ms on every page (mobile, throttled) | Lighthouse CI |
 | Layout | No horizontal overflow at any width; snapshots at 1440, 1024, 768 and 390 | Playwright |
 | Booking | Cal.com v2 slots and bookings through route handlers; times in the visitor's zone | Vitest (request shape), Playwright end to end (memory mode) |
-| Brief | Four steps with no starting prices in offer choices and an optional client budget; Zod-validated Server Action attempts Notion storage and Resend email; UTM tags and referrer kept | Vitest, Playwright end to end |
+| Brief | Four steps with no price prompts on the Start page and an optional client budget; Zod-validated Server Action attempts Notion storage and Resend email; UTM tags and referrer kept | Vitest, Playwright end to end |
 | Waitlist | Stored in Notion; the form only confirms a stored address | Vitest, Playwright |
 | Analytics | Plausible, no cookies; all eight handoff events | Playwright (events captured) |
 | Search | Titles, descriptions and canonicals per page; sitemap; robots; JSON-LD Organization | Playwright |

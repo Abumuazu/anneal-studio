@@ -18,7 +18,12 @@ export const metadata: Metadata = pageMetadata({
 export default function StartPage() {
   const [first, second] = lines(copy['start.h1'], [3]);
   return (
-    <SiteChrome variant="page" closingMsg={st.msg.close} footerMsg={chromeCopy.footerMsg}>
+    <SiteChrome
+      variant="page"
+      closingMsg={st.msg.close}
+      footerMsg={chromeCopy.footerMsg}
+      showCurrencySwitch={false}
+    >
       <section
         data-msg={st.msg.hero}
         className="reveal-on-load relative pt-[136px] desk:pt-[200px] pb-20"
