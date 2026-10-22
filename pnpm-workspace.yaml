@@ -1,0 +1,6 @@
+packages:
+  - apps/*
+  - packages/*
+allowBuilds:
+  # esbuild verifies its platform binary on install; Vitest (via Vite) needs it.
+  esbuild: true

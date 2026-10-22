@@ -1,0 +1,14 @@
+node_modules/
+.next/
+.turbo/
+.vercel/
+.env*
+!.env.example
+coverage/
+playwright-report/
+test-results/
+.DS_Store
+.lighthouseci/
+*.tsbuildinfo
+next-env.d.ts
+.playwright-mcp/

@@ -1,0 +1,11 @@
+design/
+docs/
+pnpm-lock.yaml
+.next/
+.turbo/
+node_modules/
+playwright-report/
+test-results/
+.lighthouseci/
+**/e2e/__snapshots__/
+.playwright-mcp/
