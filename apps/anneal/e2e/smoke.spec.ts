@@ -71,6 +71,7 @@ test.describe('layout', () => {
   ]) {
     test(`no horizontal overflow on ${path}`, async ({ page }) => {
       await page.goto(path);
+      await fontsReady(page);
       await scrollThrough(page);
       const { scroll, viewport } = await page.evaluate(() => ({
         scroll: document.documentElement.scrollWidth,
@@ -182,6 +183,9 @@ test.describe('work with us', () => {
     // The cover lasts about 1.5s, which a busy test runner can miss between
     // polls. Sample the overlay every frame from the start of the document.
     await page.addInitScript(() => {
+      // Seed the arriving document before boot. Writing to the previous page
+      // can race its first hydration effect, which also consumes this flag.
+      sessionStorage.setItem('anneal-wwu', String(Date.now()));
       const w = window as Window & { __coveredFrames?: number };
       w.__coveredFrames = 0;
       const sample = () => {
@@ -202,9 +206,15 @@ test.describe('work with us', () => {
       requestAnimationFrame(frame);
       setInterval(sample, 16);
     });
-    await page.evaluate(() => sessionStorage.setItem('anneal-wwu', String(Date.now())));
     await page.reload();
     const overlay = page.locator('.handoff');
+    // WebKit may finish loading before hydration starts the arrival. Wait for
+    // a covered frame before checking that the overlay has lifted away.
+    await expect
+      .poll(() =>
+        page.evaluate(() => (window as Window & { __coveredFrames?: number }).__coveredFrames ?? 0),
+      )
+      .toBeGreaterThan(0);
     await expect(overlay).toHaveCSS('opacity', '0', { timeout: 4000 });
     const covered = await page.evaluate(
       () => (window as Window & { __coveredFrames?: number }).__coveredFrames ?? 0,
