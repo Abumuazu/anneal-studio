@@ -215,7 +215,7 @@ export default function KitchenSinkPage() {
 
       <Demo id="typing" name="TypingLine" note="three examples, paused off screen">
         <TypingLine
-          className="max-w-[500px]"
+          className="max-w-[500px] overflow-x-auto"
           prefix={boardCopy.heroAskPrefix}
           prefixClassName="text-[22px] font-medium text-grey-600"
           textClassName="text-[22px] font-medium"
