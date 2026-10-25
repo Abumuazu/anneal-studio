@@ -1,4 +1,4 @@
-import { Suspense, type CSSProperties, type ReactNode } from 'react';
+import { type CSSProperties, type ReactNode } from 'react';
 
 import { cx } from '../lib/cx';
 
@@ -30,18 +30,16 @@ export function PhoneFrame({
   children,
 }: PhoneFrameProps) {
   return (
-    <Suspense fallback={null}>
-      <div
-        className={cx('phone', className)}
-        style={{ ...style, width, height, padding, borderRadius: radius }}
-      >
-        <div className="phone-screen" style={{ borderRadius: screenRadius }}>
-          <div className="phone-canvas" style={{ transform: `scale(${scale})` }}>
-            {children}
-          </div>
+    <div
+      className={cx('phone', className)}
+      style={{ ...style, width, height, padding, borderRadius: radius }}
+    >
+      <div className="phone-screen" style={{ borderRadius: screenRadius }}>
+        <div className="phone-canvas" style={{ transform: `scale(${scale})` }}>
+          {children}
         </div>
       </div>
-    </Suspense>
+    </div>
   );
 }
 
@@ -71,18 +69,16 @@ export function BrowserFrame({
   children,
 }: BrowserFrameProps) {
   return (
-    <Suspense fallback={null}>
+    <div
+      className={cx('browser-frame', className)}
+      style={{ ...style, width, height, borderRadius: radius }}
+    >
       <div
-        className={cx('browser-frame', className)}
-        style={{ ...style, width, height, borderRadius: radius }}
+        className="browser-canvas"
+        style={{ width: canvasWidth, height: canvasHeight, transform: `scale(${scale})` }}
       >
-        <div
-          className="browser-canvas"
-          style={{ width: canvasWidth, height: canvasHeight, transform: `scale(${scale})` }}
-        >
-          {children}
-        </div>
+        {children}
       </div>
-    </Suspense>
+    </div>
   );
 }

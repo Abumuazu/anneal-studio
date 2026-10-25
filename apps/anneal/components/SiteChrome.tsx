@@ -2,7 +2,7 @@ import { ClipIn } from '@studio/kit/motion';
 import { Closing, GlassFooter, SiteHeader } from '@studio/kit/sections';
 import { ArrowLink, ButtonLink, PillLink } from '@studio/kit/ui';
 import Link from 'next/link';
-import { Children, Suspense, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 import { boardCopy, copy } from '@/content/copy';
 import { approved } from '@/content/approved';
@@ -210,21 +210,12 @@ interface SiteChromeProps {
 export function SiteChrome({ variant, closingMsg, footerMsg, children }: SiteChromeProps) {
   return (
     <>
-      <Suspense fallback={null}>
-        <Header />
-      </Suspense>
-      <main id="main">
-        {/* Keep server-rendered sections visible while React hydrates them independently. */}
-        {Children.map(children, (child) => (
-          <Suspense fallback={null}>{child}</Suspense>
-        ))}
-      </main>
-      <Suspense fallback={null}>
-        <ClipIn className="relative z-[3] bg-ink">
-          {variant === 'home' ? <HomeClosing msg={closingMsg} /> : <PageClosing msg={closingMsg} />}
-          <Footer msg={footerMsg} />
-        </ClipIn>
-      </Suspense>
+      <Header />
+      <main id="main">{children}</main>
+      <ClipIn className="relative z-[3] bg-ink">
+        {variant === 'home' ? <HomeClosing msg={closingMsg} /> : <PageClosing msg={closingMsg} />}
+        <Footer msg={footerMsg} />
+      </ClipIn>
     </>
   );
 }
