@@ -62,9 +62,6 @@ export function Process() {
             </div>
             <div className="mt-auto flex items-baseline justify-between gap-3">
               <h3 className="type-h3 m-0 text-[30px] desk:text-4xl">{copy[k(s.n, 'name')]}</h3>
-              <span className="type-label text-grey-400 group-data-[active=true]:text-grey-700">
-                {copy[k(s.n, 'time')]}
-              </span>
             </div>
             <p className="type-body mt-2.5 mb-0 text-[15px] text-grey-400 group-data-[active=true]:text-grey-700 desk:mt-3 desk:text-[17px]">
               {copy[k(s.n, 'line')]}

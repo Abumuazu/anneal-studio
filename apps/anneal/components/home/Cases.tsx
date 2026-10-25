@@ -144,9 +144,9 @@ export function Cases() {
         <h2 className="type-display m-0 text-[68px] desk:col-span-9 desk:text-[clamp(56px,9.4vw,144px)]">
           {/* The deck line, split across three masked lines. Read once, from the sr-only copy. */}
           <span aria-hidden="true">
-            <LineMask line={0}>Products where</LineMask>
+            <LineMask line={0}>The work</LineMask>
             <LineMask line={1}>
-              <span className="text-grey-550">the details</span>
+              <span className="text-grey-550">behind the</span>
               <MorphTile
                 glyphs={['g-code', 'g-spark', 'g-stack', 'g-app']}
                 phase={1}
@@ -154,7 +154,7 @@ export function Cases() {
                 color="var(--color-panel)"
               />
             </LineMask>
-            <LineMask line={2}>mattered.</LineMask>
+            <LineMask line={2}>interface.</LineMask>
           </span>
           <span className="sr-only">{copy['home.work.h2']}</span>
         </h2>

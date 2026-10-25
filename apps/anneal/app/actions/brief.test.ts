@@ -12,7 +12,7 @@ function form(fields: Record<string, string>): FormData {
 
 const valid = {
   offer: 'Mobile MVP',
-  stage: 'Live product',
+  stage: 'A working product',
   timing: 'As soon as possible',
   name: 'Ada Obi',
   email: 'ada@example.com',

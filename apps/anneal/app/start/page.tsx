@@ -1,6 +1,8 @@
 import { InView, LineMask, Reveal } from '@studio/kit/motion';
 import type { Metadata } from 'next';
 
+import { approved } from '@/content/approved';
+
 import { SiteChrome } from '@/components/SiteChrome';
 import { Booking, BookingZone } from '@/components/start/Booking';
 import { BriefForm } from '@/components/start/BriefForm';
@@ -10,20 +12,15 @@ import { chromeCopy } from '@/content/pages';
 import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Start',
-  description: copy['start.lead'],
+  title: approved.meta.Start.title,
+  description: approved.meta.Start.description,
   path: '/start',
 });
 
 export default function StartPage() {
   const [first, second] = lines(copy['start.h1'], [3]);
   return (
-    <SiteChrome
-      variant="page"
-      closingMsg={st.msg.close}
-      footerMsg={chromeCopy.footerMsg}
-      showCurrencySwitch={false}
-    >
+    <SiteChrome variant="page" closingMsg={st.msg.close} footerMsg={chromeCopy.footerMsg}>
       <section
         data-msg={st.msg.hero}
         className="reveal-on-load relative pt-[136px] desk:pt-[200px] pb-20"
@@ -58,10 +55,12 @@ export default function StartPage() {
               <h2 className="type-h3 m-0 text-[32px]">{st.booking.title}</h2>
               <BookingZone />
             </div>
+            <p className="type-body m-0 text-grey-300">{approved.start['Booking introduction']}</p>
             <Booking />
           </Reveal>
           <Reveal
             step={1}
+            id="brief"
             data-msg={st.msg.brief}
             className="flex min-h-[680px] flex-col rounded-[28px] bg-panel p-6 sm:p-9"
           >

@@ -4,9 +4,9 @@
  * labels. Verbatim from the boards (ServicesV6, ProductsV6, StudioV6).
  */
 export const chromeCopy = {
-  footerMsg: 'You made it to the bottom. Thanks.',
-  closingMsgBuild: 'Come and build something with us.',
-  closingMsgServices: "That's everything. Say hello.",
+  footerMsg: 'Let us understand what you need.',
+  closingMsgBuild: 'Let us understand what you need.',
+  closingMsgServices: 'Let us understand what you need.',
 } as const;
 
 export const servicesCopy = {
@@ -43,9 +43,9 @@ export const servicesCopy = {
 
 export const productsCopy = {
   msg: {
-    hero: 'Our own, not for hire.',
-    built: 'Three ventures, one exit.',
-    fit: 'Builders who ship their own.',
+    hero: 'Products and venture experience.',
+    built: 'Products and venture experience.',
+    fit: 'What we have learned.',
     next: 'What is coming next.',
     wait: 'Want in early? Leave an email.',
     close: 'Need one built for you?',
@@ -58,27 +58,26 @@ export const productsCopy = {
 
 export const studioCopy = {
   msg: {
-    hero: 'Small studio, two cities.',
+    hero: 'About Anneal.',
     short: 'The short version.',
     what: 'What we do.',
     how: 'The people you meet are the builders.',
     team: 'You will meet the people on this list.',
     ventures: 'Three ventures so far.',
     wait: 'Want in early? Leave an email.',
-    where: 'Probably awake in one of them.',
+    where: 'How we work.',
   },
   now: 'Now',
   next: 'Next',
   engines: { studio: 'Studio', products: 'Products', ventures: 'Ventures with founders' },
   founder: { name: 'Muazu Abu', role: 'Founder' },
-  lagosZone: 'Lagos · WAT · UTC+1',
 } as const;
 
 export const waitlistCopy = {
   emailLabel: 'Email address',
   placeholder: 'you@company.com',
-  submit: 'Join the waitlist',
-  onTheList: 'On the list',
+  submit: 'Keep me updated',
+  onTheList: 'Added',
 } as const;
 
 /** WorkV6 strings outside the deck. */
@@ -90,8 +89,8 @@ export const workCopy = {
     end: 'Yours could be next on this page.',
     close: 'You read the whole list. Fancy being next?',
   },
-  listHeading: 'Everything, in one list.',
-  filters: { all: 'All', projects: 'Projects', ventures: 'Ventures' },
+  listHeading: 'Projects and ventures',
+  filters: { all: 'All', projects: 'Client projects', ventures: 'Ventures' },
   /** The list's year column, row by row. The jewellery year is an open item (build-handoff). */
   years: ['2026', '2026', '', '2023', 'Exited', '2026 · In stealth'],
   /** Captions on the hover previews, row by row. */
@@ -110,7 +109,7 @@ export const workCopy = {
 /** Case board strings outside the deck and the appendix (CaseWispV6 and siblings). */
 export const caseCopy = {
   nextProject: 'Next project',
-  nextCursor: 'Next case',
+  nextCursor: 'Next project',
   island: { compact: 'Compact', minimal: 'Minimal', expanded: 'Expanded' },
   /** Wisp's closing message; the other cases have theirs in the appendix. */
   wispClose: 'Got a product in mind? Good.',
@@ -121,5 +120,5 @@ export const startBoardCopy = {
   /** The confirm button before a day and time are picked: "Confirm a time". */
   aTime: 'a time',
   /** The brief progress label once it is sent. */
-  done: 'Done',
+  done: 'Complete',
 } as const;

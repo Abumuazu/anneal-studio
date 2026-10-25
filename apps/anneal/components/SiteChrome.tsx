@@ -1,33 +1,15 @@
 import { ClipIn } from '@studio/kit/motion';
 import { Closing, GlassFooter, SiteHeader } from '@studio/kit/sections';
-import {
-  ArrowLink,
-  ButtonLink,
-  CurrencySwitch,
-  LiveClock,
-  PillLink,
-  ZoneName,
-} from '@studio/kit/ui';
+import { ArrowLink, ButtonLink, PillLink } from '@studio/kit/ui';
 import Link from 'next/link';
 import { type ReactNode } from 'react';
 
 import { boardCopy, copy } from '@/content/copy';
-import { CURRENCY_COOKIE, currencyOptions } from '@/content/currency';
-import { primaryNav, site } from '@/content/site.config';
+import { approved } from '@/content/approved';
+import { footerNav, primaryNav, site } from '@/content/site.config';
 
 import { Mark } from './Mark';
 import { footerRestTiles, footerTiles } from './tiles';
-
-const [lagos, barcelona] = site.cities;
-
-function Clocks() {
-  return (
-    <>
-      Lagos <LiveClock timeZone={lagos.timeZone} /> · Barcelona{' '}
-      <LiveClock timeZone={barcelona.timeZone} />
-    </>
-  );
-}
 
 function Header() {
   return (
@@ -40,7 +22,6 @@ function Header() {
       }
       links={primaryNav}
       navLabel={boardCopy.primaryNav}
-      meta={<Clocks />}
       menu={{
         ...boardCopy.menu,
         openLabel: boardCopy.menu.open,
@@ -111,11 +92,8 @@ function HomeClosing({ msg }: { msg: string }) {
         >
           {boardCopy.workWithUs}
         </ButtonLink>
-        <span className="max-desk:order-3 max-desk:mt-2.5 max-desk:text-center desk:order-1">
-          <Clocks />
-        </span>
         <ArrowLink
-          href={site.startHref}
+          href="/start#brief"
           handoff
           className="type-label text-panel max-desk:order-2 max-desk:justify-center desk:order-2"
         >
@@ -143,7 +121,7 @@ function PageClosing({ msg }: { msg: string }) {
         >
           {boardCopy.workWithUs}
         </ButtonLink>
-        <ArrowLink href={site.startHref} handoff className="text-grey-300 max-desk:justify-center">
+        <ArrowLink href="/start#brief" handoff className="text-grey-300 max-desk:justify-center">
           {copy['closing.cta2']}
         </ArrowLink>
       </div>
@@ -151,33 +129,16 @@ function PageClosing({ msg }: { msg: string }) {
   );
 }
 
-function Footer({ msg, showCurrencySwitch }: { msg: string; showCurrencySwitch: boolean }) {
+function Footer({ msg }: { msg: string }) {
   return (
     <GlassFooter
       msg={msg}
       navLabel={boardCopy.footerNav}
-      links={primaryNav}
+      links={footerNav}
       middle={
-        <div className="grid grid-cols-2 gap-2.5 desk:gap-3.5">
-          {site.cities.map((city) => (
-            <div
-              key={city.name}
-              className="glass rounded-[20px] p-[18px] [--glass-bg:rgb(255_255_255/0.06)] desk:rounded-[22px] desk:p-[22px]"
-            >
-              <div className="type-display text-[56px] desk:text-[76px]">
-                <LiveClock timeZone={city.timeZone} />
-              </div>
-              <div className="type-label mt-2.5 text-grey-400 desk:mt-3.5">
-                {city.name} ·{' '}
-                {city.zone === 'WAT' ? (
-                  city.zone
-                ) : (
-                  <ZoneName timeZone={city.timeZone} fallback={city.zone} />
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+        <p className="type-lead m-0 max-w-[440px] text-grey-300">
+          {approved.shared['Footer closing'].split('\n\n')[1]}
+        </p>
       }
       aside={
         <div className="flex flex-col items-start gap-3">
@@ -207,16 +168,6 @@ function Footer({ msg, showCurrencySwitch }: { msg: string; showCurrencySwitch: 
               </span>
             ))}
           </nav>
-          {showCurrencySwitch && (
-            <CurrencySwitch
-              className="mt-2"
-              options={currencyOptions}
-              cookie={CURRENCY_COOKIE}
-              label={boardCopy.currencyGroup}
-              tone="dark"
-              prefix={<span className="type-label mr-1.5 text-grey-400">{boardCopy.pricesIn}</span>}
-            />
-          )}
           <ButtonLink
             href={site.startHref}
             handoff
@@ -234,7 +185,6 @@ function Footer({ msg, showCurrencySwitch }: { msg: string; showCurrencySwitch: 
       legal={
         <>
           <span>{boardCopy.copyright}</span>
-          <span>{boardCopy.madeIn}</span>
           <Link href="/privacy">{boardCopy.privacy}</Link>
           <a href="#top" className="text-panel">
             {boardCopy.backToTop}
@@ -250,7 +200,6 @@ interface SiteChromeProps {
   /** Floating nav messages for the closing section and the footer (they differ per page). */
   closingMsg: string;
   footerMsg: string;
-  showCurrencySwitch?: boolean;
   children: ReactNode;
 }
 
@@ -258,20 +207,14 @@ interface SiteChromeProps {
  * Header, page content, then the closing section with the glass footer sliding
  * over it. The closing differs on Home (a pointer-following pill).
  */
-export function SiteChrome({
-  variant,
-  closingMsg,
-  footerMsg,
-  showCurrencySwitch = true,
-  children,
-}: SiteChromeProps) {
+export function SiteChrome({ variant, closingMsg, footerMsg, children }: SiteChromeProps) {
   return (
     <>
       <Header />
       <main id="main">{children}</main>
       <ClipIn className="relative z-[3] bg-ink">
         {variant === 'home' ? <HomeClosing msg={closingMsg} /> : <PageClosing msg={closingMsg} />}
-        <Footer msg={footerMsg} showCurrencySwitch={showCurrencySwitch} />
+        <Footer msg={footerMsg} />
       </ClipIn>
     </>
   );

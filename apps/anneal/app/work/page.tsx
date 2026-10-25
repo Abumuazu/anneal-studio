@@ -1,3 +1,4 @@
+import { approved } from '@/content/approved';
 import { InView, LineMask, MorphTile, Reveal } from '@studio/kit/motion';
 import { ButtonLink } from '@studio/kit/ui';
 import type { Metadata } from 'next';
@@ -11,13 +12,13 @@ import { site } from '@/content/site.config';
 import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Work',
-  description: copy['work.intro'],
+  title: approved.meta.Work.title,
+  description: approved.meta.Work.description,
   path: '/work',
 });
 
 export default function WorkPage() {
-  const [first, second] = lines(copy['work.h1'], [1]);
+  const [first, second, third] = lines(copy['work.h1'], [3, 5]);
   return (
     <SiteChrome variant="page" closingMsg={workCopy.msg.close} footerMsg={chromeCopy.footerMsg}>
       <section
@@ -25,11 +26,12 @@ export default function WorkPage() {
         className="reveal-on-load relative pt-[136px] desk:pt-[200px] pb-16 desk:pb-[120px]"
       >
         <div className="wrap grid items-end gap-6 desk:grid-cols-12">
-          <h1 className="type-display m-0 text-[clamp(80px,15vw,230px)] desk:col-span-8">
+          <h1 className="type-display m-0 text-[clamp(64px,8vw,128px)] desk:col-span-8">
             <span aria-hidden="true">
               <LineMask line={0}>{first}</LineMask>
-              <LineMask line={1}>
-                {second}
+              <LineMask line={1}>{second}</LineMask>
+              <LineMask line={2}>
+                {third}
                 <MorphTile
                   glyphs={['g-app', 'g-code', 'g-spark', 'g-stack']}
                   background="var(--color-ink)"

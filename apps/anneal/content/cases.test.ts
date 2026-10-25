@@ -11,8 +11,10 @@ import { caseCopy } from './pages';
 const read = (rel: string) => readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8');
 
 const appendix = read('../../../docs/copy-deck-appendix.md');
+const approved = read('../../../docs/copy-deck-approved.md').replace(/\s+/g, ' ');
 const deckValues = Object.values(copy);
-const inSource = (s: string) => appendix.includes(s) || deckValues.some((v) => v.includes(s));
+const inSource = (s: string) =>
+  appendix.includes(s) || approved.includes(s) || deckValues.some((v) => v.includes(s));
 
 /**
  * Headlines as whole sentences: the appendix marks line breaks with " / " and
@@ -25,6 +27,7 @@ for (const [key, value] of Object.entries(copy)) {
 }
 const sentences = [
   appendix.replaceAll(' / ', ' '),
+  approved,
   ...[...groups.values()].map((v) => v.join(' ')),
 ];
 const isSentence = (s: string) => inSource(s) || sentences.some((v) => v.includes(s));

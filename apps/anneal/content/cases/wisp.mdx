@@ -18,7 +18,7 @@ import {
 <CaseHero
   slug="wisp"
   msg="Meetings in, minutes out."
-  lines={['Press record.', 'Lock the phone.', 'Approve the minutes.']}
+  lines={['Record the meeting.', 'Review the', 'record.']}
   meta={{
     client: 'Confidential',
     sector: 'Meeting records',
@@ -31,30 +31,31 @@ import {
 <WispStage />
 
 <Brief msg="Three questions came first." width="wide">
-  Boards, committees and leadership teams make decisions that have to be recorded correctly. They
-  needed to capture meetings on a phone, in the room or on a Teams or Zoom call, without losing
-  minutes to a locked screen or a bad connection. Every meeting also carries a classification, and a
-  draft only becomes the official record once a secretary approves it. We designed and built the
-  whole app.
+  Boards, committees and leadership groups need a dependable record of their decisions. Capturing the audio is one part of that. The product also has to respect classification, make recording clear to participants and support review before a draft becomes official.
+
+We designed and built an app around that full workflow, including the moments when the screen locks, a connection drops or the meeting moves between tools.
+
 </Brief>
 
 <Questions
   msg="Three questions came first."
   heading="Three questions we answered before drawing a screen."
 >
-  <Question title="What happens when the phone locks mid-meeting?">
-    Recording keeps going. A Live Activity on the lock screen and in the Dynamic Island shows the
-    timer and level meter, and a long press opens pause and stop.
-  </Question>
-  <Question title="How do classification and consent get captured before recording?">
-    Every meeting carries a classification: Public, Internal, Confidential or Restricted. The person
-    recording confirms that everyone present has been told the session is recorded.
-  </Question>
-  <Question title="How does a transcript become an official record?">
-    Only after review. The recording is uploaded to the organization's own servers and transcribed
-    with speaker labels. Draft minutes then go to a secretary, who can suggest edits and approve
-    them.
-  </Question>
+  <Question title="Keep capture within reach">
+  Recording continues when the user locks the phone or switches apps. A Live Activity shows the timer and recording status on the lock screen and in the Dynamic Island. Expanded controls let the user pause, resume or stop without returning to the main app.
+
+The recording state stays consistent across the interface.
+
+</Question>
+  <Question title="Make the recording process clear from the start">
+  Before recording, the user assigns a classification and confirms that the people present have been told about the recording. Public, Internal, Confidential and Restricted are explicit choices in the flow.
+
+The flow makes those choices explicit before recording begins.
+
+</Question>
+  <Question title="Follow one meeting through">
+  Start with its classification and recording confirmation. Capture the meeting, including while the phone is locked. Save the recording and upload it to the organisation's servers when a connection is available. Review the transcript, actions and draft minutes together. A secretary can edit and approve the minutes before they become the official record.
+</Question>
 </Questions>
 
 <WispFlow msg="Lock the phone, keep recording." heading="Follow one meeting from start to minutes.">
@@ -75,7 +76,7 @@ import {
   </FlowStep>
   <FlowStep title="Stop, saved, minutes">
     The recording is saved and uploaded to the organization's own servers. A transcript with speaker
-    labels follows in about 4 minutes, then draft minutes for a secretary to review.
+    labels follows, then draft minutes for a secretary to review.
   </FlowStep>
 </WispFlow>
 

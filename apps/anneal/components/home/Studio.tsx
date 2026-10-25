@@ -1,6 +1,8 @@
 import { ScrollSteps, StepItem, WordLight } from '@studio/kit/motion';
 import { ArrowLink } from '@studio/kit/ui';
 
+import { approved } from '@/content/approved';
+
 import { boardCopy, copy } from '@/content/copy';
 
 const PRINCIPLES = [1, 2, 3, 4] as const;
@@ -17,7 +19,7 @@ export function Studio() {
         <div className="desk:sticky desk:top-[120px] desk:col-span-6">
           <WordLight
             as="p"
-            text={copy['home.studio.statement']}
+            text={approved.home['Studio heading'].replace('\n\n', ' ')}
             span="element"
             triggerClosest="section"
             className="type-h2 m-0 text-[clamp(32px,3.4vw,50px)] leading-[1.12]"

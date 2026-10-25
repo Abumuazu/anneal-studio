@@ -96,11 +96,6 @@ test.describe('currency', () => {
 
     await ui.getByRole('button', { name: 'EUR €' }).click();
     await expect(ui.locator('[data-price="EUR"]')).toHaveText('€360');
-    // Every switch on the page follows.
-    await expect(
-      page.getByRole('contentinfo').getByRole('button', { name: 'EUR €' }),
-    ).toHaveAttribute('aria-pressed', 'true');
-
     await page.reload();
     await expect(page.locator('html')).toHaveAttribute('data-currency', 'EUR');
     await context.close();
@@ -159,7 +154,7 @@ test.describe('motion', () => {
 
   test('the floating nav appears after scrolling and follows the section', async ({ page }) => {
     await page.goto('/kitchen-sink');
-    const nav = page.getByRole('navigation', { name: 'Quick' });
+    const nav = page.getByRole('navigation', { name: 'On this page' });
     await expect(nav).not.toHaveAttribute('data-visible');
     await page.locator('#words').scrollIntoViewIfNeeded();
     await expect(nav).toHaveAttribute('data-visible', '');
@@ -172,11 +167,11 @@ test.describe('work with us', () => {
     await page.goto('/kitchen-sink');
     await page.locator('#handoff').scrollIntoViewIfNeeded();
     const overlay = page.locator('.handoff');
-    await page.locator('#handoff').getByRole('link', { name: 'Work with us' }).first().click();
+    await page.locator('#handoff').getByRole('link', { name: 'Book a call' }).first().click();
     await expect(overlay).toHaveAttribute('data-content', '', { timeout: 1500 });
     await expect(page).toHaveURL(/\/start$/, { timeout: 4000 });
     await expect(
-      page.getByRole('heading', { level: 1, name: 'Tell us what you are building.' }),
+      page.getByRole('heading', { level: 1, name: 'What do you want to build or improve?' }),
     ).toBeVisible();
     await expect(overlay).toHaveCSS('opacity', '0', { timeout: 4000 });
     expect(await page.evaluate(() => sessionStorage.getItem('anneal-wwu'))).toBeNull();
@@ -229,7 +224,7 @@ test.describe('work with us', () => {
     const context = await browser.newContext({ baseURL, reducedMotion: 'reduce' });
     const page = await context.newPage();
     await page.goto('/kitchen-sink');
-    await page.locator('#handoff').getByRole('link', { name: 'Work with us' }).first().click();
+    await page.locator('#handoff').getByRole('link', { name: 'Book a call' }).first().click();
     await expect(page).toHaveURL(/\/start$/);
     await expect(page.locator('.handoff')).toHaveCSS('opacity', '0');
     await context.close();
@@ -256,7 +251,7 @@ test.describe('keyboard', () => {
     await page.goto('/');
     expect(
       await page
-        .getByRole('navigation', { name: 'Quick' })
+        .getByRole('navigation', { name: 'On this page' })
         .evaluate((n) => (n as HTMLElement).inert),
     ).toBe(true);
   });

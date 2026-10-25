@@ -12,11 +12,7 @@ interface FloatingNavProps {
   cta: ReactNode;
   /** Accessible name for the nav, e.g. "Quick". */
   label: string;
-  /**
-   * Shows once the page has scrolled past this many px. Elements with
-   * `data-nav-after` override it: the nav shows once 70% of that element has
-   * scrolled by (Home hero).
-   */
+  /** Shows once the page has scrolled past this many px. */
   showAfter?: number;
 }
 
@@ -34,9 +30,7 @@ export function FloatingNav({ mark, cta, label, showAfter = 320 }: FloatingNavPr
   useEffect(() => {
     const update = () => {
       const vh = window.innerHeight;
-      const after = document.querySelector<HTMLElement>('[data-nav-after]');
-      const threshold = after ? after.offsetTop + after.offsetHeight * 0.7 : showAfter;
-      setVisible(window.scrollY > threshold);
+      setVisible(window.scrollY > showAfter);
       const sections = document.querySelectorAll<HTMLElement>('[data-msg]');
       let next = sections[0]?.dataset.msg ?? '';
       for (const s of sections) {

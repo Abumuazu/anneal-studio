@@ -66,6 +66,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           >
             {children}
             <FloatingNav
+              showAfter={120}
               label={boardCopy.quickNav}
               mark={<Mark size={18} className="text-panel" />}
               cta={

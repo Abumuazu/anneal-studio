@@ -45,7 +45,7 @@ These pages kept their approved Iteration 5 and 6 wording, so their copy was onl
 - **E Licensed routing:** Every trade runs through the licensed partner.
 - **F Publishing set-up:** Planned around the licensed entity's own developer account, subject to Apple's review.
 
-**Built with:** React Native · TypeScript · Node.js · Licensed partner API
+**Built with:** React Native · TypeScript · Node.js · Partner API
 
 **Next:** Next project · 03 · Marketplace / Jewellery marketplace
 
@@ -143,14 +143,14 @@ Phone labels: Gold ring · Your offer · Buyer's card.
 - **Date:** Last updated 22 October 2026
 - **Side navigation label:** On this page
 
-**01 Who we are:** Anneal Studio, led by Muazu Abu and based in Lagos and Barcelona, runs this site. We decide how the personal data described here is used, which makes us its controller.
+**01 Who we are:** Anneal Studio, led by Muazu Abu, runs this site. We decide how the personal data described here is used, which makes us its controller.
 
 **02 What we collect:** Only what you give us and a little about how the site is used.
 - From the brief form: your name, email, company, project details, timing and, if you give one, a budget.
 - How you found us, if you tell us, and any campaign tags in the link you arrived from (for example a LinkedIn post). We keep these with your brief so we know which channel it came from.
 - From call bookings: your name, email and the time you pick.
 - From the waitlist for Anneal tools and ventures: your email address.
-- Basic, privacy-friendly analytics through Plausible, which does not use cookies or follow you across other sites. We count things like which price card was opened and whether a brief was sent, not who you are.
+- Basic, privacy-friendly analytics through Plausible, which does not use cookies or follow you across other sites. We count things like which service link was opened and whether a brief was sent, not who you are.
 
 **03 Why we use it:** To reply to you, run calls, write proposals, tell you when something on the waitlist is ready, and learn which channels bring in the right projects and improve the site. We don't sell your data and we don't use it for advertising.
 
@@ -209,3 +209,123 @@ Phone labels: Gold ring · Your offer · Buyer's card.
 3. **A written quote.** The scope, the price and the date, for you to approve before paying.
 
 **Floating nav:** Call or write. Both reach the team. · Pick a slot. We'll send the invite. · Four short steps. No essays. · Still here? The form is just up there.
+
+
+## Approved Start revision, 25 October 2026
+
+
+**Title:** Discuss a Project or Partnership | Anneal Studio
+
+**Meta description:** Book a 30-minute call or send Anneal a brief. Tell us about your product, priorities and optional budget for a project or ongoing technical partnership.
+
+**H1:** What do you want to build or improve?
+
+**Lead:** Tell us where you are, what you need and what is getting in the way. Book a call or send a short brief. You do not need a technical specification.
+
+**Booking heading:** Book a 30-minute call
+
+**Booking introduction:** We will discuss your priorities, the work involved and whether a project or ongoing partnership is the right fit.
+
+**Time-zone label:** Times shown in
+
+**Booking fields:** 1. Pick a day / 2. Pick a time / 3. Your email
+
+**Email example:** you@company.com
+
+**Booking buttons:** Confirm a time / Confirm booking / Confirming booking
+
+**Booking loading:** Loading available times.
+
+**Booking no availability:** No times are available in this calendar window. Email hello@raum.africa and we can arrange a conversation.
+
+**Booking calendar error:** We could not load available times. Try again, or email hello@raum.africa.
+
+**Booking retry:** Reload times
+
+**Selected slot no longer available:** That time is no longer available. Please choose another slot.
+
+**Booking confirmation uncertain:** We could not confirm the booking on this page. Check your email for an invitation before trying again. If you are unsure, contact hello@raum.africa.
+
+**Booking success heading:** Your call is booked.
+
+**Booking success body:** Look out for the calendar invitation. If it does not arrive, contact hello@raum.africa.
+
+**Another booking action:** Choose another time
+
+**Brief heading:** Send a brief
+
+**Brief introduction:** A few details are enough to start the conversation.
+
+**Progress labels:** Step 1 of 4 / Step 2 of 4 / Step 3 of 4 / Step 4 of 4 / Complete
+
+**Step 1 heading:** What would you like help with?
+
+**Step 1 helper:** Choose the closest option. MVP means the first useful version of an app. You can explain more later.
+
+**Step 1 choices:** Website / AI feature / Web MVP / Mobile MVP / Design or product improvement / Ongoing technical partnership / Something else
+
+**Step 2 heading:** Where is it today?
+
+**Step 2 choices:** An idea / Designs or a prototype / A working product / An existing product that needs improvement
+
+**Step 3 heading:** Timing and budget
+
+**Timing question:** When would you like to start?
+
+**Timing choices:** As soon as possible / In the next few months / Exploring the options
+
+**Budget question:** What budget are you considering? (optional)
+
+**Budget helper:** Share an amount, a range or any context that helps. Include a currency if you have one in mind.
+
+**Step 4 heading:** A little about you
+
+**Fields:** Name / Email / Company or project (optional) / What would you like us to know? (optional) / How did you hear about Anneal? (optional)
+
+**Referral choices:** LinkedIn / X / A referral / A designer or agency / Search / Somewhere else
+
+**Campaign-tag note:** We also record campaign information in the link you used, so we can understand how people find Anneal.
+
+**Brief preview heading:** Your brief so far
+
+**Empty preview:** Your answers will appear here as you go.
+
+**Brief actions:** Back / Continue / Send brief / Sending brief
+
+**Brief validation:** Please check your name, email and any highlighted answers.
+
+**Brief receipt uncertain:** We could not confirm receipt of your brief. Try again, or email hello@raum.africa with your details.
+
+**Brief success label:** Brief received
+
+**Brief success heading:** Thank you. We have your brief.
+
+**Brief success body:** We will review what you have shared and reply to your email with questions or a suggested next step.
+
+**What happens next heading:** From introduction to a clear plan.
+
+**We understand the work:** We review your brief or discuss your priorities on the call.
+
+**We recommend an approach:** We consider the starting point, dependencies and whether a defined project or ongoing work fits.
+
+**You review the proposal:** The scope or priorities, fee, responsibilities and delivery arrangements are written down before work starts.
+
+**Review note:** Error and loading messages require corresponding interface states before publication. A timeout can leave booking receipt uncertain, so the copy does not assert that no event was created. Brief confirmation does not promise that every internal notification system succeeded.
+
+
+
+Step [n] of 4
+
+
+Partner integration
+
+Integration with the partner API.
+
+
+Book a call or send a brief.
+
+Pick a time.
+
+A few details to begin.
+
+What happens next.

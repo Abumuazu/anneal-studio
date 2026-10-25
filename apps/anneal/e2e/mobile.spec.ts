@@ -12,8 +12,8 @@ test.describe('phone', () => {
     await page.goto('/');
     const header = page.getByRole('banner');
     await expect(header.getByRole('button', { name: 'Open menu' })).toBeVisible();
-    await expect(header.getByRole('navigation', { name: 'Primary' })).toBeHidden();
-    await expect(header.getByRole('link', { name: 'Work with us' })).toBeHidden();
+    await expect(header.getByRole('navigation', { name: 'Main navigation' })).toBeHidden();
+    await expect(header.getByRole('link', { name: 'Book a call' })).toBeHidden();
   });
 
   test('the menu opens as a dialog, holds the page and closes with Escape', async ({
@@ -26,10 +26,10 @@ test.describe('phone', () => {
     const menu = page.getByRole('dialog', { name: 'Menu' });
     await expect(menu).toBeVisible();
     await expect(open).toHaveAttribute('aria-expanded', 'true');
-    for (const name of ['Work', 'Services', 'Products', 'Studio', 'Start']) {
+    for (const name of ['Work', 'Services', 'Studio']) {
       await expect(menu.getByRole('link', { name, exact: true })).toBeVisible();
     }
-    await expect(menu.getByRole('link', { name: 'Work with us' })).toBeVisible();
+    await expect(menu.getByRole('link', { name: 'Book a call' })).toBeVisible();
     await expect(page.locator('html')).toHaveCSS('overflow', 'hidden');
     // Focus starts on Close and stays inside the dialog.
     await expect(menu.getByRole('button', { name: 'Close menu' })).toBeFocused();
@@ -77,13 +77,12 @@ test.describe('phone', () => {
     ).toBeAttached();
     const hero = page.locator('.hero');
     await expect(hero).toBeVisible();
-    await expect(hero.getByText('Product studio', { exact: true })).toBeVisible();
-    await expect(hero.getByText('Tell us in a line')).toBeVisible();
-    await expect(
-      hero.getByText(/^Anneal is a product studio for founders and teams/),
-    ).toBeVisible();
-    const work = hero.getByRole('link', { name: 'Work with us' });
-    const prices = hero.getByRole('link', { name: 'See the prices' });
+    await expect(hero.getByText('Product studio', { exact: true })).toHaveCount(0);
+    await expect(hero.getByText('What are you working on?')).toBeVisible();
+    await expect(hero.getByText(/^Anneal designs and builds websites/)).toBeVisible();
+    const work = hero.getByRole('link', { name: 'Book a call' });
+    const prices = hero.getByRole('link', { name: 'Explore our work' });
+    await work.scrollIntoViewIfNeeded();
     await expect(work).toBeInViewport();
     await expect(prices).toBeVisible();
     const box = await hero.boundingBox();
@@ -94,8 +93,10 @@ test.describe('phone', () => {
   test('the typing card cycles through the three examples', async ({ page }) => {
     await page.goto('/');
     const card = page.locator('.hero-ask');
-    await expect(card).toContainText('a booking site for my clinic', { timeout: 6000 });
-    await expect(card).toContainText('an assistant for customer emails', { timeout: 12_000 });
+    await expect(card).toContainText('a website that explains our business', { timeout: 6000 });
+    await expect(card).toContainText('an AI workflow connected to our systems', {
+      timeout: 12_000,
+    });
   });
 
   test('the process cards follow the swipe', async ({ page }) => {
@@ -107,10 +108,10 @@ test.describe('phone', () => {
     const track = process.locator('.htrack-vp');
     await track.evaluate((el) => el.scrollTo({ left: 298 * 2 }));
     await expect(process).toContainText('03/05');
-    await expect(process.locator('[data-active="true"]')).toContainText('Build');
+    await expect(process.locator('[data-active="true"]')).toContainText('Design');
     await track.evaluate((el) => el.scrollTo({ left: el.scrollWidth }));
     await expect(process).toContainText('05/05');
-    await expect(process.locator('[data-active="true"]')).toContainText('Grow');
+    await expect(process.locator('[data-active="true"]')).toContainText('Improve');
     await expect(page.getByText('Swipe for the next stage')).toBeVisible();
   });
 
@@ -130,7 +131,7 @@ test.describe('phone', () => {
   test('the footer links carry an arrow at the right, with no hover needed', async ({ page }) => {
     await page.goto('/');
     const link = page
-      .getByRole('navigation', { name: 'Footer' })
+      .getByRole('navigation', { name: 'Footer navigation' })
       .getByRole('link', { name: /^Work/ });
     await link.scrollIntoViewIfNeeded();
     await expect(link.locator('.arrow')).toHaveCSS('opacity', '1');
@@ -139,11 +140,11 @@ test.describe('phone', () => {
   test('the floating bar shows the section message and a light button', async ({ page }) => {
     await page.goto('/');
     await page.mouse.wheel(0, 1600);
-    const bar = page.getByRole('navigation', { name: 'Quick' });
+    const bar = page.getByRole('navigation', { name: 'On this page' });
     await expect(bar).toHaveAttribute('data-visible', '');
     await expect(bar.locator('.fnav-msg')).toBeVisible();
     await expect(bar.locator('.fnav-msg')).not.toBeEmpty();
-    await expect(bar.getByRole('link', { name: 'Work with us' })).toBeVisible();
+    await expect(bar.getByRole('link', { name: 'Book a call' })).toBeVisible();
     const box = await bar.boundingBox();
     expect(box?.width).toBeGreaterThan(PHONE.width - 40);
   });
@@ -154,9 +155,9 @@ test.describe('phone', () => {
     await page.goto('/');
     const closing = page.locator('#contact');
     await closing.scrollIntoViewIfNeeded();
-    const cta = closing.getByRole('link', { name: 'Work with us' }).last();
+    const cta = closing.getByRole('link', { name: 'Book a call' }).last();
     await expect(cta).toBeVisible();
-    await expect(closing.getByRole('link', { name: /Or book a 30-minute call/ })).toBeVisible();
+    await expect(closing.getByRole('link', { name: /Send a brief/ })).toBeVisible();
     // The pill that follows a mouse pointer is for wide screens only.
     await expect(closing.locator('.follow-target a')).toBeHidden();
   });
@@ -213,7 +214,7 @@ test.describe('phone', () => {
 });
 
 test.describe('no horizontal overflow', () => {
-  for (const width of [320, 390, 768]) {
+  for (const width of [320, 390, 768, 1024, 1440]) {
     test(`at ${String(width)}px on every page`, async ({ page }) => {
       test.setTimeout(120_000);
       await page.setViewportSize({ width, height: 800 });

@@ -6,13 +6,13 @@ import { copy } from '@/content/copy';
 import { knownAmount } from './PriceText';
 
 describe('PriceText', () => {
-  it('maps every dollar amount used on Services to a price in prices.ts', () => {
+  it('keeps public service copy free of preset prices', () => {
     const services = Object.entries(copy).filter(([k]) => k.startsWith('services.'));
     const amounts = services.flatMap(([, v]) =>
       [...v.matchAll(/\$([\d,]+)/g)].map((m) => Number(m[1]?.replace(/,/g, ''))),
     );
-    expect(amounts.length).toBeGreaterThan(5);
-    for (const a of amounts) expect(knownAmount(a)).toBe(true);
+    expect(amounts).toEqual([]);
+    expect(knownAmount(400)).toBe(true);
   });
 
   it('is only used with amounts from build-handoff.md', () => {

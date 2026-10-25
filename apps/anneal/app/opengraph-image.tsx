@@ -8,5 +8,5 @@ export const contentType = 'image/png';
 
 /** The site's default social card: the Home headline. */
 export default function Image() {
-  return ogImage({ headline: boardCopy.heroH1, label: boardCopy.cities });
+  return ogImage({ headline: boardCopy.heroH1, label: boardCopy.studioName });
 }

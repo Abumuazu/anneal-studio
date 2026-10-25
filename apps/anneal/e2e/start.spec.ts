@@ -24,13 +24,53 @@ const outbox = async (page: Page) =>
   (await (await page.request.get('/api/outbox')).json()) as Outbox;
 
 test.describe('start', () => {
+  test('a calendar failure explains the problem and can be retried', async ({ page }) => {
+    await page.route('**/api/slots', (route) =>
+      route.fulfill({ status: 503, json: { ok: false } }),
+    );
+    await page.goto('/start');
+    await expect(
+      page.getByText('We could not load available times. Try again, or email hello@raum.africa.'),
+    ).toBeVisible();
+    await page.unroute('**/api/slots');
+    await page.getByRole('button', { name: 'Reload times' }).click();
+    await expect(
+      page.getByRole('group', { name: '1. Pick a day' }).getByRole('radio').first(),
+    ).toBeVisible();
+  });
+
+  test('an uncertain booking asks the visitor to check their invitation before retrying', async ({
+    page,
+  }) => {
+    await page.route('**/api/bookings', (route) => route.abort('failed'));
+    await page.goto('/start');
+    await page
+      .getByRole('group', { name: '1. Pick a day' })
+      .getByRole('radio')
+      .first()
+      .locator('..')
+      .click();
+    await page
+      .getByRole('group', { name: '2. Pick a time' })
+      .getByRole('radio')
+      .first()
+      .locator('..')
+      .click();
+    await page.getByLabel('3. Your email').fill('preview-error@example.com');
+    await page.getByRole('button', { name: 'Confirm booking', exact: true }).click();
+    await expect(page.locator('main').getByRole('alert')).toContainText(
+      'Check your email for an invitation before trying again.',
+    );
+    await expect(page.getByRole('button', { name: 'Confirm booking', exact: true })).toBeDisabled();
+  });
+
   test('books a slot and sends a brief end to end', async ({ page, isMobile }) => {
     const errors = collectErrors(page);
     const events = await captureEvents(page);
     const tag = `e2e-${Date.now().toString(36)}`;
     await page.goto(`/start?utm_source=linkedin&utm_campaign=${tag}`);
     await expect(
-      page.getByRole('heading', { level: 1, name: 'Tell us what you are building.' }),
+      page.getByRole('heading', { level: 1, name: 'What do you want to build or improve?' }),
     ).toBeAttached();
 
     // Booking: a day, a time, an email. Projects run in parallel against one
@@ -51,11 +91,17 @@ test.describe('start', () => {
     await times.last().locator('..').click();
     await booking.getByLabel('3. Your email').fill(`${tag}@example.com`);
     const confirm = booking.getByRole('button', {
-      name: /^Confirm \w{3} \d{1,2} \w{3}, \d{2}:\d{2}$/,
+      name: 'Confirm booking',
     });
     await confirm.click();
-    await expect(page.getByText('A calendar invite is on its way.')).toBeVisible();
-    await expect(page.locator(':focus')).toContainText('A calendar invite is on its way.');
+    await expect(
+      page.getByText(
+        'Look out for the calendar invitation. If it does not arrive, contact hello@raum.africa.',
+      ),
+    ).toBeVisible();
+    await expect(page.locator(':focus')).toContainText(
+      'Look out for the calendar invitation. If it does not arrive, contact hello@raum.africa.',
+    );
 
     // Brief: four steps, keyboard friendly.
     await page
@@ -66,24 +112,24 @@ test.describe('start', () => {
     await expect(sketch).toContainText('Mobile MVP', { useInnerText: true });
     await page.getByRole('button', { name: 'Continue' }).click();
     await expect(page.getByRole('heading', { name: 'Where is it today?' })).toBeFocused();
-    await page.getByRole('radio', { name: 'Live product' }).locator('..').click();
+    await page.getByRole('radio', { name: 'A working product' }).locator('..').click();
     await page.getByRole('button', { name: 'Continue' }).click();
     await page.getByRole('radio', { name: 'As soon as possible' }).locator('..').click();
     await page
       .getByLabel('What budget are you considering? (optional)')
       .fill('₦5,000,000 to ₦7,000,000');
     await page.getByRole('button', { name: 'Continue' }).click();
-    await expect(page.getByRole('heading', { name: 'About you' })).toBeFocused();
+    await expect(page.getByRole('heading', { name: 'A little about you' })).toBeFocused();
     await page.getByLabel('Name', { exact: true }).fill('Ada Obi');
     await page.getByLabel('Email', { exact: true }).fill(`${tag}@example.com`);
     await page.getByLabel('Company or project (optional)').fill('Obi Labs');
     await page.getByRole('radio', { name: 'A referral' }).locator('..').click();
-    await expect(sketch).toContainText('Mobile MVP · live product · as soon as possible', {
+    await expect(sketch).toContainText('Mobile MVP · a working product · as soon as possible', {
       useInnerText: true,
     });
     await page.getByRole('button', { name: 'Send brief' }).click();
-    await expect(page.getByText('Thanks. It is with us.')).toBeVisible();
-    await expect(page.getByText('Done', { exact: true })).toBeVisible();
+    await expect(page.getByText('Thank you. We have your brief.')).toBeVisible();
+    await expect(page.getByText('Complete', { exact: true })).toBeVisible();
 
     const sent = await outbox(page);
     const booked = sent.bookings.find((b) => b.email === `${tag}@example.com`);
@@ -91,7 +137,7 @@ test.describe('start', () => {
     const brief = sent.briefs.find((b) => b.utm_campaign === tag);
     expect(brief).toMatchObject({
       offer: 'Mobile MVP',
-      stage: 'Live product',
+      stage: 'A working product',
       timing: 'As soon as possible',
       name: 'Ada Obi',
       company: 'Obi Labs',
@@ -115,7 +161,7 @@ test.describe('start', () => {
     for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'Continue' }).click();
     await page.getByRole('button', { name: 'Send brief' }).click();
     await expect(page.getByLabel('Name', { exact: true })).toBeFocused();
-    await expect(page.getByText('Thanks. It is with us.')).toHaveCount(0);
+    await expect(page.getByText('Thank you. We have your brief.')).toHaveCount(0);
   });
 
   test('the brief asks for a client budget without showing starting prices', async ({ page }) => {
@@ -135,27 +181,17 @@ test.describe('analytics', () => {
   // Still pages: nothing moves under the clicks, and links navigate plainly.
   test.use({ reducedMotion: 'reduce' });
 
-  test('price cards, currency, waitlist and case views send their events', async ({ page }) => {
+  test('service links, waitlist and case views send their events', async ({ page }) => {
     const events = await captureEvents(page);
     await page.goto('/');
-    await page
-      .getByRole('group', { name: 'Currency' })
-      .first()
-      .getByRole('button', { name: 'EUR €' })
-      .click();
-    const card = page.locator('[data-event="price_card_click"]').first();
-    await card.getByRole('link').click();
+    const service = page.locator('[data-event="service_link_opened"]').first();
+    await service.getByRole('link', { name: 'Discuss your website' }).click();
     await page.waitForURL('**/start');
-    expect(await events()).toEqual(
-      expect.arrayContaining([
-        ['currency_changed', { currency: 'EUR' }],
-        ['price_card_click', { offer: 'website' }],
-      ]),
-    );
+    expect(await events()).toContainEqual(['service_link_opened', { offer: 'Website' }]);
 
     await page.goto('/products');
     await page.getByRole('textbox', { name: 'Email address' }).fill('wait@example.com');
-    await page.getByRole('button', { name: 'Join the waitlist' }).click();
+    await page.getByRole('button', { name: 'Keep me updated' }).click();
     await expect.poll(async () => (await events()).map(([n]) => n)).toContain('waitlist_joined');
 
     await page.goto('/work/wisp');

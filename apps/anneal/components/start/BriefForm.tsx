@@ -4,6 +4,8 @@ import { track } from '@studio/kit/lib';
 import { type ReactNode, useActionState, useEffect, useId, useRef, useState } from 'react';
 
 import { type BriefResult, sendBrief } from '@/app/actions/brief';
+import { startStates } from '@/content/interaction';
+
 import { startCopy } from '@/content/appendix';
 import { copy } from '@/content/copy';
 import { startBoardCopy } from '@/content/pages';
@@ -142,7 +144,7 @@ export function BriefForm() {
           className="flex flex-1 flex-col justify-center gap-[18px] outline-none"
         >
           <span className="type-label text-grey-600">{b.received}</span>
-          <span className="type-display text-[clamp(64px,7vw,96px)]">{copy['start.thanks.t']}</span>
+          <span className="type-display text-[clamp(48px,5vw,72px)]">{copy['start.thanks.t']}</span>
           <span className="type-lead max-w-[500px] text-grey-700">{copy['start.thanks.x']}</span>
         </div>
       ) : (
@@ -192,7 +194,16 @@ export function BriefForm() {
               <label htmlFor={`${id}-budget`} className="type-label text-grey-600">
                 {b.budget}
               </label>
-              <input id={`${id}-budget`} name="budget" type="text" className="inp" />
+              <input
+                id={`${id}-budget`}
+                name="budget"
+                type="text"
+                className="inp"
+                aria-describedby={`${id}-budget-help`}
+              />
+              <p id={`${id}-budget-help`} className="type-body mt-2 text-grey-700">
+                {startStates['Budget helper']}
+              </p>
             </div>
           </fieldset>
 
@@ -270,6 +281,13 @@ export function BriefForm() {
             </div>
           </div>
 
+          {state && !state.ok && (
+            <p role="alert" className="type-body text-ink">
+              {state.invalid
+                ? startStates['Brief validation']
+                : startStates['Brief receipt uncertain']}
+            </p>
+          )}
           <div className="mt-auto flex items-center justify-between pt-3">
             <button
               type="button"
@@ -297,7 +315,7 @@ export function BriefForm() {
                 disabled={pending}
                 className="sbtn bg-accent text-on-accent disabled:opacity-70"
               >
-                {b.send}
+                {pending ? 'Sending brief' : b.send}
               </button>
             )}
           </div>

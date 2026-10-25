@@ -18,20 +18,11 @@ export function Hero() {
   const firstWords = words.join(' ');
   return (
     <section
-      data-nav-after=""
       data-msg={copy['home.msg.1']}
       className="hero z-[1] overflow-hidden bg-ground max-desk:relative desk:sticky desk:top-0"
     >
       <HeroMotion>
         <h1 className="sr-only">{boardCopy.heroH1}</h1>
-        {/* Phones: the studio and its cities, above the headline (HomeMobileV6). */}
-        <div
-          className="type-label flex justify-between text-grey-600 desk:hidden"
-          aria-hidden="true"
-        >
-          <span>{boardCopy.heroTop}</span>
-          <span>{boardCopy.cities}</span>
-        </div>
         <div
           aria-hidden="true"
           className="type-display text-ink max-desk:mt-[26px] desk:absolute desk:inset-x-[var(--spacing-gutter)] desk:top-[clamp(110px,17vh,156px)]"
@@ -123,7 +114,7 @@ export function Hero() {
             <ButtonLink href={site.startHref} handoff className="max-desk:justify-center">
               {boardCopy.workWithUs}
             </ButtonLink>
-            <ArrowLink href="#ways" arrow="↓" className="max-desk:justify-center">
+            <ArrowLink href="/work" className="max-desk:justify-center">
               {boardCopy.seePrices}
             </ArrowLink>
           </div>
@@ -140,8 +131,6 @@ export function Hero() {
               ↓
             </span>
           </span>
-          {/* Three items wrap on phones; keep two there. */}
-          <span className="hidden sm:inline">{boardCopy.cities}</span>
         </div>
       </HeroMotion>
     </section>

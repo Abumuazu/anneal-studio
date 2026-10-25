@@ -16,7 +16,7 @@ export const privacyCopy = {
     {
       title: 'Who we are',
       body: [
-        'Anneal Studio, led by Muazu Abu and based in Lagos and Barcelona, runs this site. We decide how the personal data described here is used, which makes us its controller.',
+        'Anneal Studio, led by Muazu Abu, runs this site. We decide how the personal data described here is used, which makes us its controller.',
       ],
     },
     {
@@ -27,7 +27,7 @@ export const privacyCopy = {
         'How you found us, if you tell us, and any campaign tags in the link you arrived from (for example a LinkedIn post). We keep these with your brief so we know which channel it came from.',
         'From call bookings: your name, email and the time you pick.',
         'From the waitlist for Anneal tools and ventures: your email address.',
-        'Basic, privacy-friendly analytics through Plausible, which does not use cookies or follow you across other sites. We count things like which price card was opened and whether a brief was sent, not who you are.',
+        'Basic, privacy-friendly analytics through Plausible, which does not use cookies or follow you across other sites. We count things like which service link was opened and whether a brief was sent, not who you are.',
       ],
     },
     {
@@ -89,10 +89,10 @@ export const caseCloseMsg = 'Got a product with awkward rules? Good.';
  */
 export const startCopy = {
   msg: {
-    hero: 'Call or write. Both reach the team.',
-    booking: "Pick a slot. We'll send the invite.",
-    brief: 'Four short steps. No essays.',
-    close: 'Still here? The form is just up there.',
+    hero: 'Book a call or send a brief.',
+    booking: 'Pick a time.',
+    brief: 'A few details to begin.',
+    close: 'What happens next.',
   },
   booking: {
     title: 'Book a 30-minute call',
@@ -104,9 +104,10 @@ export const startCopy = {
     placeholder: 'you@company.com',
     /** Followed by the chosen day and time. */
     confirm: 'Confirm',
-    booked: 'Booked',
-    invite: 'A calendar invite is on its way.',
-    again: 'Pick another time',
+    booked: 'Your call is booked.',
+    invite:
+      'Look out for the calendar invitation. If it does not arrive, contact hello@raum.africa.',
+    again: 'Choose another time',
   },
   brief: {
     title: 'Send a brief',
@@ -115,33 +116,44 @@ export const startCopy = {
     back: 'Back',
     next: 'Continue',
     send: 'Send brief',
-    need: 'What do you need?',
+    need: 'What would you like help with?',
     where: 'Where is it today?',
-    stages: ['Just an idea', 'Designs or a prototype', 'Live product', 'Live, but struggling'],
-    timing: 'Timing',
-    when: 'When do you want to start?',
-    timings: ['As soon as possible', 'In 1 to 3 months', 'Just exploring'],
+    stages: [
+      'An idea',
+      'Designs or a prototype',
+      'A working product',
+      'An existing product that needs improvement',
+    ],
+    timing: 'Timing and budget',
+    when: 'When would you like to start?',
+    timings: ['As soon as possible', 'In the next few months', 'Exploring the options'],
     budget: 'What budget are you considering? (optional)',
-    about: 'About you',
+    about: 'A little about you',
     name: 'Name',
     email: 'Email',
     company: 'Company or project (optional)',
-    message: 'Anything else we should know (optional)',
-    heard: 'How did you hear about us? (optional)',
+    message: 'What would you like us to know? (optional)',
+    heard: 'How did you hear about Anneal? (optional)',
     sources: ['LinkedIn', 'X', 'A referral', 'A designer or agency', 'Search', 'Somewhere else'],
-    tags: 'We also note the campaign tags in the link you arrived from, so we know which channel to thank.',
+    tags: 'We also record campaign information in the link you used, so we can understand how people find Anneal.',
     sketch: 'Your brief so far',
-    sketchEmpty: 'Your brief will appear here as you fill it in.',
+    sketchEmpty: 'Your answers will appear here as you go.',
     received: 'Brief received',
   },
   next: {
-    title: 'What happens next',
+    title: 'From introduction to a clear plan.',
     steps: [
-      { title: 'We read your brief', body: 'Then reply with questions or a time to talk.' },
-      { title: 'A 30-minute call', body: "Goals, limits and whether we're the right team." },
       {
-        title: 'A written quote',
-        body: 'The scope, the price and the date, for you to approve before paying.',
+        title: 'We understand the work',
+        body: 'We review your brief or discuss your priorities on the call.',
+      },
+      {
+        title: 'We recommend an approach',
+        body: 'We consider the starting point, dependencies and whether a defined project or ongoing work fits.',
+      },
+      {
+        title: 'You review the proposal',
+        body: 'The scope or priorities, fee, responsibilities and delivery arrangements are written down before work starts.',
       },
     ],
   },

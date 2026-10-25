@@ -16,7 +16,7 @@ import {
 <CaseHero
   slug="naira-crypto-exchange"
   msg="This one moves naira and crypto."
-  lines={['A crypto exchange', 'built around who', 'holds the licence.']}
+  lines={['A trading flow', 'built around clear', 'responsibilities.']}
   meta={{
     client: 'Confidential fintech, Nigeria',
     sector: 'Digital assets, payments',
@@ -29,32 +29,31 @@ import {
 <ExchangeStage />
 
 <Brief msg="Two sets of requirements before any design.">
-  The founders wanted people in Nigeria to buy and sell crypto against naira on their phone.
-  Nigeria's Investments and Securities Act 2025 brings digital assets under securities regulation,
-  so this is regulated activity. Apple adds its own requirements for exchange apps: licensing, a
-  legal entity and supporting documents, which depend on how the business is set up and where the
-  app is distributed. Miss either one and the app doesn't launch, however good it looks. This is how
-  we approached the project, not legal advice, and each client confirms the requirements with its
-  own advisers.
+  The founders wanted customers to buy and sell crypto on their phones. Delivering that experience meant looking beyond the trade screen. Identity checks, provider responsibilities, publishing requirements and the path from a confirmed trade to a payout all affected the product.
+
+We mapped those dependencies before designing the main flow, so the interface reflected how the service was intended to operate.
+
 </Brief>
 
 <Questions
   msg="Who holds the licence decides a lot."
   heading="Three questions we answered before drawing a screen."
 >
-  <Question title="Who holds the licence?">
-    We mapped which parts of the flow sit with the licensed partner and which sit with the client,
-    so the client could see where its own responsibilities start.
-  </Question>
-  <Question title="Which entity goes on the App Store listing?">
-    Apple reviews exchange apps against the licences and legal entity behind the listing. We planned
-    the publishing set-up around that from the start and flagged it for the client to confirm with
-    its advisers.
-  </Question>
-  <Question title="What does the partner's API cover?">
-    Plugging into a licensed provider's API doesn't automatically hand you their licence. We drew a
-    clear line between what the API handles and what the business still has to own.
-  </Question>
+  <Question title="Begin with who is responsible">
+  The product connected to a partner's services. We separated the work performed through that integration from responsibilities that remained with the client. Access to an API was treated as a technical connection, rather than an assumption about the client's permissions.
+
+Publishing requirements were considered alongside the product, including the intended entity and developer account behind the listing.
+
+</Question>
+  <Question title="Make the first trade understandable">
+  Verification comes before trading. The flow explains the required BVN and identity checks and shows progress as the customer moves through them.
+
+For a trade, the customer sees the quoted rate and the time available to confirm it. Rate confirmation, status and receipts help explain what is happening rather than leaving the customer to infer it from a changing balance.
+
+</Question>
+  <Question title="Connect the transaction to its outcome">
+  The experience includes buying and selling, payouts to a verified bank account, trade history and individual receipts.
+</Question>
 </Questions>
 
 <Principle
@@ -82,14 +81,14 @@ import {
   <Feature title="Receipts and history">
     Every trade has a receipt and sits in a history you can search.
   </Feature>
-  <Feature title="Licensed routing">Every trade runs through the licensed partner.</Feature>
+  <Feature title="Partner integration">Integration with the partner API.</Feature>
   <Feature title="Publishing set-up">
     Planned around the licensed entity's own developer account, subject to Apple's review.
   </Feature>
 </Features>
 
 <BuiltWith msg="Built with." heading="Built with">
-  React Native · TypeScript · Node.js · Licensed partner API
+  React Native · TypeScript · Node.js · Partner API
 </BuiltWith>
 
 <Next slug="jewellery-marketplace" msg="One more case to go." />

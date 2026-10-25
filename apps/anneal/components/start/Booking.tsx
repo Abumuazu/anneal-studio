@@ -3,6 +3,8 @@
 import { track } from '@studio/kit/lib';
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 
+import { startStates } from '@/content/interaction';
+
 import { startCopy } from '@/content/appendix';
 import { startBoardCopy } from '@/content/pages';
 
@@ -27,6 +29,7 @@ export function Booking() {
   const [dayKey, setDayKey] = useState<string | null>(null);
   const [start, setStart] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+  const [uncertain, setUncertain] = useState(false);
   const [booked, setBooked] = useState<string | null>(null);
   const bookedRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +37,10 @@ export function Booking() {
     setStarts(null);
     setFailed(false);
     try {
-      const res = await fetch('/api/slots', { cache: 'no-store' });
+      const res = await fetch('/api/slots', {
+        cache: 'no-store',
+        signal: AbortSignal.timeout(15000),
+      });
       const body = (await res.json()) as { ok: boolean; days?: { slots: string[] }[] };
       if (!body.ok || !body.days) throw new Error('No slots');
       setStarts(body.days.flatMap((d) => d.slots));
@@ -71,6 +77,7 @@ export function Booking() {
     try {
       const res = await fetch('/api/bookings', {
         method: 'POST',
+        signal: AbortSignal.timeout(20000),
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ start: slot.start, email, timeZone: zone }),
       });
@@ -79,8 +86,7 @@ export function Booking() {
       setBooked(`${choice} ${zoneLabel}`);
       track('call_booked');
     } catch {
-      // The slot may have gone: refresh what is open. (No failure copy yet; see the M5 PR.)
-      void load();
+      setUncertain(true);
     } finally {
       setPending(false);
     }
@@ -88,6 +94,7 @@ export function Booking() {
 
   const again = () => {
     setBooked(null);
+    setUncertain(false);
     setDayKey(null);
     setStart(null);
     void load();
@@ -110,6 +117,27 @@ export function Booking() {
         </div>
       ) : (
         <form onSubmit={(e) => void submit(e)} className="flex flex-1 flex-col gap-[26px]">
+          {loaded.state === 'loading' && (
+            <p role="status" className="type-body m-0 text-grey-300">
+              {startStates['Booking loading']}
+            </p>
+          )}
+          {(loaded.state === 'failed' || (loaded.state === 'ready' && !days.length)) && (
+            <div className="type-body text-grey-300">
+              <p role="alert">
+                {loaded.state === 'failed'
+                  ? startStates['Booking calendar error']
+                  : startStates['Booking no availability']}
+              </p>
+              <button
+                type="button"
+                className="sbtn bg-grey-850 text-panel"
+                onClick={() => void load()}
+              >
+                {startStates['Booking retry']}
+              </button>
+            </div>
+          )}
           <fieldset className="m-0 border-0 p-0" aria-busy={loaded.state === 'loading'}>
             <legend className="type-label mb-3 p-0 text-grey-400">{c.day}</legend>
             <div className="days">
@@ -162,6 +190,14 @@ export function Booking() {
               ))}
             </div>
           </fieldset>
+          {uncertain && (
+            <div role="alert" className="type-body text-grey-300">
+              <p>{startStates['Booking confirmation uncertain']}</p>
+              <button type="button" className="sbtn bg-grey-850 text-panel" onClick={again}>
+                {c.again}
+              </button>
+            </div>
+          )}
           <div className="mt-auto flex flex-col gap-3">
             <label htmlFor={`${id}-email`} className="type-label text-grey-400">
               {c.email}
@@ -177,10 +213,14 @@ export function Booking() {
             />
             <button
               type="submit"
-              disabled={!choice || pending}
+              disabled={!choice || pending || uncertain}
               className="sbtn bg-accent text-on-accent disabled:opacity-45"
             >
-              {c.confirm} {choice ?? startBoardCopy.aTime}
+              {pending
+                ? 'Confirming booking'
+                : choice
+                  ? 'Confirm booking'
+                  : `${c.confirm} ${startBoardCopy.aTime}`}
             </button>
           </div>
         </form>

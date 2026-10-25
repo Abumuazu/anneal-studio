@@ -1,7 +1,6 @@
 import { InView, LineMask, Reveal, ScrollSteps, StepItem, WordLight } from '@studio/kit/motion';
-import { ArrowLink, LiveClock, Tag, ZoneName } from '@studio/kit/ui';
+import { ArrowLink, Tag } from '@studio/kit/ui';
 import type { Metadata } from 'next';
-import Image from 'next/image';
 
 import { SiteChrome } from '@/components/SiteChrome';
 import { VentureTiles } from '@/components/VentureTiles';
@@ -10,19 +9,18 @@ import { Tracks } from '@/components/pages/Tracks';
 import { WaitlistSection } from '@/components/pages/WaitlistSection';
 import { boardCopy, copy } from '@/content/copy';
 import { chromeCopy, studioCopy as st } from '@/content/pages';
-import { site } from '@/content/site.config';
+import { approved } from '@/content/approved';
 import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Studio',
-  description: copy['studio.lead'],
+  title: approved.meta.Studio.title,
+  description: approved.meta.Studio.description,
   path: '/studio',
 });
 
 const PRINCIPLES = [1, 2, 3, 4] as const;
 
 export default function StudioPage() {
-  const [lagos, barcelona] = site.cities;
   return (
     <SiteChrome
       variant="page"
@@ -130,44 +128,6 @@ export default function StudioPage() {
         </div>
       </InView>
 
-      <InView as="section" data-msg={st.msg.team} className="relative py-24 desk:py-40">
-        <div className="wrap">
-          <div className="grid items-end gap-6 desk:grid-cols-12">
-            <Reveal
-              as="h2"
-              step={1}
-              className="type-h2 m-0 text-[clamp(44px,5.4vw,80px)] desk:col-span-7"
-            >
-              {copy['studio.team.h2']}
-            </Reveal>
-            <Reveal
-              as="p"
-              step={2}
-              className="type-body m-0 text-grey-700 desk:col-span-4 desk:col-start-9"
-            >
-              {copy['studio.team.x']}
-            </Reveal>
-          </div>
-          <ul className="mt-9 grid max-w-[340px] list-none p-0 desk:mt-16">
-            <Reveal as="li" className="overflow-hidden rounded-3xl bg-panel">
-              <div className="relative h-[340px] bg-grey-150">
-                <Image
-                  src="/images/team-muazu-abu.jpg"
-                  alt={st.founder.name}
-                  fill
-                  sizes="340px"
-                  className="object-cover object-[50%_22%]"
-                />
-              </div>
-              <div className="p-3.5 desk:p-[22px]">
-                <h3 className="type-h3 m-0 text-[16px] desk:text-[22px]">{st.founder.name}</h3>
-                <p className="type-label mt-2 mb-0 text-grey-600">{st.founder.role}</p>
-              </div>
-            </Reveal>
-          </ul>
-        </div>
-      </InView>
-
       <InView as="section" data-msg={st.msg.ventures} className="relative pt-10 pb-24 desk:pb-40">
         <div className="wrap">
           <Reveal as="h2" step={1} className="type-h2 mt-0 mb-14 text-[clamp(44px,5.4vw,80px)]">
@@ -196,28 +156,12 @@ export default function StudioPage() {
 
       <InView as="section" data-msg={st.msg.where} className="relative py-24 desk:py-40">
         <div className="wrap">
-          <Reveal as="h2" step={1} className="type-h2 mt-0 mb-14 text-[clamp(44px,5.4vw,80px)]">
+          <Reveal as="h2" className="type-h2 m-0 text-[clamp(44px,5.4vw,80px)]">
             {copy['studio.loc.h2']}
           </Reveal>
-          <div className="grid gap-5 desk:grid-cols-2">
-            <Reveal className="rounded-[28px] bg-panel p-10">
-              <div className="type-label text-grey-600">{st.lagosZone}</div>
-              <div className="type-display mt-[30px] text-[clamp(120px,14vw,220px)]">
-                <LiveClock timeZone={lagos.timeZone} />
-              </div>
-              <div className="type-display-wide mt-5 text-[30px]">{lagos.name}</div>
-            </Reveal>
-            <Reveal step={1} className="rounded-[28px] bg-ink p-10 text-panel">
-              <div className="type-label text-grey-400">
-                {barcelona.name} ·{' '}
-                <ZoneName timeZone={barcelona.timeZone} fallback={barcelona.zone} />
-              </div>
-              <div className="type-display mt-[30px] text-[clamp(120px,14vw,220px)]">
-                <LiveClock timeZone={barcelona.timeZone} />
-              </div>
-              <div className="type-display-wide mt-5 text-[30px]">{barcelona.name}</div>
-            </Reveal>
-          </div>
+          <Reveal as="p" className="type-lead mt-8 text-grey-700">
+            {approved.studio['Working worldwide']}
+          </Reveal>
         </div>
       </InView>
     </SiteChrome>

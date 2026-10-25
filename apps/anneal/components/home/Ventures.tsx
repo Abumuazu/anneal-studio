@@ -1,7 +1,9 @@
 import { InView, Reveal } from '@studio/kit/motion';
 
 import { VentureTiles } from '@/components/VentureTiles';
-import { boardCopy, copy } from '@/content/copy';
+import { approved } from '@/content/approved';
+
+import { copy } from '@/content/copy';
 
 /** "We build our own, too." Four tiles; the hovered or focused one widens. */
 export function Ventures() {
@@ -27,7 +29,7 @@ export function Ventures() {
             step={2}
             className="type-body m-0 text-grey-700 desk:col-span-4 desk:col-start-9"
           >
-            {boardCopy.ventures.intro}
+            {approved.home['Own-products heading'].split('\n\n')[1]}
           </Reveal>
         </div>
         <VentureTiles

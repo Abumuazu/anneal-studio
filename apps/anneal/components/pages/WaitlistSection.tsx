@@ -3,6 +3,8 @@ import { EmailCapture } from '@studio/kit/ui';
 import { type ReactNode } from 'react';
 
 import { joinWaitlist } from '@/app/actions/waitlist';
+import { waitlistStates } from '@/content/interaction';
+
 import { copy } from '@/content/copy';
 import { waitlistCopy } from '@/content/pages';
 
@@ -40,6 +42,9 @@ export function WaitlistSection({ source, msg, lines, lead, note }: WaitlistSect
             label={waitlistCopy.emailLabel}
             placeholder={waitlistCopy.placeholder}
             submit={waitlistCopy.submit}
+            pendingLabel={waitlistStates.Pending}
+            failure={waitlistStates.Failure}
+            invalidMessage={waitlistStates.Validation}
             note={note}
             className="glass rounded-[28px] p-7 [--glass-bg:rgb(255_255_255/0.06)]"
             success={

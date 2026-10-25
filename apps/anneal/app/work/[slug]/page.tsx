@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { type CSSProperties } from 'react';
 
+import { approved } from '@/content/approved';
+
 import { SiteChrome } from '@/components/SiteChrome';
 import { caseBySlug, caseHref, cases } from '@/content/cases';
 import { chromeCopy } from '@/content/pages';
@@ -20,7 +22,13 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const entry = caseBySlug((await params).slug);
   if (!entry) return {};
-  return pageMetadata({ title: entry.title, description: entry.line, path: caseHref(entry.slug) });
+  const meta =
+    approved.meta[entry.title as 'Wisp' | 'Naira to crypto exchange' | 'Jewellery marketplace'];
+  return pageMetadata({
+    title: meta.title,
+    description: meta.description,
+    path: caseHref(entry.slug),
+  });
 }
 
 export default async function CasePage({ params }: Params) {

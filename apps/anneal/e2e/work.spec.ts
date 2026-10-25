@@ -5,7 +5,7 @@ import { collectErrors, scrollThrough } from './helpers';
 const CASES = [
   {
     path: '/work/wisp',
-    h1: 'Press record. Lock the phone. Approve the minutes.',
+    h1: 'Record the meeting. Review the record.',
     next: {
       name: /Next project · 02 · Fintech\s*Naira to crypto exchange/,
       path: '/work/naira-crypto-exchange',
@@ -13,7 +13,7 @@ const CASES = [
   },
   {
     path: '/work/naira-crypto-exchange',
-    h1: 'A crypto exchange built around who holds the licence.',
+    h1: 'A trading flow built around clear responsibilities.',
     next: {
       name: /Next project · 03 · Marketplace\s*Jewellery marketplace/,
       path: '/work/jewellery-marketplace',
@@ -21,7 +21,7 @@ const CASES = [
   },
   {
     path: '/work/jewellery-marketplace',
-    h1: 'Make an offer. Pay only if the seller says yes.',
+    h1: 'Make an offer. Pay when the seller accepts.',
     next: { name: /Next project · 01 · Enterprise\s*Wisp/, path: '/work/wisp' },
   },
 ];
@@ -30,7 +30,9 @@ test.describe('work', () => {
   test('renders the covers and the full list without errors', async ({ page }) => {
     const errors = collectErrors(page);
     await page.goto('/work');
-    await expect(page.getByRole('heading', { level: 1, name: 'Selected work.' })).toBeAttached();
+    await expect(
+      page.getByRole('heading', { level: 1, name: 'The work, and the decisions behind it.' }),
+    ).toBeAttached();
     for (const name of ['Wisp', 'Naira to crypto exchange', 'Jewellery marketplace']) {
       await expect(page.locator('a.cover', { hasText: name })).toBeVisible();
     }
@@ -41,7 +43,7 @@ test.describe('work', () => {
 
   test('the chips filter the list', async ({ page }) => {
     await page.goto('/work');
-    const chips = page.getByRole('group', { name: 'Everything, in one list.' });
+    const chips = page.getByRole('group', { name: 'Projects and ventures' });
     const rows = page.locator('a.irow');
     await chips.getByRole('button', { name: /^Ventures/ }).click();
     await expect(chips.getByRole('button', { name: /^Ventures/ })).toHaveAttribute(
@@ -51,7 +53,7 @@ test.describe('work', () => {
     await expect(rows.filter({ visible: true })).toHaveCount(3);
     await expect(page.locator('a.irow', { hasText: 'Raum' })).toBeVisible();
     await expect(page.locator('a.irow', { hasText: 'Wisp' })).toBeHidden();
-    await chips.getByRole('button', { name: /^Projects/ }).click();
+    await chips.getByRole('button', { name: /^Client projects/ }).click();
     await expect(page.locator('a.irow', { hasText: 'Wisp' })).toBeVisible();
     await expect(page.locator('a.irow', { hasText: 'Raum' })).toBeHidden();
     await chips.getByRole('button', { name: /^All/ }).click();
@@ -79,7 +81,7 @@ test.describe('work', () => {
     await expect(
       page.getByRole('heading', {
         level: 1,
-        name: 'A crypto exchange built around who holds the licence.',
+        name: 'A trading flow built around clear responsibilities.',
       }),
     ).toBeAttached();
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);

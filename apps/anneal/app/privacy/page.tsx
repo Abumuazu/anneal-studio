@@ -1,3 +1,4 @@
+import { approved } from '@/content/approved';
 import { InView, LineMask, Reveal } from '@studio/kit/motion';
 import { ScrollSpyNav } from '@studio/kit/sections';
 import type { Metadata } from 'next';
@@ -8,8 +9,8 @@ import { chromeCopy } from '@/content/pages';
 import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Privacy',
-  description: pc.lead,
+  title: approved.meta.Privacy.title,
+  description: approved.meta.Privacy.description,
   path: '/privacy',
 });
 

@@ -11,10 +11,6 @@ export const site = {
     { label: 'X', href: 'https://x.com/muazudev' },
   ],
   startHref: '/start',
-  cities: [
-    { name: 'Lagos', timeZone: 'Africa/Lagos', zone: 'WAT' },
-    { name: 'Barcelona', timeZone: 'Europe/Madrid', zone: 'CET' },
-  ],
   storage: {
     motion: 'anneal-motion',
     handoff: 'anneal-wwu',
@@ -25,7 +21,13 @@ export const site = {
 export const primaryNav: readonly NavItem[] = [
   { href: '/work', label: boardCopy.nav.work },
   { href: '/services', label: boardCopy.nav.services },
+  { href: '/studio', label: boardCopy.nav.studio },
+];
+
+export const footerNav: readonly NavItem[] = [
+  ...primaryNav.slice(0, 2),
   { href: '/products', label: boardCopy.nav.products },
   { href: '/studio', label: boardCopy.nav.studio },
   { href: site.startHref, label: boardCopy.nav.start, handoff: true },
+  { href: '/privacy', label: boardCopy.privacy },
 ];

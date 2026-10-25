@@ -134,7 +134,7 @@ export default function KitchenSinkPage() {
           ))}
         </div>
         <div className="mt-12 space-y-6">
-          <p className="type-display text-[96px]">{copy['home.price.site.name']}</p>
+          <p className="type-display text-[96px]">{copy['home.build.site.name']}</p>
           <p className="type-display-wide text-[54px]">{boardCopy.brand}</p>
           <p className="type-h2 text-[56px]">{copy['home.proc.h2']}</p>
           <p className="type-h3 text-[32px]">{copy['home.studio.p.2.t']}</p>
@@ -152,7 +152,7 @@ export default function KitchenSinkPage() {
         <div className="flex flex-wrap items-center gap-6">
           <ButtonLink href="#ui">{boardCopy.workWithUs}</ButtonLink>
           <ButtonLink href="#ui" size="sm">
-            {copy['home.price.site.name']}
+            {copy['home.build.site.name']}
           </ButtonLink>
           <ArrowLink href="#ui">{copy['closing.cta2']}</ArrowLink>
           <PillLink href="#ui">{boardCopy.workWithUs}</PillLink>
@@ -161,7 +161,7 @@ export default function KitchenSinkPage() {
         </div>
         <div className="mt-10 flex flex-wrap items-end gap-10">
           <div>
-            <p className="type-label text-grey-600">{copy['home.price.site.name']}</p>
+            <p className="type-label text-grey-600">{copy['home.build.site.name']}</p>
             <p className="mt-2 flex items-baseline gap-2.5">
               <span className="type-label text-grey-600">{boardCopy.from}</span>
               <Price values={priceValues('website')} className="type-display-wide text-[30px]" />
@@ -184,7 +184,7 @@ export default function KitchenSinkPage() {
           ))}
           <Mark size={56} live />
           <span className="type-display text-[56px]">
-            <LiveClock timeZone={site.cities[0].timeZone} />
+            <LiveClock timeZone={'UTC'} />
           </span>
         </div>
       </Demo>
@@ -326,7 +326,6 @@ export default function KitchenSinkPage() {
             <span className="type-display text-[120px] leading-[0.78] opacity-40">0{n}</span>
             <div className="mt-auto flex items-baseline justify-between gap-3">
               <span className="type-h3 text-4xl">{copy[`home.proc.${n}.name`]}</span>
-              <span className="type-label opacity-60">{copy[`home.proc.${n}.time`]}</span>
             </div>
             <p className="type-body mt-3 text-[17px] opacity-70">{copy[`home.proc.${n}.line`]}</p>
           </TrackItem>

@@ -1,3 +1,4 @@
+import { approved } from '@/content/approved';
 import { SiteChrome } from '@/components/SiteChrome';
 import { Builds } from '@/components/home/Builds';
 import { Cases } from '@/components/home/Cases';
@@ -7,11 +8,15 @@ import { Pricing } from '@/components/home/Pricing';
 import { Process } from '@/components/home/Process';
 import { Studio } from '@/components/home/Studio';
 import { Ventures } from '@/components/home/Ventures';
-import { boardCopy, copy } from '@/content/copy';
+import { copy } from '@/content/copy';
 import { site } from '@/content/site.config';
 import { pageMetadata, siteUrl } from '@/lib/seo';
 
-export const metadata = pageMetadata({ description: boardCopy.heroLead, path: '/' });
+export const metadata = pageMetadata({
+  title: approved.meta.Home.title,
+  description: approved.meta.Home.description,
+  path: '/',
+});
 
 /** Who the studio is, for search engines. Only facts the site already states. */
 function Organization() {
@@ -21,8 +26,7 @@ function Organization() {
     name: site.name,
     url: siteUrl().origin,
     email: site.email,
-    description: boardCopy.heroLead,
-    location: site.cities.map((c) => ({ '@type': 'Place', name: c.name })),
+    description: approved.shared['Organisation description'],
   };
   return (
     <script

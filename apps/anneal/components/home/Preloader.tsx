@@ -120,7 +120,6 @@ export function Preloader() {
       <div className="pre" aria-hidden="true">
         <div className="pre-ui type-label top-[34px] right-[var(--spacing-gutter)] left-[var(--spacing-gutter)] flex justify-between text-grey-600">
           <span>{boardCopy.studioName}</span>
-          <span>{boardCopy.cities}</span>
         </div>
         <div className="pre-ui type-label bottom-11 left-[var(--spacing-gutter)] text-grey-600">
           {boardCopy.preloaderLine}

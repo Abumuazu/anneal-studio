@@ -4,8 +4,8 @@ import { collectErrors } from './helpers';
 
 const PAGES = [
   { path: '/services', h1: 'Four things we build, start with one.' },
-  { path: '/products', h1: 'Products we build for ourselves.' },
-  { path: '/studio', h1: 'A product studio that builds its own, too.' },
+  { path: '/products', h1: 'Building products of our own.' },
+  { path: '/studio', h1: 'Close to the product. Committed to its progress.' },
   { path: '/privacy', h1: 'Privacy' },
 ];
 
@@ -39,8 +39,10 @@ test.describe('services', () => {
   test('the FAQ opens one answer at a time', async ({ page, isMobile }) => {
     test.skip(isMobile, 'keyboard flow');
     await page.goto('/services');
-    const first = page.getByRole('button', { name: 'Which one should I pick?' });
-    const second = page.getByRole('button', { name: 'How do I pay?' });
+    const first = page.getByRole('button', { name: 'What does a technical partner actually do?' });
+    const second = page.getByRole('button', {
+      name: 'Do we have to commit to a monthly partnership?',
+    });
     await expect(first).toHaveAttribute('aria-expanded', 'true');
     await second.focus();
     await page.keyboard.press('Enter');
@@ -48,23 +50,25 @@ test.describe('services', () => {
     await expect(first).toHaveAttribute('aria-expanded', 'false');
   });
 
-  test('prices inside sentences follow the currency switch', async ({ page }) => {
+  test('commercial terms are scoped in the proposal without public fees', async ({ page }) => {
     await page.goto('/services');
-    const faq = page.locator('#faq');
-    await faq.getByRole('button', { name: 'What if I do not know exactly what I need?' }).click();
-    const answer = faq.locator('p', { hasText: 'Book a Discovery week for' });
-    await expect(answer.locator('[data-price="USD"]')).toHaveText('$900');
-    await expect(answer.locator('[data-price="USD"]')).toBeVisible();
-    await page.locator('main').getByRole('button', { name: 'NGN ₦' }).first().click();
-    await expect(answer.locator('[data-price="NGN"]')).toBeVisible();
-    await expect(answer.locator('[data-price="NGN"]')).toHaveText('₦1,260,000');
-    await expect(answer.locator('[data-price="USD"]')).toBeHidden();
+    await expect(page.locator('[data-price]')).toHaveCount(0);
+    await expect(page.getByRole('group', { name: 'Currency' })).toHaveCount(0);
+    await expect(page.getByText('Half to start', { exact: false })).toHaveCount(0);
+    await expect(page.getByText('Mobile MVP is paid in three parts.')).toHaveCount(0);
+    for (const name of [
+      'How a quote works',
+      'What we agree before we start',
+      'From first conversation to working product',
+    ]) {
+      await expect(page.getByRole('heading', { name })).toHaveCount(0);
+    }
   });
 
   test('jump links reach each service', async ({ page }) => {
     await page.goto('/services');
-    await page.getByRole('link', { name: 'Growth', exact: true }).click();
-    await expect(page.locator('#s5')).toBeInViewport();
+    await page.getByRole('link', { name: 'Product improvement', exact: true }).click();
+    await expect(page.locator('#improvement')).toBeInViewport();
   });
 });
 
@@ -73,14 +77,18 @@ test.describe('waitlist', () => {
     await page.goto('/products');
     const field = page.getByRole('textbox', { name: 'Email address' });
     await field.fill('not-an-email');
-    await page.getByRole('button', { name: 'Join the waitlist' }).click();
+    await page.getByRole('button', { name: 'Keep me updated' }).click();
     await expect(
-      page.getByText('You are on the list. We will write when something opens.'),
+      page.getByText(
+        'We will write when there is an update on Anneal tools or future venture opportunities.',
+      ),
     ).toHaveCount(0);
     await field.fill('hello@example.com');
-    await page.getByRole('button', { name: 'Join the waitlist' }).click();
+    await page.getByRole('button', { name: 'Keep me updated' }).click();
     await expect(
-      page.getByText('You are on the list. We will write when something opens.'),
+      page.getByText(
+        'We will write when there is an update on Anneal tools or future venture opportunities.',
+      ),
     ).toBeVisible();
   });
 });
@@ -89,7 +97,7 @@ test.describe('privacy', () => {
   test('the contents follow the section in view', async ({ page, isMobile }) => {
     test.skip(isMobile, 'the contents are hidden on small screens');
     await page.goto('/privacy');
-    const nav = page.getByRole('navigation', { name: 'On this page' });
+    const nav = page.locator('main').getByRole('navigation', { name: 'On this page' });
     await page.evaluate(() => document.getElementById('p5')?.scrollIntoView({ block: 'start' }));
     await expect(nav.locator('[aria-current="location"]')).toContainText('How long we keep it');
   });
@@ -102,12 +110,12 @@ test.describe('privacy', () => {
 });
 
 test.describe('studio', () => {
-  test('shows the confirmed founder without placeholder profiles', async ({ page }) => {
+  test('keeps the founder and team profiles unpublished', async ({ page }) => {
     await page.goto('/studio');
-    await expect(page.getByRole('heading', { level: 3, name: 'Muazu Abu' })).toBeAttached();
+    await expect(page.getByRole('heading', { name: 'Muazu Abu' })).toHaveCount(0);
+    await expect(page.getByRole('img', { name: 'Muazu Abu' })).toHaveCount(0);
     for (const name of ['Camila Reyes', 'Mateus Oliveira', 'Jonas Weber']) {
-      await expect(page.getByRole('heading', { level: 3, name })).toHaveCount(0);
+      await expect(page.getByRole('heading', { name })).toHaveCount(0);
     }
-    await expect(page.getByRole('img', { name: 'Muazu Abu' })).toBeVisible();
   });
 });

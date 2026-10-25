@@ -37,7 +37,7 @@ test.describe('search and sharing', () => {
     for (const path of PAGES) {
       const html = await (await request.get(path)).text();
       const title = attr(html, /<title>([^<]*)<\/title>/);
-      expect(title, path).toMatch(/Anneal Studio$/);
+      expect(title, path).toContain('Anneal');
       titles.add(title);
       expect(attr(html, /<meta name="description" content="([^"]*)"/), path).toMatch(/.{40,}/);
       const canonical = attr(html, /<link rel="canonical" href="([^"]*)"/);
@@ -72,7 +72,9 @@ test.describe('not found', () => {
     const errors = collectErrors(page);
     const res = await page.goto('/no-such-page');
     expect(res?.status()).toBe(404);
-    await expect(page.getByRole('heading', { level: 1, name: '404' })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 1, name: 'This page is not here.' }),
+    ).toBeVisible();
     await page.locator('main').getByRole('link', { name: /Work/ }).click();
     await expect(page).toHaveURL(/\/work$/);
     expect(errors.filter((e) => !e.includes('404'))).toEqual([]);

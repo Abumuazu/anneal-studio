@@ -19,6 +19,8 @@ interface EmailCaptureProps {
   label: string;
   placeholder: string;
   submit: ReactNode;
+  pendingLabel?: ReactNode;
+  invalidMessage?: ReactNode;
   /** Shown under the field (privacy note). */
   note?: ReactNode;
   /** Replaces the form once the address is stored. */
@@ -40,6 +42,8 @@ export function EmailCapture({
   label,
   placeholder,
   submit,
+  pendingLabel,
+  invalidMessage,
   note,
   success,
   failure,
@@ -85,7 +89,7 @@ export function EmailCapture({
               disabled={pending}
               className={cx('capture-submit', pending && 'opacity-70')}
             >
-              {submit}
+              {pending ? (pendingLabel ?? submit) : submit}
             </button>
           </div>
           {note ? (
@@ -93,9 +97,9 @@ export function EmailCapture({
               {note}
             </div>
           ) : null}
-          {state && !state.ok && failure ? (
+          {state && !state.ok && (state.invalid ? invalidMessage : failure) ? (
             <p role="alert" className="mt-3 text-sm text-panel">
-              {failure}
+              {state.invalid ? invalidMessage : failure}
             </p>
           ) : null}
         </form>

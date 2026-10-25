@@ -25,7 +25,7 @@ export function pageMetadata({
   description: string;
   path: string;
 }): Metadata {
-  const full = title ? `${title} · ${site.name}` : site.name;
+  const full = title ? (title.includes(' | ') ? title : `${title} | ${site.name}`) : site.name;
   // A page's openGraph replaces its parent's, so name the site card here; a
   // route with its own opengraph-image file (the cases) still overrides it.
   const images = [{ url: '/opengraph-image', width: 1200, height: 630, alt: site.name }];

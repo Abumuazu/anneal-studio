@@ -6,8 +6,10 @@ import {
   InView,
   LineMask,
 } from '@studio/kit/motion';
-import { Glyph, type GlyphName, Tag } from '@studio/kit/ui';
+import { ArrowLink, Glyph, type GlyphName, Tag } from '@studio/kit/ui';
 import { type CSSProperties } from 'react';
+
+import { approved } from '@/content/approved';
 
 import { type CopyKey, copy, list } from '@/content/copy';
 
@@ -80,6 +82,9 @@ export function Builds() {
     >
       <div className="wrap pt-[88px] pb-8 desk:pt-[120px] desk:pb-16">
         <h2 className="type-h2 m-0 text-[clamp(44px,5.4vw,80px)]">{copy['home.build.h2']}</h2>
+        <p className="type-lead mt-6 mb-0 max-w-[680px] text-grey-700">
+          {approved.home['Offers heading'].split('\n\n')[1]}
+        </p>
       </div>
       <ExpandGroup hoverOpens defaultOpen={0} className="grid desk:grid-cols-2">
         {BLOCKS.map((b, i) => (
@@ -136,7 +141,9 @@ export function Builds() {
                 <span
                   className={`type-label opacity-80 max-desk:mt-1 max-desk:w-full ${b.wide ? 'mt-2.5 w-full' : 'ml-2.5'}`}
                 >
-                  {copy[k(b.key, 'time')]}
+                  <ArrowLink href="/start" handoff>
+                    {copy[`home.price.${b.key}.cta`]}
+                  </ArrowLink>
                 </span>
               </div>
             </ExpandPanel>

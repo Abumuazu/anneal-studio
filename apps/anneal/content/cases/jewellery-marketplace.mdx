@@ -18,7 +18,7 @@ import {
 <CaseHero
   slug="jewellery-marketplace"
   msg="Offers on mobile and web."
-  lines={['Make an offer.', 'Pay only if the', 'seller says yes.']}
+  lines={['Make an offer.', 'Pay when the', 'seller accepts.']}
   meta={{
     client: 'Confidential jewellery marketplace',
     sector: 'Marketplace, payments',
@@ -30,30 +30,31 @@ import {
 <JewelleryStage />
 
 <Brief msg="The usual answer meant holding other people's money.">
-  Buyers wanted to offer a price instead of paying the sticker one. Sellers wanted to accept,
-  decline or counter, and know an accepted offer would actually pay. The usual answer is a custom
-  escrow that holds the buyer's money until the deal closes. Here, building one would have meant
-  taking on the compliance that comes with holding other people's money.
+  Buyers wanted to offer a price rather than pay the listed amount. Sellers needed to accept, decline or counter and understand what would happen to payment after their decision.
+
+We designed the offer flow and payment mechanism together. The product needed a clear state for both parties while an offer was waiting for a response.
+
 </Brief>
 
 <Questions
   msg="Who holds the money? The bank does."
   heading="Three questions we answered before drawing a screen."
 >
-  <Question title="Who holds the money while the seller decides?">
-    The buyer's own bank, same as any card payment. The card is authorised when the offer is made,
-    and the funds stay there until the seller accepts.
-  </Question>
-  <Question title="Do we need to hold anyone's money at all?">
-    A custom escrow would have put the client in the business of holding funds. We recommended a
-    card hold through Stripe Checkout instead, so the money stays on the buyer's card until the
-    seller accepts and we never hold it. How a marketplace is regulated depends on where it
-    operates, so the client's advisers confirm that side.
-  </Question>
-  <Question title="What happens if the seller says nothing?">
-    Every offer has an expiry. Card holds usually last about seven days, so offers run out inside
-    that window. When one does, the hold is released and the buyer is free to try again.
-  </Question>
+  <Question title="Separate authorisation from capture">
+  A card can be authorised before a payment is captured. The flow uses that distinction: the buyer confirms the card when making an offer, and acceptance triggers capture.
+
+The flow uses card authorisation and capture rather than a custom escrow service. Provider authorisation windows and payment states shaped the offer-expiry design.
+
+</Question>
+  <Question title="Keep every offer state visible">
+  The buyer chooses an amount and submits the offer. The card is authorised and the seller receives the request. The seller can accept, decline or counter before expiry. Acceptance captures payment; a declined or expired offer triggers release of the authorisation through the payment flow.
+
+The interface explains whether an offer is waiting, accepted or expired. It distinguishes an authorised amount from a captured payment.
+
+</Question>
+  <Question title="Design both sides of the negotiation">
+  Buyers can follow their offers and responses. Sellers can review incoming offers in one place and act on them. The same product rules carry across mobile and web.
+</Question>
 </Questions>
 
 <MoneyFlow

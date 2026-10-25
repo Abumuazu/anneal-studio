@@ -1,49 +1,20 @@
 import { InView, Parallax, Reveal } from '@studio/kit/motion';
-import {
-  ArrowLink,
-  ButtonLink,
-  CurrencySwitch,
-  Glyph,
-  type GlyphName,
-  Price,
-} from '@studio/kit/ui';
+import { ArrowLink, ButtonLink, Glyph } from '@studio/kit/ui';
 import { type CSSProperties } from 'react';
 
-import { type CopyKey, boardCopy, copy } from '@/content/copy';
-import { CURRENCY_COOKIE, currencyOptions } from '@/content/currency';
-import { type Offer, priceValues } from '@/content/prices';
-import { site } from '@/content/site.config';
+import { approved } from '@/content/approved';
+import { copy } from '@/content/copy';
 
-type Key = 'site' | 'ai' | 'web' | 'mobile';
+const CARDS = [
+  { key: 'site', glyph: 'g-web', height: 560 },
+  { key: 'ai', glyph: 'g-spark', height: 600 },
+  { key: 'web', glyph: 'g-code', height: 640 },
+  { key: 'mobile', glyph: 'g-app', height: 680 },
+] as const;
 
-const CARDS: { key: Key; offer: Offer; glyph: GlyphName; height: number; dark?: boolean }[] = [
-  { key: 'site', offer: 'website', glyph: 'g-web', height: 560 },
-  { key: 'ai', offer: 'aiFeature', glyph: 'g-spark', height: 600 },
-  { key: 'web', offer: 'webMvp', glyph: 'g-code', height: 640 },
-  { key: 'mobile', offer: 'mobileMvp', glyph: 'g-app', height: 680, dark: true },
-];
-
-const k = (key: Key, part: string) => `home.price.${key}.${part}` as CopyKey;
-
-/** Deck lines such as "Care · from $400/mo · Fixes, updates..." hold name and description. */
-function growthItem(key: CopyKey) {
-  const [name = '', , desc = ''] = copy[key].split(' · ');
-  return { name, desc };
-}
-
-const GROWTH: { key: CopyKey; offer: Offer; from: boolean; per: string }[] = [
-  { key: 'home.price.growth.care', offer: 'care', from: true, per: boardCopy.perMonth },
-  { key: 'home.price.growth.growth', offer: 'growth', from: true, per: boardCopy.perMonth },
-  {
-    key: 'home.price.growth.sprint',
-    offer: 'featureSprint',
-    from: false,
-    per: boardCopy.perTwoWeeks,
-  },
-];
-
-/** "Pick your build.": four cards rising in a staircase, the Growth panel and the terms. */
+/** The original staircase cards, with scoped offers and no public prices. */
 export function Pricing() {
+  const h = approved.home;
   return (
     <InView
       as="section"
@@ -56,164 +27,128 @@ export function Pricing() {
         <div className="grid items-end gap-6 desk:grid-cols-12">
           <Reveal
             as="h2"
-            className="type-display m-0 text-[84px] desk:col-span-7 desk:text-[clamp(72px,10vw,156px)]"
+            className="type-display m-0 text-[64px] desk:col-span-7 desk:text-[clamp(64px,8vw,120px)]"
           >
-            {copy['home.price.h2']}
+            {h['Project heading'].split('\n\n')[0]}
           </Reveal>
           <Reveal
+            as="p"
             step={2}
-            className="flex flex-col gap-5 desk:col-span-4 desk:col-start-9 desk:pb-3"
+            className="type-body m-0 text-grey-700 desk:col-span-4 desk:col-start-9 desk:pb-3"
           >
-            <p className="type-body m-0 text-grey-700">{copy['home.price.lead']}</p>
-            <CurrencySwitch
-              options={currencyOptions}
-              cookie={CURRENCY_COOKIE}
-              label={boardCopy.currencyGroup}
-            />
+            {h['Project heading'].split('\n\n')[1]}
           </Reveal>
         </div>
-
         <div className="mt-7 grid items-stretch gap-3 desk:mt-16 desk:grid-cols-4 desk:items-end desk:gap-4">
-          {CARDS.map((c, i) => (
-            <Parallax key={c.key} mode="enter" distance={50 + i * 80}>
-              <article
-                data-event="price_card_click"
-                data-event-offer={c.offer}
-                className={`way desk:min-h-[520px] ${c.dark ? 'bg-ink text-panel' : 'bg-panel text-ink'}`}
-                style={{ '--way-h': `${c.height}px` } as CSSProperties}
-              >
-                <div className="flex items-start justify-between">
+          {CARDS.map((c, i) => {
+            const offer = approved.services.offers[i];
+            if (!offer) return null;
+            const dark = c.key === 'mobile';
+            return (
+              <Parallax key={c.key} mode="enter" distance={50 + i * 80}>
+                <article
+                  data-event="service_link_opened"
+                  data-event-offer={offer.name}
+                  className={`way desk:min-h-[520px] ${dark ? 'bg-ink text-panel' : 'bg-panel text-ink'}`}
+                  style={{ '--way-h': `${c.height}px` } as CSSProperties}
+                >
                   <span
-                    className={`way-tile ${c.dark ? 'bg-accent text-on-accent' : 'bg-ink text-panel'}`}
+                    className={`way-tile ${dark ? 'bg-accent text-on-accent' : 'bg-ink text-panel'}`}
                   >
                     <Glyph name={c.glyph} className="h-[56%] w-[56%]" />
                   </span>
-                  <span className={`type-label ${c.dark ? 'text-grey-400' : 'text-grey-600'}`}>
-                    {copy[k(c.key, 'time')]}
-                  </span>
-                </div>
-                <h3 className="type-display mt-7 mb-0 text-[52px] desk:mt-auto desk:text-[58px]">
-                  {copy[k(c.key, 'name')]}
-                </h3>
-                <div className="mt-3 flex items-baseline gap-2.5 desk:mt-3.5">
-                  <span className={`type-label ${c.dark ? 'text-grey-400' : 'text-grey-600'}`}>
-                    {boardCopy.from}
-                  </span>
-                  <Price
-                    values={priceValues(c.offer)}
-                    className="type-display-wide text-[28px] desk:text-[30px]"
-                  />
-                </div>
-                <p
-                  className={`type-body mt-2.5 mb-0 text-[15px] ${c.dark ? 'text-grey-300' : 'text-grey-700'}`}
-                >
-                  {copy[k(c.key, 'for')]}
-                </p>
-                <ul className="mt-[18px] mb-0 flex list-none flex-col gap-[9px] p-0 text-[15px] leading-[1.3]">
-                  {[1, 2, 3, 4].map((n) => (
-                    <li key={n} className="flex items-start gap-2.5">
-                      <span
-                        aria-hidden="true"
-                        className={`-mt-px inline-flex h-5 w-5 flex-none items-center justify-center rounded-full text-[11px] ${c.dark ? 'bg-grey-800 text-panel' : 'bg-grey-100 text-ink'}`}
-                      >
-                        ✓
-                      </span>
-                      {copy[k(c.key, `inc.${n}`)]}
-                    </li>
-                  ))}
-                </ul>
-                <ButtonLink
-                  href={site.startHref}
-                  handoff
-                  size="sm"
-                  className="mt-[22px] self-start max-desk:self-stretch max-desk:justify-center"
-                  bg={c.dark ? 'var(--color-panel)' : 'var(--color-ink)'}
-                  fg={c.dark ? 'var(--color-ink)' : 'var(--color-panel)'}
-                >
-                  {copy[k(c.key, 'cta')]}
-                </ButtonLink>
-              </article>
-            </Parallax>
-          ))}
+                  <h3 className="type-display mt-7 mb-0 text-[52px] desk:mt-auto desk:text-[58px]">
+                    {offer.name}
+                  </h3>
+                  <p
+                    className={`type-body mt-4 mb-0 text-[15px] ${dark ? 'text-grey-300' : 'text-grey-700'}`}
+                  >
+                    {copy[`home.build.${c.key}.promise`]} {copy[`home.build.${c.key}.body`]}
+                  </p>
+                  <ArrowLink href={`/services#${offer.id}`} className="mt-5">
+                    {h['Capabilities link']}
+                  </ArrowLink>
+                  <ButtonLink
+                    href="/start"
+                    handoff
+                    size="sm"
+                    className="mt-[22px] self-start max-desk:self-stretch max-desk:justify-center"
+                    bg={dark ? 'var(--color-panel)' : 'var(--color-ink)'}
+                    fg={dark ? 'var(--color-ink)' : 'var(--color-panel)'}
+                  >
+                    {offer.Action}
+                  </ButtonLink>
+                </article>
+              </Parallax>
+            );
+          })}
         </div>
-
-        <Reveal className="mt-1 rounded-3xl bg-ink p-6 text-panel desk:mt-4 desk:rounded-[28px] desk:p-11">
-          <div className="grid items-start gap-[18px] desk:grid-cols-12 desk:gap-6">
-            {/* Phones: title, lead, the three plans, then the button (HomeMobileV6). */}
-            <div className="max-desk:contents desk:col-span-4">
-              <h3 className="type-display m-0 text-[52px] leading-[0.9] desk:text-[clamp(44px,4.6vw,68px)]">
-                {copy['home.price.growth.name']}
+        <Reveal className="mt-4 rounded-3xl bg-ink p-6 text-panel desk:rounded-[28px] desk:p-11">
+          <div className="grid items-start gap-6 desk:grid-cols-12">
+            <div className="desk:col-span-5">
+              <h3 className="type-display m-0 text-[52px] desk:text-[68px]">
+                {h['Partnership heading'].split('\n\n')[0]}
               </h3>
-              <p className="type-body mt-[18px] mb-0 text-base text-grey-300">
-                {copy['home.price.growth.lead']}
-              </p>
+              {h['Partnership heading']
+                .split('\n\n')
+                .slice(1)
+                .map((text) => (
+                  <p key={text} className="type-body mt-5 mb-0 text-grey-300">
+                    {text}
+                  </p>
+                ))}
               <ButtonLink
-                href={site.startHref}
+                href="/start"
                 handoff
-                size="md"
-                className="max-desk:order-3 max-desk:w-full max-desk:justify-center desk:mt-[26px]"
+                className="mt-7"
                 bg="var(--color-accent)"
                 fg="var(--color-on-accent)"
-                fill="var(--color-panel)"
-                fillFg="var(--color-ink)"
               >
-                {copy['home.price.growth.cta']}
+                {h['Partnership action']}
               </ButtonLink>
             </div>
-            <div className="grid gap-2.5 max-desk:order-2 desk:col-span-7 desk:col-start-6 desk:grid-cols-3 desk:gap-3.5">
-              {GROWTH.map((g) => {
-                const item = growthItem(g.key);
-                return (
-                  <div
-                    key={g.key}
-                    className="rounded-[18px] bg-grey-900 p-5 max-desk:flex max-desk:flex-wrap max-desk:items-baseline max-desk:justify-between max-desk:gap-x-3 desk:rounded-[20px] desk:p-6"
-                  >
-                    <h4 className="type-h3 m-0 text-[22px] desk:text-2xl">{item.name}</h4>
-                    <div className="flex flex-wrap items-baseline gap-1.5 desk:mt-2.5 desk:gap-2">
-                      {g.from ? (
-                        <span className="type-label text-grey-400">{boardCopy.from}</span>
-                      ) : null}
-                      <Price
-                        values={priceValues(g.offer)}
-                        className="type-display-wide text-[19px] desk:text-[26px]"
-                      />
-                      <span className="type-label text-grey-400">{g.per}</span>
-                    </div>
-                    <p className="type-body mt-2 mb-0 text-[14px] text-grey-300 max-desk:basis-full desk:mt-3 desk:text-[15px]">
-                      {item.desc}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
+            <ul className="m-0 grid list-none gap-3 p-0 desk:col-span-6 desk:col-start-7 desk:grid-cols-2">
+              {h['Partnership details'].split(' / ').map((item) => (
+                <li key={item} className="type-body rounded-[20px] bg-grey-900 p-6 text-[18px]">
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
         </Reveal>
-
-        <div className="mt-2.5 grid gap-2.5 desk:mt-4 desk:grid-cols-3 desk:gap-4">
-          {([1, 2, 3] as const).map((n, i) => (
-            <Reveal
-              key={n}
-              step={i as 0 | 1 | 2}
-              className="rounded-[22px] bg-panel p-[22px] desk:p-7"
-            >
-              <h3 className="type-h3 m-0 text-[20px] desk:text-[22px]">
-                {copy[`home.price.terms.${n}.t`]}
-              </h3>
-              <p className="type-body mt-2 mb-0 text-[15px] text-grey-700 desk:mt-3 desk:text-base">
-                {copy[`home.price.terms.${n}.x`]}
-              </p>
-              {n === 3 ? (
-                <ArrowLink href={site.startHref} handoff className="mt-4">
-                  {copy['services.custom.bigger.cta']}
+        <div className="mt-12 desk:mt-20">
+          <Reveal as="h3" className="type-display m-0 max-w-[900px] text-[clamp(48px,6vw,88px)]">
+            {h['Capabilities heading'].split('\n\n')[0]}
+          </Reveal>
+          <Reveal as="p" className="type-body mt-6 max-w-[680px] text-grey-700">
+            {h['Capabilities heading'].split('\n\n')[1]}
+          </Reveal>
+          <div className="mt-8 grid gap-3 desk:grid-cols-3">
+            {approved.services.capabilities.map((c, i) => (
+              <Reveal
+                key={c.id}
+                step={i as 0 | 1 | 2}
+                className="flex h-full flex-col rounded-[22px] bg-panel p-7 desk:p-8"
+              >
+                <h4 className="type-display m-0 text-[40px] leading-[0.98] desk:text-[clamp(36px,3.1vw,48px)]">
+                  {c.name}
+                </h4>
+                <p className="type-body mt-6 mb-0 text-[17px] text-grey-700">{c.home}</p>
+                <ArrowLink href={`/services#${c.id}`} className="mt-auto self-start pt-8">
+                  {h['Capabilities link']}
                 </ArrowLink>
-              ) : null}
-            </Reveal>
-          ))}
+              </Reveal>
+            ))}
+          </div>
         </div>
-
-        <div className="mt-2 flex flex-wrap items-center justify-center gap-7 desk:mt-12 desk:justify-start">
-          <ArrowLink href="/services">{boardCopy.everythingInEachBuild}</ArrowLink>
-        </div>
+        <Reveal className="mt-10 rounded-[22px] bg-panel p-7">
+          <h3 className="type-display m-0 text-[36px] desk:text-[44px]">
+            {h['Ownership heading'].split('\n\n')[0]}
+          </h3>
+          <p className="type-body mt-3 mb-0 max-w-[780px] text-grey-700">
+            {h['Ownership heading'].split('\n\n')[1]}
+          </p>
+        </Reveal>
       </div>
     </InView>
   );

@@ -1,3 +1,4 @@
+import { approved } from '@/content/approved';
 import { InView, LineMask, Reveal } from '@studio/kit/motion';
 import { ButtonLink, Tag } from '@studio/kit/ui';
 import type { Metadata } from 'next';
@@ -13,8 +14,8 @@ import { chromeCopy, productsCopy as pc } from '@/content/pages';
 import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Products',
-  description: copy['products.lead'],
+  title: approved.meta.Products.title,
+  description: approved.meta.Products.description,
   path: '/products',
 });
 
