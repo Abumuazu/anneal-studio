@@ -33,19 +33,10 @@ export function useMotionEffect<T extends Element>(
   useEffect(() => {
     const el = ref.current;
     if (!el || reduced) return;
-    // Give each motion setup its own task. Initialising every section inside
-    // React's hydration effect otherwise blocks input on slower devices.
-    let revert: (() => void) | undefined;
-    const task = window.setTimeout(() => {
-      ensureGsap();
-      const mm = gsap.matchMedia();
-      mm.add(media, () => setup(el));
-      revert = () => mm.revert();
-    }, 0);
-    return () => {
-      window.clearTimeout(task);
-      revert?.();
-    };
+    ensureGsap();
+    const mm = gsap.matchMedia();
+    mm.add(media, () => setup(el));
+    return () => mm.revert();
     // `setup` is intentionally read fresh on each run; callers list their own deps.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref, reduced, media, ...deps]);

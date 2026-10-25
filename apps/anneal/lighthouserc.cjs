@@ -19,19 +19,24 @@ module.exports = {
     collect: {
       startServerCommand: `pnpm next start -p ${PORT}`,
       startServerReadyPattern: 'Ready',
-      url: [
-        `${base}/`,
-        `${base}/work`,
-        `${base}/work/wisp`,
-        `${base}/work/naira-crypto-exchange`,
-        `${base}/work/jewellery-marketplace`,
-        `${base}/services`,
-        `${base}/products`,
-        `${base}/studio`,
-        `${base}/privacy`,
-        `${base}/start`,
-        `${base}/kitchen-sink`,
-      ],
+      // A manual diagnostic can measure only the affected routes. Default CI
+      // still measures every route with the same three runs and budgets.
+      url:
+        process.env.LHCI_FOCUS === 'launch'
+          ? [base + '/', base + '/work', base + '/work/wisp']
+          : [
+              `${base}/`,
+              `${base}/work`,
+              `${base}/work/wisp`,
+              `${base}/work/naira-crypto-exchange`,
+              `${base}/work/jewellery-marketplace`,
+              `${base}/services`,
+              `${base}/products`,
+              `${base}/studio`,
+              `${base}/privacy`,
+              `${base}/start`,
+              `${base}/kitchen-sink`,
+            ],
       numberOfRuns: 3,
       settings: {
         throttlingMethod: 'devtools',
