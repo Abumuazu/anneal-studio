@@ -13,8 +13,8 @@ import { site } from '@/content/site.config';
 import { pageMetadata, siteUrl } from '@/lib/seo';
 
 export const metadata = pageMetadata({
-  title: approved.meta.Home.title,
-  description: approved.meta.Home.description,
+  title: copy['hero.meta.title'],
+  description: copy['hero.meta.description'],
   path: '/',
 });
 

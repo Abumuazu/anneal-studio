@@ -67,36 +67,37 @@ test.describe('phone', () => {
     }
   });
 
-  test('the Home hero fits the screen: headline, typing card, lead and both buttons', async ({
-    page,
-  }) => {
+  test('the Home hero keeps the headline, offer and call to action together', async ({ page }) => {
     const errors = collectErrors(page);
     await page.goto('/');
     await expect(
-      page.getByRole('heading', { level: 1, name: 'What do you need built?' }),
-    ).toBeAttached();
+      page.getByRole('heading', { level: 1, name: 'You bring the idea. We build it.' }),
+    ).toBeVisible();
     const hero = page.locator('.hero');
     await expect(hero).toBeVisible();
     await expect(hero.getByText('Product studio', { exact: true })).toHaveCount(0);
-    await expect(hero.getByText('What are you working on?')).toBeVisible();
-    await expect(hero.getByText(/^Anneal designs and builds websites/)).toBeVisible();
-    const work = hero.getByRole('link', { name: 'Book a call' });
-    const prices = hero.getByRole('link', { name: 'Explore our work' });
-    await work.scrollIntoViewIfNeeded();
+    await expect(
+      hero.getByText(/^We design and build websites, mobile apps and AI features/),
+    ).toBeVisible();
+    await expect(hero.locator('[data-hero-tile] .morph-tile')).toHaveCount(3);
+    const call = hero.getByRole('link', { name: 'Book a call' });
+    const work = hero.getByRole('link', { name: 'Explore our work' });
+    await expect(call).toBeInViewport();
     await expect(work).toBeInViewport();
-    await expect(prices).toBeVisible();
     const box = await hero.boundingBox();
-    expect(box?.height).toBeGreaterThanOrEqual(PHONE.height - 1);
+    expect(box?.height).toBeLessThanOrEqual(PHONE.height);
     expect(errors).toEqual([]);
   });
 
-  test('the typing card cycles through the three examples', async ({ page }) => {
+  test('the three hero tiles keep their original looping animation', async ({ page }) => {
     await page.goto('/');
-    const card = page.locator('.hero-ask');
-    await expect(card).toContainText('a website that explains our business', { timeout: 6000 });
-    await expect(card).toContainText('an AI workflow connected to our systems', {
-      timeout: 12_000,
-    });
+    const tiles = page.locator('.hero .morph-tile');
+    await expect(tiles).toHaveCount(3);
+    for (const tile of await tiles.all()) {
+      await expect(tile).toHaveCSS('animation-name', 'kit-morph');
+      await expect(tile).toHaveCSS('animation-iteration-count', 'infinite');
+      await expect(tile.locator('.morph-glyph')).toHaveCount(4);
+    }
   });
 
   test('the process cards follow the swipe', async ({ page }) => {

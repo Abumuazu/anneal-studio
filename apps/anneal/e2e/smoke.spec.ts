@@ -7,7 +7,7 @@ test.describe('smoke', () => {
     const errors = collectErrors(page);
     await page.goto('/');
     await expect(
-      page.getByRole('heading', { level: 1, name: 'What do you need built?' }),
+      page.getByRole('heading', { level: 1, name: 'You bring the idea. We build it.' }),
     ).toBeAttached();
     await expect(
       page.getByRole('banner').getByRole('link', { name: 'Anneal', exact: true }),

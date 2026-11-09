@@ -1,8 +1,48 @@
 import { expect, test } from '@playwright/test';
 
-import { collectErrors } from './helpers';
+import { collectErrors, fontsReady } from './helpers';
 
 test.describe('home', () => {
+  for (const width of [1440, 1024, 768, 390]) {
+    test(`hero stays compact with an unclipped headline and clear links at ${String(width)}px`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.goto('/');
+      await fontsReady(page);
+      const hero = page.locator('.hero');
+      await expect(hero.getByRole('heading', { level: 1 })).toHaveText(
+        'You bring the idea. We build it.',
+      );
+      await expect(hero.getByRole('link', { name: 'Book a call' })).toBeInViewport();
+      await expect(hero.getByRole('link', { name: 'Explore our work' })).toHaveAttribute(
+        'href',
+        '/work',
+      );
+      const layout = await hero.evaluate((section) => {
+        const heading = section.querySelector('.hero-heading');
+        const content = section.querySelector('.hero-copy');
+        if (!heading || !content) throw new Error('Hero layout is incomplete');
+        const h = heading.getBoundingClientRect();
+        const c = content.getBoundingClientRect();
+        const rows = [...section.querySelectorAll('.hero-row > span')].map((element) => {
+          const box = element.getBoundingClientRect();
+          return box.left >= -1 && box.right <= window.innerWidth + 1;
+        });
+        return {
+          height: section.getBoundingClientRect().height,
+          rowsFit: rows.every(Boolean),
+          separated: c.left >= h.right || c.top >= h.bottom,
+        };
+      });
+      expect(layout.rowsFit).toBe(true);
+      expect(layout.separated).toBe(true);
+      expect(layout.height).toBeLessThan(900);
+      await hero.screenshot({ path: test.info().outputPath(`hero-${String(width)}.png`) });
+    });
+  }
+
   for (const width of [1440, 390]) {
     for (const reducedMotion of ['no-preference', 'reduce'] as const) {
       test(`floating navigation appears early and stays visible at ${width}px (${reducedMotion})`, async ({

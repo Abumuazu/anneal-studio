@@ -6,38 +6,136 @@
 @layer components {
   /* Hero */
   .hero {
-    height: clamp(640px, 100svh, 1000px);
+    height: auto;
   }
-  @media (min-height: 1300px) {
-    .hero {
-      height: 920px;
-    }
+  .hero-inner {
+    position: relative;
+    max-width: 1680px;
+    margin-inline: auto;
+    padding: clamp(128px, 15svh, 156px) var(--spacing-gutter) 28px;
+  }
+  .hero-top {
+    display: none;
+  }
+  .hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(32px, 4vw, 64px);
+  }
+  .hero-heading {
+    min-width: 0;
+    margin: 0;
   }
   .hero-row {
     display: flex;
     align-items: center;
     white-space: nowrap;
-    font-size: clamp(48px, min(11.4vw, 15.6vh), 176px);
+    font-size: clamp(94px, min(11vw, 19vh), 176px);
     will-change: transform;
   }
-  /* Phones (HomeMobileV6): a flow layout, and a 92px headline at 390px wide. */
+  .hero-row + .hero-row {
+    margin-top: 0.06em;
+  }
+  .hero-row-last {
+    font-size: clamp(86px, min(10.1vw, 17.5vh), 162px);
+  }
+  .hero-copy {
+    min-width: 0;
+    max-width: 440px;
+  }
+  .hero-positioning {
+    margin: 0 0 22px;
+    font-size: 10px;
+  }
+  .hero-lead {
+    margin: 0;
+    font-size: clamp(20px, 1.65vw, 24px);
+  }
+  .hero-partnership {
+    margin: 18px 0 0;
+    font-size: 17px;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 24px;
+    margin-top: 28px;
+  }
+  .hero-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-top: 42px;
+    font-size: 10px;
+  }
+  .hero-services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .hero-scroll {
+    flex: none;
+  }
+
+  /* Keep the headline and invitation together without a viewport-sized empty area. */
   @media (max-width: 900px) {
-    .hero {
-      height: auto;
-      min-height: 100svh;
+    .hero-inner {
+      padding: 104px var(--spacing-gutter-sm) 26px;
+    }
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 9px;
+    }
+    .hero-layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 28px;
+      margin-top: 24px;
     }
     .hero-row {
-      font-size: clamp(72px, 23.6vw, 120px);
+      font-size: clamp(58px, 19.5vw, 150px);
     }
-    .hero-ask {
-      padding: 16px 18px 14px;
-      border-radius: 20px;
-      background: var(--color-glass-light);
-      -webkit-backdrop-filter: blur(18px) saturate(1.6);
-      backdrop-filter: blur(18px) saturate(1.6);
-      box-shadow:
-        inset 0 1px 0 rgb(255 255 255 / 0.7),
-        0 10px 30px rgb(11 11 12 / 0.08);
+    .hero-row-last {
+      font-size: clamp(54px, 18vw, 138px);
+    }
+    .hero-copy {
+      max-width: 560px;
+    }
+    .hero-positioning {
+      margin-bottom: 14px;
+      font-size: 9px;
+    }
+    .hero-lead {
+      font-size: 18px;
+    }
+    .hero-partnership {
+      margin-top: 14px;
+      font-size: 16px;
+    }
+    .hero-actions {
+      gap: 14px 22px;
+      margin-top: 22px;
+    }
+    .hero-actions .pbtn,
+    .hero-actions .alink {
+      font-size: 14px;
+    }
+    .hero-foot {
+      margin-top: 30px;
+      font-size: 8px;
+    }
+    .hero-services {
+      gap: 6px 18px;
+    }
+    .hero-scroll {
+      display: none;
     }
   }
   .hw {

@@ -41,13 +41,18 @@ export const boardCopy = {
   workWithUs: 'Book a call',
   brand: 'Anneal',
   studioName: 'Anneal Studio',
-  heroRows: ['What', 'do you need', 'built?'],
-  heroH1: 'What do you need built?',
+  heroRows: [copy['hero.row.1'], copy['hero.row.2'], copy['hero.row.3']],
+  heroH1: copy['hero.headline'],
   heroAskPrefix: 'I need',
   /** From build-handoff.md, section 1 (the hero lead is a product decision there). */
   heroLead:
     'Anneal designs and builds websites, apps and AI features for startups and growing businesses. Start with a defined project, or work with us monthly on a product that needs ongoing design and development.',
-  heroLabels: ['Product design', 'Websites and apps', 'AI workflows', 'Ongoing development'],
+  heroLabels: [
+    copy['hero.service.1'],
+    copy['hero.service.2'],
+    copy['hero.service.3'],
+    copy['hero.service.4'],
+  ],
   heroFoot: 'Anneal Studio · Product studio',
   /** Phones: the label row above the headline, and the label on the typing card (HomeMobileV6). */
   askLabel: 'What are you working on?',

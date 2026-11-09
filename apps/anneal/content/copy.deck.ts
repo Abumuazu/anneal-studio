@@ -306,6 +306,23 @@ export const deck = {
   'gov.msg.4': 'Follow one meeting through.',
   'gov.msg.5': 'Six things we built.',
   'gov.msg.6': 'Next project is up.',
+  'hero.headline': 'You bring the idea. We build it.',
+  'hero.row.1': 'You bring',
+  'hero.row.2': 'the idea.',
+  'hero.row.3': 'We build it.',
+  'hero.lead':
+    'We design and build websites, mobile apps and AI features. You work directly with the people making your product, with a working preview every week.',
+  'hero.partnership':
+    'Start with a project. Keep us as your design and development partner after launch.',
+  'hero.cta': 'Book a call',
+  'hero.work': 'Explore our work',
+  'hero.service.1': 'Product design',
+  'hero.service.2': 'Websites and apps',
+  'hero.service.3': 'AI workflows',
+  'hero.service.4': 'Ongoing development',
+  'hero.meta.title': 'Website & App Design and Development',
+  'hero.meta.description':
+    'Anneal designs and builds websites, mobile apps and AI features for founders and growing teams. Your design and development partner, from first idea to launch.',
   'hero.ask.label': 'What are you working on?',
   'hero.ask.1': 'a website that explains our business',
   'hero.ask.2': 'an AI workflow connected to our systems',

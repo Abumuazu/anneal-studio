@@ -35,10 +35,7 @@ export function HeroMotion({ children }: { children: ReactNode }) {
     { media: DESKTOP_QUERY },
   );
   return (
-    <div
-      ref={ref}
-      className="origin-[50%_35%] max-desk:relative max-desk:flex max-desk:min-h-[inherit] max-desk:flex-col max-desk:px-[var(--spacing-gutter-sm)] max-desk:pt-[104px] max-desk:pb-7 desk:absolute desk:inset-0"
-    >
+    <div ref={ref} className="hero-inner origin-[50%_35%]">
       {children}
     </div>
   );

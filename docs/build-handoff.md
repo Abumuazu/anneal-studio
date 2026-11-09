@@ -6,8 +6,8 @@ Copy for every slot is in `copy-deck-v3.md`. The visual spec is in `../design/v6
 
 | Decision | Where |
 | --- | --- |
-| Hero headline on three rows: "What" / "do you need" / "built?", with the lead "Anneal is a product studio for founders and teams. We design, build and launch websites, mobile apps and AI-powered products, with clear pricing, defined scope and timelines agreed upfront." | Home |
-| A quiet typing line sits above the lead: "I need [a booking site for my clinic]", followed by the matching offer and time in mono. It cycles through three examples | Home |
+| Hero update, 9 November 2026: "You bring" / "the idea." / "We build it." Three original looping tiles, with the headline and offer alongside each other on desktop. The copy is in the `hero.*` keys of the copy deck. | Home |
+| A compact grid replaces the viewport-height hero and its typing line. The lead names websites, mobile apps and AI features, direct contact with the builders and weekly previews. The next line explains ongoing design and development after launch. | Home |
 | No bracketed section labels. Headlines carry each section | All pages |
 | Prices appear only on the pricing cards and the Services page | All pages |
 | Pricing: large headline, currency switcher, four cards with four inclusions each, a Product Growth & Engineering panel, and three terms | Home |

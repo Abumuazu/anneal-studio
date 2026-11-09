@@ -52,6 +52,13 @@ test.describe('search and sharing', () => {
 
   test('home describes the studio for search engines', async ({ page }) => {
     await page.goto('/');
+    await expect(page).toHaveTitle('Website & App Design and Development | Anneal Studio');
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+      'content',
+      /websites, mobile apps and AI features/,
+    );
+    await expect(page.locator('main h1')).toHaveCount(1);
+    await expect(page.locator('main h1')).toHaveText('You bring the idea. We build it.');
     const json = await page.locator('script[type="application/ld+json"]').textContent();
     expect(JSON.parse(json ?? '{}')).toMatchObject({
       '@type': 'Organization',
